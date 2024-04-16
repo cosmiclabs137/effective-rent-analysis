@@ -265,8 +265,26 @@ const DealPage = () => {
                                 />
                                 <Tab
                                     icon={<TableViewIcon />}
-                                    label="Spreadsheet"
+                                    label="Deal 1"
                                     value="2"
+                                    sx={{
+                                        textTransform: "none",
+                                        fontSize: "1.1rem",
+                                    }}
+                                />
+                                <Tab
+                                    icon={<TableViewIcon />}
+                                    label="Deal 1"
+                                    value="3"
+                                    sx={{
+                                        textTransform: "none",
+                                        fontSize: "1.1rem",
+                                    }}
+                                />
+                                <Tab
+                                    icon={<TableViewIcon />}
+                                    label="Deal 1"
+                                    value="4"
                                     sx={{
                                         textTransform: "none",
                                         fontSize: "1.1rem",
@@ -298,7 +316,27 @@ const DealPage = () => {
                         )}
                         {currentTabIndex === "2" && (
                             <TabPanel value="2">
-                                <Typography>Spread Sheet</Typography>
+                                <Typography variant="h5">
+                                    {dealName !== "" ? dealName : "Untitled"}
+                                </Typography>
+                                {dealTable}
+                            </TabPanel>
+                        )}
+
+                        {currentTabIndex === "3" && (
+                            <TabPanel value="3">
+                                <Typography variant="h5">
+                                    {dealName !== "" ? dealName : "Untitled"}
+                                </Typography>
+                                {dealTable}
+                            </TabPanel>
+                        )}
+
+                        {currentTabIndex === "4" && (
+                            <TabPanel value="4">
+                                <Typography variant="h5">
+                                    {dealName !== "" ? dealName : "Untitled"}
+                                </Typography>
                                 {dealTable}
                             </TabPanel>
                         )}
