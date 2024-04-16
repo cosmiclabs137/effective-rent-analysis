@@ -22,24 +22,56 @@ const Summary = ({ ownerDeals, tenantDeals }) => {
         ownerDeals.pv
     );
 
-    const td = {
-        netEffectiveRentPerMonth: tenantNERperMonth,
-        netEffectiveRentPerYear: tenantNERperMonth * 12,
-        totalCost: tenantDeals.totalCost,
-        pv: tenantDeals.pv,
-        sqftLeased: tenantDeals.sqftLeased,
-    };
-    const od = {
-        netEffectiveRentPerMonth: ownerNERperMonth,
-        netEffectiveRentPerYear: ownerNERperMonth * 12,
-        totalCost: ownerDeals.totalCost,
-        pv: ownerDeals.pv,
-        sqftLeased: ownerDeals.sqftLeased,
-    };
+    const td = [
+        {
+            netEffectiveRentPerMonth: tenantNERperMonth,
+            netEffectiveRentPerYear: tenantNERperMonth * 12,
+            totalCost: tenantDeals.totalCost,
+            pv: tenantDeals.pv,
+            sqftLeased: tenantDeals.sqftLeased,
+        },
+        {
+            netEffectiveRentPerMonth: tenantNERperMonth,
+            netEffectiveRentPerYear: tenantNERperMonth * 12,
+            totalCost: tenantDeals.totalCost,
+            pv: tenantDeals.pv,
+            sqftLeased: tenantDeals.sqftLeased,
+        },
+        {
+            netEffectiveRentPerMonth: tenantNERperMonth,
+            netEffectiveRentPerYear: tenantNERperMonth * 12,
+            totalCost: tenantDeals.totalCost,
+            pv: tenantDeals.pv,
+            sqftLeased: tenantDeals.sqftLeased,
+        },
+    ];
+    const od = [
+        {
+            netEffectiveRentPerMonth: ownerNERperMonth,
+            netEffectiveRentPerYear: ownerNERperMonth * 12,
+            totalCost: ownerDeals.totalCost,
+            pv: ownerDeals.pv,
+            sqftLeased: ownerDeals.sqftLeased,
+        },
+        {
+            netEffectiveRentPerMonth: ownerNERperMonth,
+            netEffectiveRentPerYear: ownerNERperMonth * 12,
+            totalCost: ownerDeals.totalCost,
+            pv: ownerDeals.pv,
+            sqftLeased: ownerDeals.sqftLeased,
+        },
+        {
+            netEffectiveRentPerMonth: ownerNERperMonth,
+            netEffectiveRentPerYear: ownerNERperMonth * 12,
+            totalCost: ownerDeals.totalCost,
+            pv: ownerDeals.pv,
+            sqftLeased: ownerDeals.sqftLeased,
+        },
+    ];
     return (
         <>
-            <SummaryTable deal={td} title="Tenant" />
-            <SummaryTable deal={od} title="Owner" />
+            <SummaryTable deals={td} title="Tenant" />
+            <SummaryTable deals={od} title="Owner" />
         </>
     );
 };
