@@ -38,7 +38,12 @@ const genTableBody = (data) => {
     );
 };
 
-const BasicTable = ({ columnNames, data, stickyHeader = true }) => {
+const BasicTable = ({
+    columnNames,
+    data,
+    stickyHeader = true,
+    size = "small",
+}) => {
     return (
         <TableContainer component={Paper} sx={{ overflow: "scroll" }}>
             <Table
@@ -46,6 +51,7 @@ const BasicTable = ({ columnNames, data, stickyHeader = true }) => {
                 stickyHeader={stickyHeader}
                 xs={12}
                 md={8}
+                size={size}
             >
                 {genTableHead(columnNames)}
                 {genTableBody(data)}
