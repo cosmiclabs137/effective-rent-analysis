@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
 import App from "./App";
@@ -11,14 +11,14 @@ import IndexPage from "./pages/IndexPage/IndexPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <BrowserRouter>
+    <HashRouter>
         <Routes>
             <Route path="/" element={<App />}>
                 <Route path="/" element={<DealPage />} />
                 <Route path="test" element={<IndexPage />} />
             </Route>
         </Routes>
-    </BrowserRouter>
+    </HashRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
