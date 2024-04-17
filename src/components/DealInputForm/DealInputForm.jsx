@@ -30,7 +30,7 @@ const DealInputForm = ({
     commissionPercent,
     handleCommissionPercent,
     handleSubmit,
-    xs = 4,
+    xs = 3,
 }) => {
     return (
         <Grid item xs={xs}>

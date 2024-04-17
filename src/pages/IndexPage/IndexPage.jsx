@@ -1,27 +1,7 @@
 import React, { useState } from "react";
 
-import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-
-function CustomTabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { BarChart } from "@mui/x-charts/BarChart";
 
 const IndexPage = () => {
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
@@ -29,6 +9,14 @@ const IndexPage = () => {
         console.log(tabIndex);
         setCurrentTabIndex(tabIndex);
     };
+
+    const axis = {
+        data: ["Deal 1", "Deal 2", "Deal 3"],
+        scaleType: "band",
+    };
+    const sizingProps = { width: 600, height: 500 };
+    console.log(axis);
+    console.log(sizingProps);
 
     return (
         <React.Fragment>
@@ -44,13 +32,22 @@ const IndexPage = () => {
                 <Box sx={{ p: 3 }}>
                     <Typography variant="h5">Tab 1 Content</Typography>
                     <Typography variant="p">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Vestibulum finibus odio eget orci bibendum, ac hendrerit
-                        mi porta. Nullam volutpat libero tempus leo lacinia
-                        ornare. In hac habitasse platea dictumst. Pellentesque
-                        facilisis ex eget vulputate tincidunt. Curabitur
-                        fringilla ultrices commodo.
+                        Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book.
                     </Typography>
+                    <BarChart
+                        xAxis={[axis]}
+                        series={[
+                            { data: [4, 3, 5] },
+                            { data: [1, 6, 3] },
+                            { data: [2, 5, 6] },
+                        ]}
+                        width={800}
+                        height={600}
+                    />
                 </Box>
             )}
 

@@ -1,78 +1,60 @@
 import React from "react";
 
+import { Box } from "@mui/material";
+// import SummaryChart from "../Charts/SummaryChart";
 import SummaryTable from "../Tables/SummaryTable";
 
 const Summary = ({ ownerDeals, tenantDeals }) => {
-    const pmt = (rate, nper, pv, fv = 0) => {
-        // adapted from: https://numpy.org/numpy-financial/latest/pmt.html
-        const temp = (1 + rate) ** nper;
-        const fact = ((1 + rate) * (temp - 1)) / rate;
-        return -(fv + pv * temp) / fact;
-    };
+    // const toCurrency = (num) => {
+    //     const formatted = Intl.NumberFormat("en-US", {
+    //         style: "currency",
+    //         currency: "USD",
+    //     }).format(num >= 0 ? num : -num);
+    //     return num >= 0 ? formatted : `(${formatted})`;
+    // };
 
-    const tenantNERperMonth = -pmt(
-        tenantDeals.rate / 12,
-        tenantDeals.term,
-        tenantDeals.pv
-    );
+    // const pmt = (rate, nper, pv, fv = 0) => {
+    //     // adapted from: https://numpy.org/numpy-financial/latest/pmt.html
+    //     const temp = (1 + rate) ** nper;
+    //     const fact = ((1 + rate) * (temp - 1)) / rate;
+    //     return -(fv + pv * temp) / fact;
+    // };
 
-    const ownerNERperMonth = -pmt(
-        ownerDeals.rate / 12,
-        ownerDeals.term,
-        ownerDeals.pv
-    );
+    // const toSeries = (deals) => ({
+    //     data: deals.map(
+    //         (deal) => -pmt(deal.rate / 12, deal.term, deal.pv) / deal.sqftLeased
+    //     ),
+    //     type: "bar",
+    // });
 
-    const td = [
-        {
-            netEffectiveRentPerMonth: tenantNERperMonth,
-            netEffectiveRentPerYear: tenantNERperMonth * 12,
-            totalCost: tenantDeals.totalCost,
-            pv: tenantDeals.pv,
-            sqftLeased: tenantDeals.sqftLeased,
-        },
-        {
-            netEffectiveRentPerMonth: tenantNERperMonth,
-            netEffectiveRentPerYear: tenantNERperMonth * 12,
-            totalCost: tenantDeals.totalCost,
-            pv: tenantDeals.pv,
-            sqftLeased: tenantDeals.sqftLeased,
-        },
-        {
-            netEffectiveRentPerMonth: tenantNERperMonth,
-            netEffectiveRentPerYear: tenantNERperMonth * 12,
-            totalCost: tenantDeals.totalCost,
-            pv: tenantDeals.pv,
-            sqftLeased: tenantDeals.sqftLeased,
-        },
-    ];
-    const od = [
-        {
-            netEffectiveRentPerMonth: ownerNERperMonth,
-            netEffectiveRentPerYear: ownerNERperMonth * 12,
-            totalCost: ownerDeals.totalCost,
-            pv: ownerDeals.pv,
-            sqftLeased: ownerDeals.sqftLeased,
-        },
-        {
-            netEffectiveRentPerMonth: ownerNERperMonth,
-            netEffectiveRentPerYear: ownerNERperMonth * 12,
-            totalCost: ownerDeals.totalCost,
-            pv: ownerDeals.pv,
-            sqftLeased: ownerDeals.sqftLeased,
-        },
-        {
-            netEffectiveRentPerMonth: ownerNERperMonth,
-            netEffectiveRentPerYear: ownerNERperMonth * 12,
-            totalCost: ownerDeals.totalCost,
-            pv: ownerDeals.pv,
-            sqftLeased: ownerDeals.sqftLeased,
-        },
-    ];
+    // const ownerSeries = toSeries(ownerDeals);
+    // const tenantSeries = toSeries(tenantDeals);
+    // const axis = {
+    //     data: ownerDeals.map((d) => d.name),
+    //     scaleType: "linear",
+    // };
+    // const sizingProps = { width: 600, height: 500 };
+
+    // console.log(ownerSeries);
+    // console.log(tenantSeries);
+    // console.log(axis);
+    // console.log(sizingProps);
+    // const tenantDataset = tenantDeals.map(({name, }) => ({name: toCurrency()}));
+    // const tenantDataset = [
+    //     { "Deal 1": 3.22 },
+    //     { "Deal 2": 4.2 },
+    //     { "Deal 3": 10.2 },
+    // ];
+    // const ownerDataset = [{}];
+    console.log(tenantDeals);
+    console.log(ownerDeals);
     return (
-        <>
-            <SummaryTable deals={td} title="Tenant" />
-            <SummaryTable deals={od} title="Owner" />
-        </>
+        <Box md={5}>
+            <SummaryTable deals={tenantDeals} title="Tenant" />
+            <SummaryTable deals={ownerDeals} title="Owner" />
+            {/* <SummaryChart dataset={tenantDataset} sizingProps={sizingProps} />
+            <SummaryChart dataset={ownerDataset} sizingProps={sizingProps} /> */}
+        </Box>
     );
 };
 

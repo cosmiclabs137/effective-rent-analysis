@@ -1,343 +1,395 @@
 import React, { useState } from "react";
 
-import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Grid, Tab } from "@mui/material";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import TableViewIcon from "@mui/icons-material/TableView";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import GridWrapper from "../../components/common/GridWrapper/GridWrapper";
-import BasicTable from "../../components/Tables/BasicTable";
-import DealInputForm from "../../components/DealInputForm/DealInputForm";
-// import DealTab from "../../components/DealTab/DealTab";
+import Deal from "../../components/Deal/Deal";
 import Summary from "../../components/Summary/Summary";
 
 const DealPage = () => {
-    const [dealName, setDealName] = useState("");
-    const [sqftLeased, setSqftLeased] = useState(0);
-    const [dealTerm, setDealTerm] = useState(12); // is this standard
-    const [baseRent, setBaseRent] = useState(0);
-    const [annualEscalations, setAnnualEscalations] = useState(0);
-    const [occupancyExpensesPsf, setOccupancyExpensesPsf] = useState(0);
-    const [monthsFreeRent, setMonthsFreeRent] = useState(0);
-    const [landlordDiscountRate, setLandlordDiscountRate] = useState(0);
-    const [tenantDiscountRate, setTenantDiscountRate] = useState(0);
-    const [commissionPercent, setCommissionPercent] = useState(0);
+    const [deal1Name, setDeal1Name] = useState("Deal");
+    const [deal2Name, setDeal2Name] = useState("");
+    const [deal3Name, setDeal3Name] = useState("");
 
-    const [occupancyOpExCommissionsTotal, setOccupancyOpExCommissionsTotal] =
+    const [deal1Term, setDeal1Term] = useState(65); // is this standard
+    const [deal2Term, setDeal2Term] = useState(12); // is this standard
+    const [deal3Term, setDeal3Term] = useState(12); // is this standard,
+
+    const [deal1TenantDiscountRate, setDeal1TenantDiscountRate] = useState(7);
+    const [deal2TenantDiscountRate, setDeal2TenantDiscountRate] = useState(0);
+    const [deal3TenantDiscountRate, setDeal3TenantDiscountRate] = useState(0);
+
+    const [deal1SqftLeased, setDeal1SqftLeased] = useState(2794);
+    const [deal2SqftLeased, setDeal2SqftLeased] = useState(0);
+    const [deal3SqftLeased, setDeal3SqftLeased] = useState(0);
+
+    const [deal1BaseRent, setDeal1BaseRent] = useState(3.45);
+    const [deal2BaseRent, setDeal2BaseRent] = useState(0);
+    const [deal3BaseRent, setDeal3BaseRent] = useState(0);
+
+    const [deal1AnnualEscalations, setDeal1AnnualEscalations] = useState(3);
+    const [deal2AnnualEscalations, setDeal2AnnualEscalations] = useState(0);
+    const [deal3AnnualEscalations, setDeal3AnnualEscalations] = useState(0);
+
+    const [deal1OccupancyExpensesPsf, setDeal1OccupancyExpensesPsf] =
+        useState(0);
+    const [deal2OccupancyExpensesPsf, setDeal2OccupancyExpensesPsf] =
+        useState(0);
+    const [deal3OccupancyExpensesPsf, setDeal3OccupancyExpensesPsf] =
         useState(0);
 
-    const [ownerNetPresentValue, setOwnerNetPresentValue] = useState(0);
-    const [beforeTaxOccupancyCostTotal, setBeforeTaxOccupancyCostTotal] =
+    const [deal1LandlordDiscountRate, setDeal1LandlordDiscountRate] =
+        useState(5);
+    const [deal2LandlordDiscountRate, setDeal2LandlordDiscountRate] =
         useState(0);
-    const [tenantNetPresentValue, setTenantNetPresentValue] = useState(0);
+    const [deal3LandlordDiscountRate, setDeal3LandlordDiscountRate] =
+        useState(0);
+
+    const [
+        deal1OccupancyOpExCommissionsTotal,
+        setDeal1OccupancyOpExCommissionsTotal,
+    ] = useState(0);
+    const [
+        deal2OccupancyOpExCommissionsTotal,
+        setDeal2OccupancyOpExCommissionsTotal,
+    ] = useState(0);
+    const [
+        deal3OccupancyOpExCommissionsTotal,
+        setDeal3OccupancyOpExCommissionsTotal,
+    ] = useState(0);
+
+    const [deal1OwnerNetPresentValue, setDeal1OwnerNetPresentValue] =
+        useState(0);
+    const [deal2OwnerNetPresentValue, setDeal2OwnerNetPresentValue] =
+        useState(0);
+    const [deal3OwnerNetPresentValue, setDeal3OwnerNetPresentValue] =
+        useState(0);
+
+    const [
+        deal1BeforeTaxOccupancyCostTotal,
+        setDeal1BeforeTaxOccupancyCostTotal,
+    ] = useState(0);
+    const [
+        deal2BeforeTaxOccupancyCostTotal,
+        setDeal2BeforeTaxOccupancyCostTotal,
+    ] = useState(0);
+    const [
+        deal3BeforeTaxOccupancyCostTotal,
+        setDeal3BeforeTaxOccupancyCostTotal,
+    ] = useState(0);
+
+    const [deal1TenantNetPresentValue, setDeal1TenantNetPresentValue] =
+        useState(0);
+    const [deal2TenantNetPresentValue, setDeal2TenantNetPresentValue] =
+        useState(0);
+    const [deal3TenantNetPresentValue, setDeal3TenantNetPresentValue] =
+        useState(0);
+
+    const [deal1Monthsfree, setDeal1MonthsFree] = useState(5);
+    const [deal2Monthsfree, setDeal2MonthsFree] = useState(0);
+    const [deal3Monthsfree, setDeal3MonthsFree] = useState(0);
+
+    const [deal1CommissionPercent, setDeal1CommissionPercent] = useState(4);
+    const [deal2CommissionPercent, setDeal2CommissionPercent] = useState(0);
+    const [deal3CommissionPercent, setDeal3CommissionPercent] = useState(0);
 
     const [currentTabIndex, setCurrentTabIndex] = React.useState("1");
 
-    const toCurrency = (num) => {
-        const formatted = Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-        }).format(num >= 0 ? num : -num);
-        return num >= 0 ? formatted : `(${formatted})`;
-    };
-
-    const generateTable = () => {
-        const columnNames = [
-            "Period",
-            // "Rate",
-            "Base Rent ($)",
-            "Operating Expenses ($)",
-            "Rent Abatement ($)",
-            "Commission ($)",
-            "Before Tax Occupancy Expenses ($)",
-            "Tenant Net Present Value ($)",
-            "Occupancy + OpEx + Commission ($)",
-            "Owner Net Present Value ($)",
-        ];
-        return <BasicTable columnNames={columnNames} data={calculateDeal()} />;
-    };
-
-    const calculateDeal = () => {
-        const pv = (rate, nper, pmt, fv) => {
-            let pv_value = 0;
-
-            if (rate === 0.0) {
-                pv_value = -(fv + pmt * nper);
-            } else {
-                const x = Math.pow(1 + rate, -nper);
-                const y = Math.pow(1 + rate, nper);
-
-                pv_value = -(x * (fv * rate - pmt + y * pmt)) / rate;
-            }
-
-            return pv_value;
-        };
-
-        const rates = [];
-
-        let currentRate = 1;
-        for (let period = 0; period < dealTerm; period++) {
-            if (period > 11 && period % 12 === 0) {
-                currentRate = currentRate * (1 + annualEscalations / 100);
-            }
-            rates.push(currentRate);
-        }
-
-        const operatingExpenses = Array.from(
-            new Float32Array(rates.length).fill(
-                occupancyExpensesPsf * sqftLeased
-            )
-        );
-
-        const monthlyPayments = rates.map(
-            (rate) => rate * baseRent * sqftLeased
-        );
-
-        const rentAbatements = monthlyPayments.map((payment, period) => {
-            return monthsFreeRent > period ? -payment : 0;
-        });
-        let commissions = Array.from(new Float64Array(rates.length).fill(0.0));
-        rentAbatements.forEach((abatement, period) => {
-            if (abatement >= 0) {
-                const commission =
-                    (commissionPercent / 100) * monthlyPayments[period];
-                commissions[period] = -commission;
-            }
-        });
-
-        const beforeTaxOccupancyCost = monthlyPayments.map(
-            (baseRent, period) => {
-                return (
-                    baseRent +
-                    operatingExpenses[period] +
-                    rentAbatements[period]
-                );
-            }
-        );
-        setBeforeTaxOccupancyCostTotal(
-            beforeTaxOccupancyCost.reduce((acc, cost) => acc + cost)
-        );
-
-        const tenantNetPV = beforeTaxOccupancyCost.map(
-            (cost, period) => -pv(tenantDiscountRate / 1200, period, 0, cost)
-        );
-        setTenantNetPresentValue(
-            tenantNetPV.reduce((acc, value) => acc + value)
-        );
-
-        const totalCommission = commissions.reduce(
-            (acc, commission) => acc + commission
-        );
-
-        const occupancyOpExCommissions = monthlyPayments.map(
-            (payment, period) => {
-                return (
-                    payment +
-                    rentAbatements[period] +
-                    (period === 0 ? totalCommission : 0)
-                );
-            }
-        );
-
-        setOccupancyOpExCommissionsTotal(
-            occupancyOpExCommissions.reduce((acc, value) => acc + value)
-        );
-
-        const ownerNetPV = occupancyOpExCommissions.map(
-            (cost, period) => -pv(landlordDiscountRate / 1200, period, 0, cost)
-        );
-
-        setOwnerNetPresentValue(ownerNetPV.reduce((acc, value) => acc + value));
-
-        // combine all the data into a table-friendly format
-        const data = rates.map((rate, period) => {
-            return [
-                <Typography>
-                    <Box component="span" fontWeight="bold">
-                        {period}
-                    </Box>
-                </Typography>,
-                // Number(rate).toFixed(3),
-                toCurrency(monthlyPayments[period]),
-                toCurrency(operatingExpenses[period]),
-                toCurrency(rentAbatements[period]),
-                toCurrency(commissions[period]),
-                toCurrency(beforeTaxOccupancyCost[period]),
-                toCurrency(tenantNetPV[period]),
-                toCurrency(occupancyOpExCommissions[period]),
-                toCurrency(ownerNetPV[period]),
-            ];
-        });
-
-        return data;
-    };
-
-    const handleDealName = (e) => {
-        setDealName(e.target.value);
-    };
-
-    const handlesqftLeased = (e) => {
-        setSqftLeased(e.target.value);
-    };
-
-    const handleDealTerm = (e) => {
-        setDealTerm(e.target.value);
-    };
-
-    const handleBaseRent = (e) => {
-        setBaseRent(e.target.value);
-    };
-
-    const handleAnnualEscalations = (e) => {
-        setAnnualEscalations(e.target.value);
-    };
-
-    const handleOccupancyExpensesPsf = (e) => {
-        setOccupancyExpensesPsf(e.target.value);
-    };
-
-    const handleMonthsFreeRent = (e) => {
-        setMonthsFreeRent(e.target.value);
-    };
-
-    const handleTenantDiscountRate = (e) => {
-        setTenantDiscountRate(e.target.value);
-    };
-
-    const handleLandlordDiscountRate = (e) => {
-        setLandlordDiscountRate(e.target.value);
-    };
-
-    const handleCommissionPercent = (e) => {
-        setCommissionPercent(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
-        setDealTable(generateTable());
-    };
-
     const handleTabChange = (e, tabIndex) => setCurrentTabIndex(tabIndex);
-
-    const [dealTable, setDealTable] = useState(generateTable);
 
     return (
         <GridWrapper spacing={1}>
-            <DealInputForm
-                dealName={dealName}
-                handleDealName={handleDealName}
-                sqftLeased={sqftLeased}
-                handlesqftLeased={handlesqftLeased}
-                dealTerm={dealTerm}
-                handleDealTerm={handleDealTerm}
-                baseRent={baseRent}
-                handleBaseRent={handleBaseRent}
-                annualEscalations={annualEscalations}
-                handleAnnualEscalations={handleAnnualEscalations}
-                occupancyExpensesPsf={occupancyExpensesPsf}
-                handleOccupancyExpensesPsf={handleOccupancyExpensesPsf}
-                monthsFreeRent={monthsFreeRent}
-                handleMonthsFreeRent={handleMonthsFreeRent}
-                tenantDiscountRate={tenantDiscountRate}
-                handleTenantDiscountRate={handleTenantDiscountRate}
-                landlordDiscountRate={landlordDiscountRate}
-                handleLandlordDiscountRate={handleLandlordDiscountRate}
-                commissionPercent={commissionPercent}
-                handleCommissionPercent={handleCommissionPercent}
-                handleSubmit={handleSubmit}
-                xs={3}
-            />
-            <Grid item xs={9}>
+            <Grid item xs={12}>
                 <Box sx={{ width: "100%", typography: "body1" }}>
                     <TabContext value={currentTabIndex}>
                         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                             <TabList
                                 onChange={handleTabChange}
                                 aria-label="deal tabs"
+                                centered
                             >
                                 <Tab
-                                    icon={<BarChartIcon />}
-                                    label="Summary"
+                                    icon={<TableViewIcon />}
+                                    label={
+                                        deal1Name !== ""
+                                            ? deal1Name
+                                            : "Untitled Deal 1"
+                                    }
                                     value="1"
                                     sx={{
                                         textTransform: "none",
                                         fontSize: "1.1rem",
                                     }}
+                                    key={1}
                                 />
                                 <Tab
                                     icon={<TableViewIcon />}
-                                    label="Deal 1"
+                                    label={
+                                        deal2Name !== ""
+                                            ? deal2Name
+                                            : "Untitled Deal 2"
+                                    }
                                     value="2"
                                     sx={{
                                         textTransform: "none",
                                         fontSize: "1.1rem",
                                     }}
+                                    key={2}
                                 />
                                 <Tab
                                     icon={<TableViewIcon />}
-                                    label="Deal 1"
+                                    label={
+                                        deal3Name !== ""
+                                            ? deal3Name
+                                            : "Untitled Deal 3"
+                                    }
                                     value="3"
                                     sx={{
                                         textTransform: "none",
                                         fontSize: "1.1rem",
                                     }}
+                                    key={3}
                                 />
                                 <Tab
-                                    icon={<TableViewIcon />}
-                                    label="Deal 1"
+                                    icon={<BarChartIcon />}
+                                    label="Summary"
                                     value="4"
                                     sx={{
                                         textTransform: "none",
                                         fontSize: "1.1rem",
                                     }}
+                                    key={4}
                                 />
                             </TabList>
                         </Box>
 
                         {currentTabIndex === "1" && (
                             <TabPanel value="1">
-                                <Summary
-                                    tenantDeals={{
-                                        rate: tenantDiscountRate / 100,
-                                        term: dealTerm,
-                                        totalCost: beforeTaxOccupancyCostTotal,
-                                        pv: tenantNetPresentValue,
-                                        sqftLeased: sqftLeased,
-                                    }}
-                                    ownerDeals={{
-                                        rate: landlordDiscountRate / 100,
-                                        term: dealTerm,
-                                        totalCost:
-                                            occupancyOpExCommissionsTotal,
-                                        pv: ownerNetPresentValue,
-                                        sqftLeased: sqftLeased,
-                                    }}
+                                <Deal
+                                    tenantDiscountRate={deal1TenantDiscountRate}
+                                    dealName={deal1Name}
+                                    dealTerm={deal1Term}
+                                    setDealTerm={setDeal1Term}
+                                    sqftLeased={deal1SqftLeased}
+                                    setSqftLeased={setDeal1SqftLeased}
+                                    setBeforeTaxOccupancyCostTotal={
+                                        setDeal1BeforeTaxOccupancyCostTotal
+                                    }
+                                    setTenantNetPresentValue={
+                                        setDeal1TenantNetPresentValue
+                                    }
+                                    setDealName={setDeal1Name}
+                                    setOccupancyOpExCommissionsTotal={
+                                        setDeal1OccupancyOpExCommissionsTotal
+                                    }
+                                    setOwnerNetPresentValue={
+                                        setDeal1OwnerNetPresentValue
+                                    }
+                                    landlordDiscountRate={
+                                        deal1LandlordDiscountRate
+                                    }
+                                    setLandlordDiscountRate={
+                                        setDeal1LandlordDiscountRate
+                                    }
+                                    monthsFreeRent={deal1Monthsfree}
+                                    setMonthsFreeRent={setDeal1MonthsFree}
+                                    commissionPercent={deal1CommissionPercent}
+                                    setCommissionPercent={
+                                        setDeal1CommissionPercent
+                                    }
+                                    baseRent={deal1BaseRent}
+                                    setBaseRent={setDeal1BaseRent}
+                                    annualEscalations={deal1AnnualEscalations}
+                                    setAnnualEscalations={
+                                        setDeal1AnnualEscalations
+                                    }
+                                    occupancyExpensesPsf={
+                                        deal1OccupancyExpensesPsf
+                                    }
+                                    setOccupancyExpensesPsf={
+                                        setDeal1OccupancyExpensesPsf
+                                    }
+                                    setTenantDiscountRate={
+                                        setDeal1TenantDiscountRate
+                                    }
                                 />
                             </TabPanel>
                         )}
+
                         {currentTabIndex === "2" && (
                             <TabPanel value="2">
-                                <Typography variant="h5">
-                                    {dealName !== "" ? dealName : "Untitled"}
-                                </Typography>
-                                {dealTable}
+                                <Deal
+                                    tenantDiscountRate={deal2TenantDiscountRate}
+                                    dealName={deal2Name}
+                                    dealTerm={deal2Term}
+                                    setDealTerm={setDeal2Term}
+                                    sqftLeased={deal2SqftLeased}
+                                    setSqftLeased={setDeal2SqftLeased}
+                                    setBeforeTaxOccupancyCostTotal={
+                                        setDeal2BeforeTaxOccupancyCostTotal
+                                    }
+                                    setTenantNetPresentValue={
+                                        setDeal2TenantNetPresentValue
+                                    }
+                                    setDealName={setDeal2Name}
+                                    setOccupancyOpExCommissionsTotal={
+                                        setDeal2OccupancyOpExCommissionsTotal
+                                    }
+                                    setOwnerNetPresentValue={
+                                        setDeal2OwnerNetPresentValue
+                                    }
+                                    landlordDiscountRate={
+                                        deal2LandlordDiscountRate
+                                    }
+                                    setLandlordDiscountRate={
+                                        setDeal2LandlordDiscountRate
+                                    }
+                                    monthsFreeRent={deal2Monthsfree}
+                                    setMonthsFreeRent={setDeal2MonthsFree}
+                                    commissionPercent={deal2CommissionPercent}
+                                    setCommissionPercent={
+                                        setDeal2CommissionPercent
+                                    }
+                                    baseRent={deal2BaseRent}
+                                    setBaseRent={setDeal2BaseRent}
+                                    annualEscalations={deal2AnnualEscalations}
+                                    setAnnualEscalations={
+                                        setDeal2AnnualEscalations
+                                    }
+                                    occupancyExpensesPsf={
+                                        deal2OccupancyExpensesPsf
+                                    }
+                                    setOccupancyExpensesPsf={
+                                        setDeal2OccupancyExpensesPsf
+                                    }
+                                    setTenantDiscountRate={
+                                        setDeal2TenantDiscountRate
+                                    }
+                                />
                             </TabPanel>
                         )}
 
                         {currentTabIndex === "3" && (
                             <TabPanel value="3">
-                                <Typography variant="h5">
-                                    {dealName !== "" ? dealName : "Untitled"}
-                                </Typography>
-                                {dealTable}
+                                <Deal
+                                    tenantDiscountRate={deal3TenantDiscountRate}
+                                    dealName={deal3Name}
+                                    dealTerm={deal3Term}
+                                    setDealTerm={setDeal3Term}
+                                    sqftLeased={deal3SqftLeased}
+                                    setSqftLeased={setDeal3SqftLeased}
+                                    setBeforeTaxOccupancyCostTotal={
+                                        setDeal3BeforeTaxOccupancyCostTotal
+                                    }
+                                    setTenantNetPresentValue={
+                                        setDeal3TenantNetPresentValue
+                                    }
+                                    setDealName={setDeal3Name}
+                                    setOccupancyOpExCommissionsTotal={
+                                        setDeal3OccupancyOpExCommissionsTotal
+                                    }
+                                    setOwnerNetPresentValue={
+                                        setDeal3OwnerNetPresentValue
+                                    }
+                                    landlordDiscountRate={
+                                        deal3LandlordDiscountRate
+                                    }
+                                    setLandlordDiscountRate={
+                                        setDeal3LandlordDiscountRate
+                                    }
+                                    monthsFreeRent={deal3Monthsfree}
+                                    setMonthsFreeRent={setDeal3MonthsFree}
+                                    commissionPercent={deal3CommissionPercent}
+                                    setCommissionPercent={
+                                        setDeal3CommissionPercent
+                                    }
+                                    baseRent={deal3BaseRent}
+                                    setBaseRent={setDeal3BaseRent}
+                                    annualEscalations={deal3AnnualEscalations}
+                                    setAnnualEscalations={
+                                        setDeal3AnnualEscalations
+                                    }
+                                    occupancyExpensesPsf={
+                                        deal3OccupancyExpensesPsf
+                                    }
+                                    setOccupancyExpensesPsf={
+                                        setDeal3OccupancyExpensesPsf
+                                    }
+                                    setTenantDiscountRate={
+                                        setDeal3TenantDiscountRate
+                                    }
+                                />
                             </TabPanel>
                         )}
 
                         {currentTabIndex === "4" && (
                             <TabPanel value="4">
-                                <Typography variant="h5">
-                                    {dealName !== "" ? dealName : "Untitled"}
-                                </Typography>
-                                {dealTable}
+                                <Summary
+                                    tenantDeals={[
+                                        {
+                                            name: deal1Name,
+                                            rate: deal1TenantDiscountRate / 100,
+                                            term: deal1Term,
+                                            totalCost:
+                                                deal1BeforeTaxOccupancyCostTotal,
+                                            pv: deal1TenantNetPresentValue,
+                                            sqftLeased: deal1SqftLeased,
+                                        },
+                                        {
+                                            name: deal2Name,
+                                            rate: deal2TenantDiscountRate / 100,
+                                            term: deal2Term,
+                                            totalCost:
+                                                deal2BeforeTaxOccupancyCostTotal,
+                                            pv: deal2TenantNetPresentValue,
+                                            sqftLeased: deal2SqftLeased,
+                                        },
+                                        {
+                                            name: deal3Name,
+                                            rate: deal3TenantDiscountRate / 100,
+                                            term: deal3Term,
+                                            totalCost:
+                                                deal3BeforeTaxOccupancyCostTotal,
+                                            pv: deal3TenantNetPresentValue,
+                                            sqftLeased: deal3SqftLeased,
+                                        },
+                                    ]}
+                                    ownerDeals={[
+                                        {
+                                            name: deal1Name,
+                                            rate:
+                                                deal1LandlordDiscountRate / 100,
+                                            term: deal1Term,
+                                            totalCost:
+                                                deal1OccupancyOpExCommissionsTotal,
+                                            pv: deal1OwnerNetPresentValue,
+                                            sqftLeased: deal1SqftLeased,
+                                        },
+                                        {
+                                            name: deal2Name,
+                                            rate:
+                                                deal2LandlordDiscountRate / 100,
+                                            term: deal2Term,
+                                            totalCost:
+                                                deal2OccupancyOpExCommissionsTotal,
+                                            pv: deal2OwnerNetPresentValue,
+                                            sqftLeased: deal2SqftLeased,
+                                        },
+                                        {
+                                            name: deal3Name,
+                                            rate:
+                                                deal3LandlordDiscountRate / 100,
+                                            term: deal3Term,
+                                            totalCost:
+                                                deal3OccupancyOpExCommissionsTotal,
+                                            pv: deal3OwnerNetPresentValue,
+                                            sqftLeased: deal3SqftLeased,
+                                        },
+                                    ]}
+                                />
                             </TabPanel>
                         )}
                     </TabContext>

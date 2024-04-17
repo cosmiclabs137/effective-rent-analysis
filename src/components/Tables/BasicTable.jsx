@@ -14,8 +14,8 @@ const genTableHead = (columnNames) => {
     return (
         <TableHead>
             <TableRow key="table-key">
-                {columnNames.map((columnName) => (
-                    <TableCell sx={{ fontWeight: "bold" }}>
+                {columnNames.map((columnName, index) => (
+                    <TableCell sx={{ fontWeight: "bold" }} key={index}>
                         {columnName}
                     </TableCell>
                 ))}
@@ -49,9 +49,10 @@ const BasicTable = ({
             <Table
                 aria-label="basic table"
                 stickyHeader={stickyHeader}
-                xs={12}
+                xs={9}
                 md={8}
                 size={size}
+                key="a-basic-table"
             >
                 {genTableHead(columnNames)}
                 {genTableBody(data)}
