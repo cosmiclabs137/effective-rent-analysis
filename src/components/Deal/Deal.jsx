@@ -44,7 +44,7 @@ const Deal = ({
 
     const generateTable = () => {
         const columnNames = [
-            "Period",
+            "Month",
             // "Rate",
             "Base Rent ($)",
             "Operating Expenses ($)",
@@ -155,7 +155,7 @@ const Deal = ({
             return [
                 <Typography>
                     <Box component="span" fontWeight="bold">
-                        {period}
+                        {period + 1}
                     </Box>
                 </Typography>,
                 // Number(rate).toFixed(3),
