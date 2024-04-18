@@ -11,7 +11,6 @@ import {
 } from "@mui/x-charts";
 
 const SummaryChart = ({ axis, sizingProps, dataset = [] }) => {
-    // console.log(series);
     return (
         <Box sx={{ width: "100%" }}>
             {/* <Paper>

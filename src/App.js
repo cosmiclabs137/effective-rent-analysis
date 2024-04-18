@@ -14,7 +14,6 @@ function App() {
 
     useEffect(() => {
         const parsedTitle = location.pathname.replace(/\W/g, " ");
-        console.log(parsedTitle);
         setTitle(parsedTitle);
     }, [location]);
     return (

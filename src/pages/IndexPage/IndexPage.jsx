@@ -6,7 +6,6 @@ import { BarChart } from "@mui/x-charts/BarChart";
 const IndexPage = () => {
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
     const handleTabChange = (e, tabIndex) => {
-        console.log(tabIndex);
         setCurrentTabIndex(tabIndex);
     };
 
@@ -15,8 +14,6 @@ const IndexPage = () => {
         scaleType: "band",
     };
     const sizingProps = { width: 600, height: 500 };
-    console.log(axis);
-    console.log(sizingProps);
 
     return (
         <React.Fragment>

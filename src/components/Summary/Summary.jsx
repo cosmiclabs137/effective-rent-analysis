@@ -35,10 +35,6 @@ const Summary = ({ ownerDeals, tenantDeals }) => {
     // };
     // const sizingProps = { width: 600, height: 500 };
 
-    // console.log(ownerSeries);
-    // console.log(tenantSeries);
-    // console.log(axis);
-    // console.log(sizingProps);
     // const tenantDataset = tenantDeals.map(({name, }) => ({name: toCurrency()}));
     // const tenantDataset = [
     //     { "Deal 1": 3.22 },
@@ -46,8 +42,6 @@ const Summary = ({ ownerDeals, tenantDeals }) => {
     //     { "Deal 3": 10.2 },
     // ];
     // const ownerDataset = [{}];
-    console.log(tenantDeals);
-    console.log(ownerDeals);
     return (
         <Box md={5}>
             <SummaryTable deals={tenantDeals} title="Tenant" />
