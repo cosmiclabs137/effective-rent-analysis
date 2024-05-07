@@ -41,15 +41,15 @@ const DealPage = () => {
     const [deal2GrowthRateInOpEx, setDeal2GrowthRateInOpEx] = useState(0);
     const [deal3GrowthRateInOpEx, setDeal3GrowthRateInOpEx] = useState(0);
 
-    const [deal1OtherRecurringCost, deal1SetOtherRecurringCost] = useState(0);
-    const [deal2OtherRecurringCost, deal2SetOtherRecurringCost] = useState(0);
-    const [deal3OtherRecurringCost, deal3SetOtherRecurringCost] = useState(0);
+    const [deal1OtherRecurringCost, setDeal1OtherRecurringCost] = useState(0);
+    const [deal2OtherRecurringCost, setDeal2OtherRecurringCost] = useState(0);
+    const [deal3OtherRecurringCost, setDeal3OtherRecurringCost] = useState(0);
 
-    const [deal1OtherNonRecurringCost, deal1SetOtherNonRecurringCost] =
+    const [deal1OtherNonRecurringCost, setDeal1OtherNonRecurringCost] =
         useState(0);
-    const [deal2OtherNonRecurringCost, deal2SetOtherNonRecurringCost] =
+    const [deal2OtherNonRecurringCost, setDeal2OtherNonRecurringCost] =
         useState(0);
-    const [deal3OtherNonRecurringCost, deal3SetOtherNonRecurringCost] =
+    const [deal3OtherNonRecurringCost, setDeal3OtherNonRecurringCost] =
         useState(0);
 
     const [deal1RecurringCostGrowthRate, setDeal1RecurringCostGrowthRate] =
@@ -254,39 +254,12 @@ const DealPage = () => {
                         {currentTabIndex === "1" && (
                             <TabPanel value="1">
                                 <Deal
-                                    tenantDiscountRate={deal1TenantDiscountRate}
                                     dealName={deal1Name}
-                                    dealTerm={deal1Term}
-                                    setDealTerm={setDeal1Term}
+                                    setDealName={setDeal1Name}
                                     sqftLeased={deal1SqftLeased}
                                     setSqftLeased={setDeal1SqftLeased}
-                                    setBeforeTaxOccupancyCostTotal={
-                                        setDeal1BeforeTaxOccupancyCostTotal
-                                    }
-                                    setTenantNetPresentValue={
-                                        setDeal1TenantNetPresentValue
-                                    }
-                                    setDealName={setDeal1Name}
-                                    setOccupancyOpExCommissionsTotal={
-                                        setDeal1OccupancyOpExCommissionsTotal
-                                    }
-                                    setOwnerNetPresentValue={
-                                        setDeal1OwnerNetPresentValue
-                                    }
-                                    landlordDiscountRate={
-                                        deal1LandlordDiscountRate
-                                    }
-                                    setLandlordDiscountRate={
-                                        setDeal1LandlordDiscountRate
-                                    }
-                                    monthsFreeRent={deal1Monthsfree}
-                                    setMonthsFreeRent={setDeal1MonthsFree}
-                                    commissionPercent={
-                                        deal1CommissionPercent1st
-                                    }
-                                    setCommissionPercent={
-                                        setDeal1CommissionPercent1st
-                                    }
+                                    dealTerm={deal1Term}
+                                    setDealTerm={setDeal1Term}
                                     baseRent={deal1BaseRent}
                                     setBaseRent={setDeal1BaseRent}
                                     annualEscalations={deal1AnnualEscalations}
@@ -299,8 +272,91 @@ const DealPage = () => {
                                     setOccupancyExpensesPsf={
                                         setDeal1OccupancyExpensesPsf
                                     }
+                                    growthRateInOpEx={deal1GrowthRateInOpEx}
+                                    setGrowthRateInOpEx={
+                                        setDeal1GrowthRateInOpEx
+                                    }
+                                    otherNonRecurringCost={
+                                        deal1OtherNonRecurringCost
+                                    }
+                                    setOtherNonRecurringCost={
+                                        setDeal1OtherNonRecurringCost
+                                    }
+                                    otherRecurringCost={deal1OtherRecurringCost}
+                                    setOtherRecurringCost={
+                                        deal1OtherRecurringCost
+                                    }
+                                    recurringCostGrowthRate={
+                                        deal1RecurringCostGrowthRate
+                                    }
+                                    setRecurringCostGrowthRate={
+                                        setDeal1RecurringCostGrowthRate
+                                    }
+                                    tenantImprovementCost={
+                                        deal1TenantImprovementCost
+                                    }
+                                    setTenantImprovementCost={
+                                        setDeal1TenantImprovementCost
+                                    }
+                                    tenantImprovementAllowance={
+                                        deal1TenantImprovementAllowance
+                                    }
+                                    setTenantImprovementAllowance={
+                                        setDeal1TenantImprovementAllowance
+                                    }
+                                    monthsFreeRent={deal1Monthsfree}
+                                    setMonthsFreeRent={setDeal1MonthsFree}
+                                    otherNonRecurringContribution={
+                                        deal1OtherNonRecurringContribution
+                                    }
+                                    setOtherNonRecurringContribution={
+                                        setDeal1OtherNonRecurringContribution
+                                    }
+                                    otherRecurringContribution={
+                                        deal1OtherRecurringContribution
+                                    }
+                                    setOtherRecurringContribution={
+                                        setDeal1OtherRecurringContribution
+                                    }
+                                    contributionGrowthRate={
+                                        deal1ContributionGrowthRate
+                                    }
+                                    setContributionGrowthRate={
+                                        setDeal1ContributionGrowthRate
+                                    }
+                                    tenantDiscountRate={deal1TenantDiscountRate}
                                     setTenantDiscountRate={
                                         setDeal1TenantDiscountRate
+                                    }
+                                    landlordDiscountRate={
+                                        deal1LandlordDiscountRate
+                                    }
+                                    setLandlordDiscountRate={
+                                        setDeal1LandlordDiscountRate
+                                    }
+                                    commissionPercent1st={
+                                        deal1CommissionPercent1st
+                                    }
+                                    setCommissionPercent1st={
+                                        setDeal1CommissionPercent1st
+                                    }
+                                    commissionPercent2nd={
+                                        deal1CommissionPercent2nd
+                                    }
+                                    setCommissionPercent2nd={
+                                        setDeal1CommissionPercent2nd
+                                    }
+                                    setBeforeTaxOccupancyCostTotal={
+                                        setDeal1BeforeTaxOccupancyCostTotal
+                                    }
+                                    setTenantNetPresentValue={
+                                        setDeal1TenantNetPresentValue
+                                    }
+                                    setOccupancyOpExCommissionsTotal={
+                                        setDeal1OccupancyOpExCommissionsTotal
+                                    }
+                                    setOwnerNetPresentValue={
+                                        setDeal1OwnerNetPresentValue
                                     }
                                 />
                             </TabPanel>
@@ -309,39 +365,12 @@ const DealPage = () => {
                         {currentTabIndex === "2" && (
                             <TabPanel value="2">
                                 <Deal
-                                    tenantDiscountRate={deal2TenantDiscountRate}
                                     dealName={deal2Name}
-                                    dealTerm={deal2Term}
-                                    setDealTerm={setDeal2Term}
+                                    setDealName={setDeal2Name}
                                     sqftLeased={deal2SqftLeased}
                                     setSqftLeased={setDeal2SqftLeased}
-                                    setBeforeTaxOccupancyCostTotal={
-                                        setDeal2BeforeTaxOccupancyCostTotal
-                                    }
-                                    setTenantNetPresentValue={
-                                        setDeal2TenantNetPresentValue
-                                    }
-                                    setDealName={setDeal2Name}
-                                    setOccupancyOpExCommissionsTotal={
-                                        setDeal2OccupancyOpExCommissionsTotal
-                                    }
-                                    setOwnerNetPresentValue={
-                                        setDeal2OwnerNetPresentValue
-                                    }
-                                    landlordDiscountRate={
-                                        deal2LandlordDiscountRate
-                                    }
-                                    setLandlordDiscountRate={
-                                        setDeal2LandlordDiscountRate
-                                    }
-                                    monthsFreeRent={deal2Monthsfree}
-                                    setMonthsFreeRent={setDeal2MonthsFree}
-                                    commissionPercent={
-                                        deal2CommissionPercent1st
-                                    }
-                                    setCommissionPercent={
-                                        setDeal2CommissionPercent1st
-                                    }
+                                    dealTerm={deal2Term}
+                                    setDealTerm={setDeal2Term}
                                     baseRent={deal2BaseRent}
                                     setBaseRent={setDeal2BaseRent}
                                     annualEscalations={deal2AnnualEscalations}
@@ -354,8 +383,91 @@ const DealPage = () => {
                                     setOccupancyExpensesPsf={
                                         setDeal2OccupancyExpensesPsf
                                     }
+                                    growthRateInOpEx={deal2GrowthRateInOpEx}
+                                    setGrowthRateInOpEx={
+                                        setDeal2GrowthRateInOpEx
+                                    }
+                                    otherNonRecurringCost={
+                                        deal2OtherNonRecurringCost
+                                    }
+                                    setOtherNonRecurringCost={
+                                        setDeal2OtherNonRecurringCost
+                                    }
+                                    otherRecurringCost={deal2OtherRecurringCost}
+                                    setOtherRecurringCost={
+                                        deal2OtherRecurringCost
+                                    }
+                                    recurringCostGrowthRate={
+                                        deal2RecurringCostGrowthRate
+                                    }
+                                    setRecurringCostGrowthRate={
+                                        setDeal2RecurringCostGrowthRate
+                                    }
+                                    tenantImprovementCost={
+                                        deal2TenantImprovementCost
+                                    }
+                                    setTenantImprovementCost={
+                                        setDeal2TenantImprovementCost
+                                    }
+                                    tenantImprovementAllowance={
+                                        deal2TenantImprovementAllowance
+                                    }
+                                    setTenantImprovementAllowance={
+                                        setDeal2TenantImprovementAllowance
+                                    }
+                                    monthsFreeRent={deal2Monthsfree}
+                                    setMonthsFreeRent={setDeal2MonthsFree}
+                                    otherNonRecurringContribution={
+                                        deal2OtherNonRecurringContribution
+                                    }
+                                    setOtherNonRecurringContribution={
+                                        setDeal2OtherNonRecurringContribution
+                                    }
+                                    otherRecurringContribution={
+                                        deal2OtherRecurringContribution
+                                    }
+                                    setOtherRecurringContribution={
+                                        setDeal2OtherRecurringContribution
+                                    }
+                                    contributionGrowthRate={
+                                        deal2ContributionGrowthRate
+                                    }
+                                    setContributionGrowthRate={
+                                        setDeal2ContributionGrowthRate
+                                    }
+                                    tenantDiscountRate={deal2TenantDiscountRate}
                                     setTenantDiscountRate={
                                         setDeal2TenantDiscountRate
+                                    }
+                                    landlordDiscountRate={
+                                        deal2LandlordDiscountRate
+                                    }
+                                    setLandlordDiscountRate={
+                                        setDeal2LandlordDiscountRate
+                                    }
+                                    commissionPercent1st={
+                                        deal2CommissionPercent1st
+                                    }
+                                    setCommissionPercent1st={
+                                        setDeal2CommissionPercent1st
+                                    }
+                                    commissionPercent2nd={
+                                        deal2CommissionPercent2nd
+                                    }
+                                    setCommissionPercent2nd={
+                                        setDeal2CommissionPercent2nd
+                                    }
+                                    setBeforeTaxOccupancyCostTotal={
+                                        setDeal2BeforeTaxOccupancyCostTotal
+                                    }
+                                    setTenantNetPresentValue={
+                                        setDeal2TenantNetPresentValue
+                                    }
+                                    setOccupancyOpExCommissionsTotal={
+                                        setDeal2OccupancyOpExCommissionsTotal
+                                    }
+                                    setOwnerNetPresentValue={
+                                        setDeal2OwnerNetPresentValue
                                     }
                                 />
                             </TabPanel>
@@ -364,53 +476,109 @@ const DealPage = () => {
                         {currentTabIndex === "3" && (
                             <TabPanel value="3">
                                 <Deal
-                                    tenantDiscountRate={deal3TenantDiscountRate}
                                     dealName={deal3Name}
-                                    dealTerm={deal3Term}
-                                    setDealTerm={setDeal3Term}
-                                    sqftLeased={deal3SqftLeased}
+                                    setDealName={setDeal3Name}
+                                    sqftLeased={deal2SqftLeased}
                                     setSqftLeased={setDeal3SqftLeased}
+                                    dealTerm={deal2Term}
+                                    setDealTerm={setDeal3Term}
+                                    baseRent={deal2BaseRent}
+                                    setBaseRent={setDeal3BaseRent}
+                                    annualEscalations={deal2AnnualEscalations}
+                                    setAnnualEscalations={
+                                        setDeal3AnnualEscalations
+                                    }
+                                    occupancyExpensesPsf={
+                                        deal2OccupancyExpensesPsf
+                                    }
+                                    setOccupancyExpensesPsf={
+                                        setDeal3OccupancyExpensesPsf
+                                    }
+                                    growthRateInOpEx={deal2GrowthRateInOpEx}
+                                    setGrowthRateInOpEx={
+                                        setDeal3GrowthRateInOpEx
+                                    }
+                                    otherNonRecurringCost={
+                                        deal2OtherNonRecurringCost
+                                    }
+                                    setOtherNonRecurringCost={
+                                        setDeal3OtherNonRecurringCost
+                                    }
+                                    otherRecurringCost={deal2OtherRecurringCost}
+                                    setOtherRecurringCost={
+                                        deal2OtherRecurringCost
+                                    }
+                                    recurringCostGrowthRate={
+                                        deal2RecurringCostGrowthRate
+                                    }
+                                    setRecurringCostGrowthRate={
+                                        setDeal3RecurringCostGrowthRate
+                                    }
+                                    tenantImprovementCost={
+                                        deal2TenantImprovementCost
+                                    }
+                                    setTenantImprovementCost={
+                                        setDeal3TenantImprovementCost
+                                    }
+                                    tenantImprovementAllowance={
+                                        deal2TenantImprovementAllowance
+                                    }
+                                    setTenantImprovementAllowance={
+                                        setDeal3TenantImprovementAllowance
+                                    }
+                                    monthsFreeRent={deal2Monthsfree}
+                                    setMonthsFreeRent={setDeal3MonthsFree}
+                                    otherNonRecurringContribution={
+                                        deal2OtherNonRecurringContribution
+                                    }
+                                    setOtherNonRecurringContribution={
+                                        setDeal3OtherNonRecurringContribution
+                                    }
+                                    otherRecurringContribution={
+                                        deal2OtherRecurringContribution
+                                    }
+                                    setOtherRecurringContribution={
+                                        setDeal3OtherRecurringContribution
+                                    }
+                                    contributionGrowthRate={
+                                        deal2ContributionGrowthRate
+                                    }
+                                    setContributionGrowthRate={
+                                        setDeal3ContributionGrowthRate
+                                    }
+                                    tenantDiscountRate={deal2TenantDiscountRate}
+                                    setTenantDiscountRate={
+                                        setDeal3TenantDiscountRate
+                                    }
+                                    landlordDiscountRate={
+                                        deal2LandlordDiscountRate
+                                    }
+                                    setLandlordDiscountRate={
+                                        setDeal3LandlordDiscountRate
+                                    }
+                                    commissionPercent1st={
+                                        deal2CommissionPercent1st
+                                    }
+                                    setCommissionPercent1st={
+                                        setDeal3CommissionPercent1st
+                                    }
+                                    commissionPercent2nd={
+                                        deal2CommissionPercent2nd
+                                    }
+                                    setCommissionPercent2nd={
+                                        setDeal3CommissionPercent2nd
+                                    }
                                     setBeforeTaxOccupancyCostTotal={
                                         setDeal3BeforeTaxOccupancyCostTotal
                                     }
                                     setTenantNetPresentValue={
                                         setDeal3TenantNetPresentValue
                                     }
-                                    setDealName={setDeal3Name}
                                     setOccupancyOpExCommissionsTotal={
                                         setDeal3OccupancyOpExCommissionsTotal
                                     }
                                     setOwnerNetPresentValue={
                                         setDeal3OwnerNetPresentValue
-                                    }
-                                    landlordDiscountRate={
-                                        deal3LandlordDiscountRate
-                                    }
-                                    setLandlordDiscountRate={
-                                        setDeal3LandlordDiscountRate
-                                    }
-                                    monthsFreeRent={deal3Monthsfree}
-                                    setMonthsFreeRent={setDeal3MonthsFree}
-                                    commissionPercent={
-                                        deal3CommissionPercent1st
-                                    }
-                                    setCommissionPercent={
-                                        setDeal3CommissionPercent1st
-                                    }
-                                    baseRent={deal3BaseRent}
-                                    setBaseRent={setDeal3BaseRent}
-                                    annualEscalations={deal3AnnualEscalations}
-                                    setAnnualEscalations={
-                                        setDeal3AnnualEscalations
-                                    }
-                                    occupancyExpensesPsf={
-                                        deal3OccupancyExpensesPsf
-                                    }
-                                    setOccupancyExpensesPsf={
-                                        setDeal3OccupancyExpensesPsf
-                                    }
-                                    setTenantDiscountRate={
-                                        setDeal3TenantDiscountRate
                                     }
                                 />
                             </TabPanel>
