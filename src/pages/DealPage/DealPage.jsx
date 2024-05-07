@@ -14,17 +14,13 @@ const DealPage = () => {
     const [deal2Name, setDeal2Name] = useState("");
     const [deal3Name, setDeal3Name] = useState("");
 
-    const [deal1Term, setDeal1Term] = useState(65); // is this standard
-    const [deal2Term, setDeal2Term] = useState(12); // is this standard
-    const [deal3Term, setDeal3Term] = useState(12); // is this standard,
-
-    const [deal1TenantDiscountRate, setDeal1TenantDiscountRate] = useState(7);
-    const [deal2TenantDiscountRate, setDeal2TenantDiscountRate] = useState(0);
-    const [deal3TenantDiscountRate, setDeal3TenantDiscountRate] = useState(0);
-
     const [deal1SqftLeased, setDeal1SqftLeased] = useState(2794);
     const [deal2SqftLeased, setDeal2SqftLeased] = useState(0);
     const [deal3SqftLeased, setDeal3SqftLeased] = useState(0);
+
+    const [deal1Term, setDeal1Term] = useState(65); // is this standard
+    const [deal2Term, setDeal2Term] = useState(12); // is this standard
+    const [deal3Term, setDeal3Term] = useState(12); // is this standard,
 
     const [deal1BaseRent, setDeal1BaseRent] = useState(3.45);
     const [deal2BaseRent, setDeal2BaseRent] = useState(0);
@@ -40,6 +36,85 @@ const DealPage = () => {
         useState(0);
     const [deal3OccupancyExpensesPsf, setDeal3OccupancyExpensesPsf] =
         useState(0);
+
+    const [deal1GrowthRateInOpEx, setDeal1GrowthRateInOpEx] = useState(0);
+    const [deal2GrowthRateInOpEx, setDeal2GrowthRateInOpEx] = useState(0);
+    const [deal3GrowthRateInOpEx, setDeal3GrowthRateInOpEx] = useState(0);
+
+    const [deal1OtherRecurringCost, deal1SetOtherRecurringCost] = useState(0);
+    const [deal2OtherRecurringCost, deal2SetOtherRecurringCost] = useState(0);
+    const [deal3OtherRecurringCost, deal3SetOtherRecurringCost] = useState(0);
+
+    const [deal1OtherNonRecurringCost, deal1SetOtherNonRecurringCost] =
+        useState(0);
+    const [deal2OtherNonRecurringCost, deal2SetOtherNonRecurringCost] =
+        useState(0);
+    const [deal3OtherNonRecurringCost, deal3SetOtherNonRecurringCost] =
+        useState(0);
+
+    const [deal1RecurringCostGrowthRate, setDeal1RecurringCostGrowthRate] =
+        useState(0);
+    const [deal2RecurringCostGrowthRate, setDeal2RecurringCostGrowthRate] =
+        useState(0);
+    const [deal3RecurringCostGrowthRate, setDeal3RecurringCostGrowthRate] =
+        useState(0);
+
+    const [deal1TenantImprovementCost, setDeal1TenantImprovementCost] =
+        useState(0);
+    const [deal2TenantImprovementCost, setDeal2TenantImprovementCost] =
+        useState(0);
+    const [deal3TenantImprovementCost, setDeal3TenantImprovementCost] =
+        useState(0);
+
+    const [
+        deal1TenantImprovementAllowance,
+        setDeal1TenantImprovementAllowance,
+    ] = useState(0);
+    const [
+        deal2TenantImprovementAllowance,
+        setDeal2TenantImprovementAllowance,
+    ] = useState(0);
+    const [
+        deal3TenantImprovementAllowance,
+        setDeal3TenantImprovementAllowance,
+    ] = useState(0);
+
+    const [
+        deal1OtherNonRecurringContribution,
+        setDeal1OtherNonRecurringContribution,
+    ] = useState(0);
+    const [
+        deal2OtherNonRecurringContribution,
+        setDeal2OtherNonRecurringContribution,
+    ] = useState(0);
+    const [
+        deal3OtherNonRecurringContribution,
+        setDeal3OtherNonRecurringContribution,
+    ] = useState(0);
+
+    const [
+        deal1OtherRecurringContribution,
+        setDeal1OtherRecurringContribution,
+    ] = useState(0);
+    const [
+        deal2OtherRecurringContribution,
+        setDeal2OtherRecurringContribution,
+    ] = useState(0);
+    const [
+        deal3OtherRecurringContribution,
+        setDeal3OtherRecurringContribution,
+    ] = useState(0);
+
+    const [deal1ContributionGrowthRate, setDeal1ContributionGrowthRate] =
+        useState(0);
+    const [deal2ContributionGrowthRate, setDeal2ContributionGrowthRate] =
+        useState(0);
+    const [deal3ContributionGrowthRate, setDeal3ContributionGrowthRate] =
+        useState(0);
+
+    const [deal1TenantDiscountRate, setDeal1TenantDiscountRate] = useState(7);
+    const [deal2TenantDiscountRate, setDeal2TenantDiscountRate] = useState(0);
+    const [deal3TenantDiscountRate, setDeal3TenantDiscountRate] = useState(0);
 
     const [deal1LandlordDiscountRate, setDeal1LandlordDiscountRate] =
         useState(5);
@@ -92,9 +167,19 @@ const DealPage = () => {
     const [deal2Monthsfree, setDeal2MonthsFree] = useState(0);
     const [deal3Monthsfree, setDeal3MonthsFree] = useState(0);
 
-    const [deal1CommissionPercent, setDeal1CommissionPercent] = useState(4);
-    const [deal2CommissionPercent, setDeal2CommissionPercent] = useState(0);
-    const [deal3CommissionPercent, setDeal3CommissionPercent] = useState(0);
+    const [deal1CommissionPercent1st, setDeal1CommissionPercent1st] =
+        useState(4);
+    const [deal2CommissionPercent1st, setDeal2CommissionPercent1st] =
+        useState(0);
+    const [deal3CommissionPercent1st, setDeal3CommissionPercent1st] =
+        useState(0);
+
+    const [deal1CommissionPercent2nd, setDeal1CommissionPercent2nd] =
+        useState(4);
+    const [deal2CommissionPercent2nd, setDeal2CommissionPercent2nd] =
+        useState(0);
+    const [deal3CommissionPercent2nd, setDeal3CommissionPercent2nd] =
+        useState(0);
 
     const [currentTabIndex, setCurrentTabIndex] = React.useState("1");
 
@@ -196,9 +281,11 @@ const DealPage = () => {
                                     }
                                     monthsFreeRent={deal1Monthsfree}
                                     setMonthsFreeRent={setDeal1MonthsFree}
-                                    commissionPercent={deal1CommissionPercent}
+                                    commissionPercent={
+                                        deal1CommissionPercent1st
+                                    }
                                     setCommissionPercent={
-                                        setDeal1CommissionPercent
+                                        setDeal1CommissionPercent1st
                                     }
                                     baseRent={deal1BaseRent}
                                     setBaseRent={setDeal1BaseRent}
@@ -249,9 +336,11 @@ const DealPage = () => {
                                     }
                                     monthsFreeRent={deal2Monthsfree}
                                     setMonthsFreeRent={setDeal2MonthsFree}
-                                    commissionPercent={deal2CommissionPercent}
+                                    commissionPercent={
+                                        deal2CommissionPercent1st
+                                    }
                                     setCommissionPercent={
-                                        setDeal2CommissionPercent
+                                        setDeal2CommissionPercent1st
                                     }
                                     baseRent={deal2BaseRent}
                                     setBaseRent={setDeal2BaseRent}
@@ -302,9 +391,11 @@ const DealPage = () => {
                                     }
                                     monthsFreeRent={deal3Monthsfree}
                                     setMonthsFreeRent={setDeal3MonthsFree}
-                                    commissionPercent={deal3CommissionPercent}
+                                    commissionPercent={
+                                        deal3CommissionPercent1st
+                                    }
                                     setCommissionPercent={
-                                        setDeal3CommissionPercent
+                                        setDeal3CommissionPercent1st
                                     }
                                     baseRent={deal3BaseRent}
                                     setBaseRent={setDeal3BaseRent}
