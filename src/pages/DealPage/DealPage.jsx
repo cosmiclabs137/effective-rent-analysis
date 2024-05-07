@@ -175,7 +175,7 @@ const DealPage = () => {
         useState(0);
 
     const [deal1CommissionPercent2nd, setDeal1CommissionPercent2nd] =
-        useState(4);
+        useState(0);
     const [deal2CommissionPercent2nd, setDeal2CommissionPercent2nd] =
         useState(0);
     const [deal3CommissionPercent2nd, setDeal3CommissionPercent2nd] =
@@ -284,7 +284,7 @@ const DealPage = () => {
                                     }
                                     otherRecurringCost={deal1OtherRecurringCost}
                                     setOtherRecurringCost={
-                                        deal1OtherRecurringCost
+                                        setDeal1OtherRecurringCost
                                     }
                                     recurringCostGrowthRate={
                                         deal1RecurringCostGrowthRate
@@ -395,7 +395,7 @@ const DealPage = () => {
                                     }
                                     otherRecurringCost={deal2OtherRecurringCost}
                                     setOtherRecurringCost={
-                                        deal2OtherRecurringCost
+                                        setDeal2OtherRecurringCost
                                     }
                                     recurringCostGrowthRate={
                                         deal2RecurringCostGrowthRate
@@ -478,92 +478,92 @@ const DealPage = () => {
                                 <Deal
                                     dealName={deal3Name}
                                     setDealName={setDeal3Name}
-                                    sqftLeased={deal2SqftLeased}
+                                    sqftLeased={deal3SqftLeased}
                                     setSqftLeased={setDeal3SqftLeased}
-                                    dealTerm={deal2Term}
+                                    dealTerm={deal3Term}
                                     setDealTerm={setDeal3Term}
-                                    baseRent={deal2BaseRent}
+                                    baseRent={deal3BaseRent}
                                     setBaseRent={setDeal3BaseRent}
-                                    annualEscalations={deal2AnnualEscalations}
+                                    annualEscalations={deal3AnnualEscalations}
                                     setAnnualEscalations={
                                         setDeal3AnnualEscalations
                                     }
                                     occupancyExpensesPsf={
-                                        deal2OccupancyExpensesPsf
+                                        deal3OccupancyExpensesPsf
                                     }
                                     setOccupancyExpensesPsf={
                                         setDeal3OccupancyExpensesPsf
                                     }
-                                    growthRateInOpEx={deal2GrowthRateInOpEx}
+                                    growthRateInOpEx={deal3GrowthRateInOpEx}
                                     setGrowthRateInOpEx={
                                         setDeal3GrowthRateInOpEx
                                     }
                                     otherNonRecurringCost={
-                                        deal2OtherNonRecurringCost
+                                        deal3OtherNonRecurringCost
                                     }
                                     setOtherNonRecurringCost={
                                         setDeal3OtherNonRecurringCost
                                     }
-                                    otherRecurringCost={deal2OtherRecurringCost}
+                                    otherRecurringCost={deal3OtherRecurringCost}
                                     setOtherRecurringCost={
-                                        deal2OtherRecurringCost
+                                        setDeal3OtherRecurringCost
                                     }
                                     recurringCostGrowthRate={
-                                        deal2RecurringCostGrowthRate
+                                        deal3RecurringCostGrowthRate
                                     }
                                     setRecurringCostGrowthRate={
                                         setDeal3RecurringCostGrowthRate
                                     }
                                     tenantImprovementCost={
-                                        deal2TenantImprovementCost
+                                        deal3TenantImprovementCost
                                     }
                                     setTenantImprovementCost={
                                         setDeal3TenantImprovementCost
                                     }
                                     tenantImprovementAllowance={
-                                        deal2TenantImprovementAllowance
+                                        deal3TenantImprovementAllowance
                                     }
                                     setTenantImprovementAllowance={
                                         setDeal3TenantImprovementAllowance
                                     }
-                                    monthsFreeRent={deal2Monthsfree}
+                                    monthsFreeRent={deal3Monthsfree}
                                     setMonthsFreeRent={setDeal3MonthsFree}
                                     otherNonRecurringContribution={
-                                        deal2OtherNonRecurringContribution
+                                        deal3OtherNonRecurringContribution
                                     }
                                     setOtherNonRecurringContribution={
                                         setDeal3OtherNonRecurringContribution
                                     }
                                     otherRecurringContribution={
-                                        deal2OtherRecurringContribution
+                                        deal3OtherRecurringContribution
                                     }
                                     setOtherRecurringContribution={
                                         setDeal3OtherRecurringContribution
                                     }
                                     contributionGrowthRate={
-                                        deal2ContributionGrowthRate
+                                        deal3ContributionGrowthRate
                                     }
                                     setContributionGrowthRate={
                                         setDeal3ContributionGrowthRate
                                     }
-                                    tenantDiscountRate={deal2TenantDiscountRate}
+                                    tenantDiscountRate={deal3TenantDiscountRate}
                                     setTenantDiscountRate={
                                         setDeal3TenantDiscountRate
                                     }
                                     landlordDiscountRate={
-                                        deal2LandlordDiscountRate
+                                        deal3LandlordDiscountRate
                                     }
                                     setLandlordDiscountRate={
                                         setDeal3LandlordDiscountRate
                                     }
                                     commissionPercent1st={
-                                        deal2CommissionPercent1st
+                                        deal3CommissionPercent1st
                                     }
                                     setCommissionPercent1st={
                                         setDeal3CommissionPercent1st
                                     }
                                     commissionPercent2nd={
-                                        deal2CommissionPercent2nd
+                                        deal3CommissionPercent2nd
                                     }
                                     setCommissionPercent2nd={
                                         setDeal3CommissionPercent2nd
