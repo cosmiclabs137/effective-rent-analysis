@@ -13,7 +13,7 @@ const IndexPage = () => {
         data: ["Deal 1", "Deal 2", "Deal 3"],
         scaleType: "band",
     };
-    const sizingProps = { width: 600, height: 500 };
+    // const sizingProps = { width: 600, height: 500 };
 
     return (
         <React.Fragment>
