@@ -1,6 +1,6 @@
 {
     "name": "effective-rent-analysis",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "private": true,
     "homepage": "https://cosmiclabs137.github.io/era",
     "dependencies": {
