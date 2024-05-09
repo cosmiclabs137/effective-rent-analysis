@@ -121,10 +121,10 @@ const Deal = ({
                 ? -sqftLeased * tenantImprovementAllowance
                 : 0;
 
-        const nonRecurringCosts = Array.from(
+        const otherNonRecurringCosts = Array.from(
             new Float32Array(rates.length).fill(0.0)
         );
-        nonRecurringCosts[0] = Number(otherNonRecurringCost);
+        otherNonRecurringCosts[0] = -Number(otherNonRecurringCost);
 
         const otherRecurringCosts = Array.from(
             new Float32Array(rates.length).fill(otherRecurringCost)
@@ -190,7 +190,7 @@ const Deal = ({
                     baseRent +
                     operatingExpenses[period] +
                     tenantImprovementCosts[period] +
-                    nonRecurringCosts[period] +
+                    otherNonRecurringCosts[period] +
                     otherRecurringCosts[period] +
                     rentAbatements[period] +
                     tenantImprovementAllowances[period]
@@ -224,6 +224,7 @@ const Deal = ({
                     otherRecurringCosts[period] +
                     rentAbatements[period] +
                     tenantImprovementAllowances[period] +
+                    otherNonRecurringCosts[period] +
                     otherRecurringContributions[period] +
                     (period === 0 ? totalCommission : 0)
                 );
@@ -252,7 +253,7 @@ const Deal = ({
                 toCurrency(monthlyPayments[period]),
                 toCurrency(operatingExpenses[period]),
                 toCurrency(tenantImprovementCosts[period]),
-                toCurrency(nonRecurringCosts[period]),
+                toCurrency(otherNonRecurringCosts[period]),
                 toCurrency(otherRecurringCosts[period]),
                 toCurrency(rentAbatements[period]),
                 toCurrency(tenantImprovementAllowances[period]),
