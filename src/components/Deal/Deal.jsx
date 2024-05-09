@@ -24,8 +24,6 @@ const Deal = ({
     setLandlordDiscountRate,
     monthsFreeRent,
     setMonthsFreeRent,
-    commissionPercent,
-    setCommissionPercent,
     baseRent,
     setBaseRent,
     annualEscalations,
@@ -70,7 +68,11 @@ const Deal = ({
             // "Rate",
             "Base Rent ($)",
             "Operating Expenses ($)",
+            "Tenant Improvements Cost ($)",
+            "Non-Recurring Cost ($)",
+            "Other Recurring Cost ($)",
             "Rent Abatement ($)",
+            "Tenant Improvements Allowance ($)",
             "Commission ($)",
             "Before Tax Occupancy Expenses ($)",
             "Tenant Net Present Value ($)",
@@ -106,11 +108,65 @@ const Deal = ({
             rates.push(currentRate);
         }
 
-        const operatingExpenses = Array.from(
-            new Float32Array(rates.length).fill(
-                occupancyExpensesPsf * sqftLeased
-            )
+        const tenantImprovementCosts = Array.from(
+            new Float32Array(rates.length).fill(0.0)
         );
+        tenantImprovementCosts[0] = sqftLeased * tenantImprovementCost;
+
+        const tenantImprovementAllowances = Array.from(
+            new Float32Array(rates.length).fill(0.0)
+        );
+        tenantImprovementAllowances[0] =
+            tenantImprovementAllowance > 0
+                ? -sqftLeased * tenantImprovementAllowance
+                : 0;
+
+        const nonRecurringCosts = Array.from(
+            new Float32Array(rates.length).fill(0.0)
+        );
+        nonRecurringCosts[0] = Number(otherNonRecurringCost);
+
+        const otherRecurringCosts = Array.from(
+            new Float32Array(rates.length).fill(otherRecurringCost)
+        );
+        let currentRecurringCostGrowthRate = 1;
+        for (let period = 0; period < dealTerm; period++) {
+            if (period > 11 && period % 12 === 0) {
+                currentRecurringCostGrowthRate =
+                    currentRecurringCostGrowthRate *
+                    (1 + recurringCostGrowthRate / 100);
+            }
+            otherRecurringCosts[period] =
+                otherRecurringCost * currentRecurringCostGrowthRate;
+        }
+
+        const operatingExpenses = Array.from(
+            new Float32Array(rates.length).fill(0)
+        );
+
+        let currentGrowthRate = 1;
+        const opExConstant = occupancyExpensesPsf * sqftLeased;
+        for (let period = 0; period < dealTerm; period++) {
+            if (period > 11 && period % 12 === 0) {
+                currentGrowthRate =
+                    currentGrowthRate * (1 + growthRateInOpEx / 100);
+            }
+            operatingExpenses[period] = opExConstant * currentGrowthRate;
+        }
+
+        let currentContribGrowthRate = 1;
+        const otherRecurringContributions = Array.from(
+            new Float32Array(rates.length).fill(0)
+        );
+        for (let period = 0; period < dealTerm; period++) {
+            if (period > 11 && period % 12 === 0) {
+                currentContribGrowthRate =
+                    currentContribGrowthRate *
+                    (1 + contributionGrowthRate / 100);
+            }
+            otherRecurringContributions[period] =
+                otherRecurringContribution * currentContribGrowthRate;
+        }
 
         const monthlyPayments = rates.map(
             (rate) => rate * baseRent * sqftLeased
@@ -123,7 +179,7 @@ const Deal = ({
         rentAbatements.forEach((abatement, period) => {
             if (abatement >= 0) {
                 const commission =
-                    (commissionPercent / 100) * monthlyPayments[period];
+                    (commissionPercent1st / 100) * monthlyPayments[period];
                 commissions[period] = -commission;
             }
         });
@@ -133,7 +189,11 @@ const Deal = ({
                 return (
                     baseRent +
                     operatingExpenses[period] +
-                    rentAbatements[period]
+                    tenantImprovementCosts[period] +
+                    nonRecurringCosts[period] +
+                    otherRecurringCosts[period] +
+                    rentAbatements[period] +
+                    tenantImprovementAllowances[period]
                 );
             }
         );
@@ -152,11 +212,19 @@ const Deal = ({
             (acc, commission) => acc + commission
         );
 
+        const firstCommissions = Array.from(
+            new Float32Array(rates.length).fill(0)
+        );
+        firstCommissions[0] = totalCommission;
+
         const occupancyOpExCommissions = monthlyPayments.map(
             (payment, period) => {
                 return (
                     payment +
+                    otherRecurringCosts[period] +
                     rentAbatements[period] +
+                    tenantImprovementAllowances[period] +
+                    otherRecurringContributions[period] +
                     (period === 0 ? totalCommission : 0)
                 );
             }
@@ -183,7 +251,11 @@ const Deal = ({
                 // Number(rate).toFixed(3),
                 toCurrency(monthlyPayments[period]),
                 toCurrency(operatingExpenses[period]),
+                toCurrency(tenantImprovementCosts[period]),
+                toCurrency(nonRecurringCosts[period]),
+                toCurrency(otherRecurringCosts[period]),
                 toCurrency(rentAbatements[period]),
+                toCurrency(tenantImprovementAllowances[period]),
                 toCurrency(commissions[period]),
                 toCurrency(beforeTaxOccupancyCost[period]),
                 toCurrency(tenantNetPV[period]),
@@ -233,8 +305,48 @@ const Deal = ({
         setLandlordDiscountRate(e.target.value);
     };
 
-    const handleCommissionPercent = (e) => {
-        setCommissionPercent(e.target.value);
+    const handleCommissionPercent1st = (e) => {
+        setCommissionPercent1st(e.target.value);
+    };
+
+    const handleCommissionPercent2nd = (e) => {
+        setCommissionPercent2nd(e.target.value);
+    };
+
+    const handleGrowthRateInOpEx = (e) => {
+        setGrowthRateInOpEx(e.target.value);
+    };
+
+    const handleOtherNonRecurringCost = (e) => {
+        setOtherNonRecurringCost(e.target.value);
+    };
+
+    const handleOtherRecurringCost = (e) => {
+        setOtherRecurringCost(e.target.value);
+    };
+
+    const handleRecurringCostGrowthRate = (e) => {
+        setRecurringCostGrowthRate(e.target.value);
+    };
+
+    const handleTenantImprovementCost = (e) => {
+        setTenantImprovementCost(e.target.value);
+    };
+
+    const handleTenantImprovementAllowance = (e) => {
+        setTenantImprovementAllowance(e.target.value);
+    };
+
+    const handleOtherNonRecurringContribution = (e) => {
+        setOtherNonRecurringContribution(e.target.value);
+    };
+
+    const handleOtherRecurringContribution = (e) => {
+        setOtherRecurringContribution(e.target.value);
+    };
+
+    const handleContributionGrowthRate = (e) => {
+        setContributionGrowthRate(e.target.value);
     };
 
     const handleSubmit = (e) => {
@@ -262,8 +374,34 @@ const Deal = ({
                 handleTenantDiscountRate={handleTenantDiscountRate}
                 landlordDiscountRate={landlordDiscountRate}
                 handleLandlordDiscountRate={handleLandlordDiscountRate}
-                commissionPercent={commissionPercent}
-                handleCommissionPercent={handleCommissionPercent}
+                commissionPercent1st={commissionPercent1st}
+                handleCommissionPercent1st={handleCommissionPercent1st}
+                commissionPercent2nd={commissionPercent2nd}
+                handleCommissionPercent2nd={handleCommissionPercent2nd}
+                growthRateInOpEx={growthRateInOpEx}
+                handleGrowthRateInOpEx={handleGrowthRateInOpEx}
+                handleOtherNonRecurringCost={handleOtherNonRecurringCost}
+                otherNonRecurringCost={otherNonRecurringCost}
+                otherRecurringCost={otherRecurringCost}
+                handleOtherRecurringCost={handleOtherRecurringCost}
+                recurringCostGrowthRate={recurringCostGrowthRate}
+                handleRecurringCostGrowthRate={handleRecurringCostGrowthRate}
+                tenantImprovementCost={tenantImprovementCost}
+                handleTenantImprovementCost={handleTenantImprovementCost}
+                tenantImprovementAllowance={tenantImprovementAllowance}
+                handleTenantImprovementAllowance={
+                    handleTenantImprovementAllowance
+                }
+                otherNonRecurringContribution={otherNonRecurringContribution}
+                handleOtherNonRecurringContribution={
+                    handleOtherNonRecurringContribution
+                }
+                otherRecurringContribution={otherRecurringContribution}
+                handleOtherRecurringContribution={
+                    handleOtherRecurringContribution
+                }
+                contributionGrowthRate={contributionGrowthRate}
+                handleContributionGrowthRate={handleContributionGrowthRate}
                 handleSubmit={handleSubmit}
                 xs={xs}
             />
