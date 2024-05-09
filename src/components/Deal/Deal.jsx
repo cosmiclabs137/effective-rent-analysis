@@ -178,8 +178,10 @@ const Deal = ({
         let commissions = Array.from(new Float64Array(rates.length).fill(0.0));
         rentAbatements.forEach((abatement, period) => {
             if (abatement >= 0) {
+                let commissionPercentIncrease =
+                    period < 60 ? commissionPercent1st : commissionPercent2nd;
                 const commission =
-                    (commissionPercent1st / 100) * monthlyPayments[period];
+                    (commissionPercentIncrease / 100) * monthlyPayments[period];
                 commissions[period] = -commission;
             }
         });
