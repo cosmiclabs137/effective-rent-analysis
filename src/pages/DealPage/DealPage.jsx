@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Box, Grid, Tab } from "@mui/material";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -146,7 +146,7 @@ const DealPage = () => {
     const [
         deal1BeforeTaxOccupancyCostTotal,
         setDeal1BeforeTaxOccupancyCostTotal,
-    ] = useState(0);
+    ] = React.useState(0);
     const [
         deal2BeforeTaxOccupancyCostTotal,
         setDeal2BeforeTaxOccupancyCostTotal,
