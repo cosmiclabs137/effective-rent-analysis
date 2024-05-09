@@ -165,7 +165,7 @@ const Deal = ({
                     (1 + contributionGrowthRate / 100);
             }
             otherRecurringContributions[period] =
-                otherRecurringContribution * currentContribGrowthRate;
+                -otherRecurringContribution * currentContribGrowthRate;
         }
 
         const monthlyPayments = rates.map(
@@ -183,7 +183,7 @@ const Deal = ({
                 commissions[period] = -commission;
             }
         });
-
+        console.log(otherRecurringContributions);
         const beforeTaxOccupancyCost = monthlyPayments.map(
             (baseRent, period) => {
                 return (
@@ -192,6 +192,7 @@ const Deal = ({
                     tenantImprovementCosts[period] +
                     otherNonRecurringCosts[period] +
                     otherRecurringCosts[period] +
+                    otherRecurringContributions[period] +
                     rentAbatements[period] +
                     tenantImprovementAllowances[period]
                 );
