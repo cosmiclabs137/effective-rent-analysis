@@ -183,7 +183,6 @@ const Deal = ({
                 commissions[period] = -commission;
             }
         });
-        console.log(otherRecurringContributions);
         const beforeTaxOccupancyCost = monthlyPayments.map(
             (baseRent, period) => {
                 return (
