@@ -1,5 +1,5 @@
 {
-    "name": "effective-rent-analysis",
+    "name": "era",
     "version": "0.0.1",
     "private": true,
     "homepage": "https://cosmiclabs137.github.io/era",
@@ -20,7 +20,7 @@
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.51.3",
         "react-router-dom": "^6.22.3",
-        "react-scripts": "5.0.1",
+        "react-scripts": "^5.0.1",
         "web-vitals": "^2.1.4",
         "yup": "^1.4.0"
     },
