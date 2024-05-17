@@ -13,9 +13,9 @@ import {
 const genTableHead = (columnNames) => {
     return (
         <TableHead>
-            <TableRow key="table-key">
-                {columnNames.map((columnName, index) => (
-                    <TableCell sx={{ fontWeight: "bold" }} key={index}>
+            <TableRow key="table-head">
+                {columnNames.map((columnName) => (
+                    <TableCell sx={{ fontWeight: "bold" }} key={columnName}>
                         {columnName}
                     </TableCell>
                 ))}
@@ -26,7 +26,7 @@ const genTableHead = (columnNames) => {
 
 const genTableBody = (data) => {
     return (
-        <TableBody>
+        <TableBody key="table-body">
             {data.map((row, index) => (
                 <TableRow hover key={index}>
                     {row.map((datum) => (

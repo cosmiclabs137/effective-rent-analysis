@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { Box, Grid, Typography } from "@mui/material";
 
@@ -352,9 +352,9 @@ const Deal = ({
         setContributionGrowthRate(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback(() => {
         setDealTable(generateTable());
-    };
+    }, [generateTable]);
 
     return (
         <GridWrapper>
