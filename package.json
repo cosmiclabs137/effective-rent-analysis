@@ -2,7 +2,7 @@
     "name": "era",
     "version": "0.0.1",
     "private": true,
-    "homepage": "https://cosmiclabs137.github.io/era",
+    "homepage": "https://cosmiclabs137.github.io/effective-rent-analysis",
     "dependencies": {
         "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.5",
