@@ -11,14 +11,16 @@ import IndexPage from "./pages/IndexPage/IndexPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <HashRouter>
-        <Routes>
-            <Route path="/" element={<App />}>
-                <Route path="/" element={<DealPage />} />
-                <Route path="test" element={<IndexPage />} />
-            </Route>
-        </Routes>
-    </HashRouter>
+    <React.StrictMode>
+        <HashRouter>
+            <Routes>
+                <Route path="/" element={<App />}>
+                    <Route path="/" element={<DealPage />} />
+                    <Route path="test" element={<IndexPage />} />
+                </Route>
+            </Routes>
+        </HashRouter>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
