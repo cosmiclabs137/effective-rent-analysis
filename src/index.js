@@ -8,6 +8,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import DealPage from "./pages/DealPage/DealPage";
 import IndexPage from "./pages/IndexPage/IndexPage";
+import TestPage from "./pages/TestPage/TestPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,6 +18,7 @@ root.render(
                 <Route path="/" element={<App />}>
                     <Route path="/" element={<DealPage />} />
                     <Route path="test" element={<IndexPage />} />
+                    <Route path="pg" element={<TestPage />} />
                 </Route>
             </Routes>
         </HashRouter>
