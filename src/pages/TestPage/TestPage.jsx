@@ -27,50 +27,50 @@ const FORM_FIELDS = new Set([
 const DealsContext = React.createContext(null);
 const DealsDispatchContext = React.createContext(null);
 
-const DealContainer = () => {
-    const dealsReducer = (deals, action) => {
-        switch (action.type) {
-            case "created": {
-                const id = deals.length;
-                const newDeal = {
-                    id: id,
-                    name: `Deal ${id + 1}`,
-                    sqtf: 0,
-                    term: 12,
-                    baseRent: 0,
-                    annualEscalations: 0,
-                    opExPerMonth: 0,
-                    opExGrowthRate: 0,
-                    otherNonRecurringCost: 0,
-                    otherNonRecurringCostTotal: 0,
-                    otherRecurringCost: 0,
-                    otherRecurringCostTotal: 0,
-                    contributionGrowthRate: 0,
-                    monthsFreeRent: 0,
-                    commissionFirst: 0,
-                    commissionSecond: 0,
-                    tenantDiscountRate: 0,
-                    tenantImprovementCost: 0,
-                    tenantImprovementAllowance: 0,
-                    landlordDiscountRate: 0,
-                };
-                console.log(newDeal);
-                return [...deals, newDeal];
-            }
-            case "deleted": {
-                return deals.filter((deal) => deal.id !== action.id);
-            }
-            case "updated": {
-                return deals.map((deal) =>
-                    deal.id === action.deal.id ? action.deal : deal
-                );
-            }
-            default: {
-                throw Error("Unknown action: " + action.type);
-            }
+const dealsReducer = (deals, action) => {
+    switch (action.type) {
+        case "created": {
+            const id = deals.length;
+            const newDeal = {
+                id: id,
+                name: `Deal ${id + 1}`,
+                sqtf: 0,
+                term: 12,
+                baseRent: 0,
+                annualEscalations: 0,
+                opExPerMonth: 0,
+                opExGrowthRate: 0,
+                otherNonRecurringCost: 0,
+                otherNonRecurringCostTotal: 0,
+                otherRecurringCost: 0,
+                otherRecurringCostTotal: 0,
+                contributionGrowthRate: 0,
+                monthsFreeRent: 0,
+                commissionFirst: 0,
+                commissionSecond: 0,
+                tenantDiscountRate: 0,
+                tenantImprovementCost: 0,
+                tenantImprovementAllowance: 0,
+                landlordDiscountRate: 0,
+            };
+            console.log(newDeal);
+            return [...deals, newDeal];
         }
-    };
+        case "deleted": {
+            return deals.filter((deal) => deal.id !== action.id);
+        }
+        case "updated": {
+            return deals.map((deal) =>
+                deal.id === action.deal.id ? action.deal : deal
+            );
+        }
+        default: {
+            throw Error("Unknown action: " + action.type);
+        }
+    }
+};
 
+const DealContainer = () => {
     const [deals, dispatch] = React.useReducer(dealsReducer, []);
 
     const handleAddDeal = () => {
