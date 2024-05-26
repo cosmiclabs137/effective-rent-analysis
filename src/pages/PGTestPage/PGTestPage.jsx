@@ -153,352 +153,305 @@ const DealForm = ({ dealId }) => {
                 {deal?.name.length > 0 ? deal?.name : "New Deal"}
             </Typography>
             <form>
-                <Accordion defaultExpanded>
-                    <AccordionSummary
-                        id="basic-input-panel-content"
-                        aria-label="basic-input-panel-content"
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        Basic Inputs
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Deal name"
-                                type="text"
-                                value={deal.name}
-                                variant="standard"
-                                onChange={(e) => handleChange(e, "name")}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Sqft leased"
-                                type="number"
-                                value={deal.sqft}
-                                variant="standard"
-                                onChange={(e) => handleChange(e, "sqft")}
-                                inputProps={{ min: 0 }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Term (in months)"
-                                type="number"
-                                value={deal.term}
-                                variant="standard"
-                                onChange={(e) => handleChange(e, "term")}
-                                inputProps={{ min: 0 }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Base rent"
-                                type="number"
-                                variant="standard"
-                                value={deal.baseRent}
-                                onChange={(e) => handleChange(e, "baseRent")}
-                                inputProps={{ min: 0, step: 0.01 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Annual escalations"
-                                type="number"
-                                variant="standard"
-                                value={deal.annualEscalations}
-                                onChange={(e) =>
-                                    handleChange(e, "annualEscalations")
-                                }
-                                inputProps={{ min: 0 }}
-                                InputProps={{ endAdornment: percentAdornment }}
-                            />
-                        </FormControl>
+                <Collapsible
+                    defaultExpanded={true}
+                    id="basic-input-panel-content"
+                    summary="Basic Inputs"
+                >
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Deal name"
+                            type="text"
+                            value={deal.name}
+                            variant="standard"
+                            onChange={(e) => handleChange(e, "name")}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Sqft leased"
+                            type="number"
+                            value={deal.sqft}
+                            variant="standard"
+                            onChange={(e) => handleChange(e, "sqft")}
+                            inputProps={{ min: 0 }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Term (in months)"
+                            type="number"
+                            value={deal.term}
+                            variant="standard"
+                            onChange={(e) => handleChange(e, "term")}
+                            inputProps={{ min: 0 }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Base rent"
+                            type="number"
+                            variant="standard"
+                            value={deal.baseRent}
+                            onChange={(e) => handleChange(e, "baseRent")}
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Annual escalations"
+                            type="number"
+                            variant="standard"
+                            value={deal.annualEscalations}
+                            onChange={(e) =>
+                                handleChange(e, "annualEscalations")
+                            }
+                            inputProps={{ min: 0 }}
+                            InputProps={{ endAdornment: percentAdornment }}
+                        />
+                    </FormControl>
 
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Months free rent"
-                                type="number"
-                                value={deal.monthsFreeRent}
-                                variant="standard"
-                                onChange={(e) =>
-                                    handleChange(e, "monthsFreeRent")
-                                }
-                                inputProps={{ min: 0 }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Months free rent"
+                            type="number"
+                            value={deal.monthsFreeRent}
+                            variant="standard"
+                            onChange={(e) => handleChange(e, "monthsFreeRent")}
+                            inputProps={{ min: 0 }}
+                        />
+                    </FormControl>
+                </Collapsible>
 
-                <Accordion>
-                    <AccordionSummary
-                        id="occupancy-expenses-panel-content"
-                        aria-label="occupancy-expenses-panel-content"
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        Occupancy Expenses
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Occupancy expenses (psf/mo)"
-                                type="number"
-                                variant="standard"
-                                value={deal.opExPerMonth}
-                                onChange={(e) =>
-                                    handleChange(e, "opExPerMonth")
-                                }
-                                inputProps={{ min: 0 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Occupancy expenses growth rate (%)"
-                                type="number"
-                                variant="standard"
-                                value={deal.opExGrowthRate}
-                                onChange={(e) =>
-                                    handleChange(e, "opExGrowthRate")
-                                }
-                                inputProps={{ min: 0 }}
-                                InputProps={{ endAdornment: percentAdornment }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
+                <Collapsible
+                    id="occupancy-expenses-panel-content"
+                    summary="Occupancy Expenses"
+                >
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Occupancy expenses (psf/mo)"
+                            type="number"
+                            variant="standard"
+                            value={deal.opExPerMonth}
+                            onChange={(e) => handleChange(e, "opExPerMonth")}
+                            inputProps={{ min: 0 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Occupancy expenses growth rate (%)"
+                            type="number"
+                            variant="standard"
+                            value={deal.opExGrowthRate}
+                            onChange={(e) => handleChange(e, "opExGrowthRate")}
+                            inputProps={{ min: 0 }}
+                            InputProps={{ endAdornment: percentAdornment }}
+                        />
+                    </FormControl>
+                </Collapsible>
 
-                <Accordion>
-                    <AccordionSummary
-                        id="other-costs-panel-content"
-                        aria-label="other-costs-panel-content"
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        Other Costs
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Other non-recurring cost"
-                                type="number"
-                                variant="standard"
-                                value={deal.otherNonRecurringCost}
-                                onChange={(e) =>
-                                    handleChange(e, "otherNonRecurringCost")
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
+                <Collapsible
+                    id="other-costs-panel-content"
+                    summary="Other Costs"
+                >
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Other non-recurring cost"
+                            type="number"
+                            variant="standard"
+                            value={deal.otherNonRecurringCost}
+                            onChange={(e) =>
+                                handleChange(e, "otherNonRecurringCost")
+                            }
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Other non-recurring cost (total)"
+                            type="number"
+                            variant="standard"
+                            value={deal.otherNonRecurringCostTotal}
+                            onChange={(e) =>
+                                handleChange(e, "otherNonRecurringCostTotal")
+                            }
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Other recurring cost"
+                            type="number"
+                            variant="standard"
+                            value={deal.otherRecurringCost}
+                            onChange={(e) =>
+                                handleChange(e, "otherRecurringCost")
+                            }
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Other recurring cost (total)"
+                            type="number"
+                            variant="standard"
+                            value={deal.otherRecurringCostTotal}
+                            onChange={(e) =>
+                                handleChange(e, "otherRecurringCostTotal")
+                            }
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                </Collapsible>
 
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Other non-recurring cost (total)"
-                                type="number"
-                                variant="standard"
-                                value={deal.otherNonRecurringCostTotal}
-                                onChange={(e) =>
-                                    handleChange(
-                                        e,
-                                        "otherNonRecurringCostTotal"
-                                    )
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Other recurring cost"
-                                type="number"
-                                variant="standard"
-                                value={deal.otherRecurringCost}
-                                onChange={(e) =>
-                                    handleChange(e, "otherRecurringCost")
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Other recurring cost (total)"
-                                type="number"
-                                variant="standard"
-                                value={deal.otherRecurringCostTotal}
-                                onChange={(e) =>
-                                    handleChange(e, "otherRecurringCostTotal")
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
+                <Collapsible
+                    id="tenant-improvement-panel-content"
+                    summary="Tenant Improvements"
+                >
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Tenant improvement cost"
+                            type="number"
+                            variant="standard"
+                            value={deal.tenantImprovementCost}
+                            onChange={(e) =>
+                                handleChange(e, "tenantImprovementCost")
+                            }
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Tenant improvement allowance"
+                            type="number"
+                            variant="standard"
+                            value={deal.tenantImprovementAllowance}
+                            onChange={(e) =>
+                                handleChange(e, "tenantImprovementAllowance")
+                            }
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                </Collapsible>
 
-                <Accordion>
-                    <AccordionSummary
-                        id="tenant-improvement-panel-content"
-                        aria-label="tenant-improvement-panel-content"
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        Tenant Improvements
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Tenant improvement cost"
-                                type="number"
-                                variant="standard"
-                                value={deal.tenantImprovementCost}
-                                onChange={(e) =>
-                                    handleChange(e, "tenantImprovementCost")
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Tenant improvement allowance"
-                                type="number"
-                                variant="standard"
-                                value={deal.tenantImprovementAllowance}
-                                onChange={(e) =>
-                                    handleChange(
-                                        e,
-                                        "tenantImprovementAllowance"
-                                    )
-                                }
-                                inputProps={{ min: 0, step: 0.01 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
+                <Collapsible
+                    id="tenant-improvement-panel-content"
+                    summary="Discount Rates"
+                >
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Tenant discount rate"
+                            type="number"
+                            variant="standard"
+                            value={deal.tenantDiscountRate}
+                            onChange={(e) =>
+                                handleChange(e, "tenantDiscountRate")
+                            }
+                            inputProps={{ min: 0, step: 0.1 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Lanlord discount rate"
+                            type="number"
+                            variant="standard"
+                            value={deal.landlordDiscountRate}
+                            onChange={(e) =>
+                                handleChange(e, "landlordDiscountRate")
+                            }
+                            inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                </Collapsible>
 
-                <Accordion>
-                    <AccordionSummary
-                        id="tenant-improvement-panel-content"
-                        aria-label="tenant-improvement-panel-content"
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        Discount Rates
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Tenant discount rate"
-                                type="number"
-                                variant="standard"
-                                value={deal.tenantDiscountRate}
-                                onChange={(e) =>
-                                    handleChange(e, "tenantDiscountRate")
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Lanlord discount rate"
-                                type="number"
-                                variant="standard"
-                                value={deal.landlordDiscountRate}
-                                onChange={(e) =>
-                                    handleChange(e, "landlordDiscountRate")
-                                }
-                                inputProps={{ min: 0, step: 0.01 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
+                <Collapsible
+                    id="other-contribution-panel-content"
+                    summary="Other Contributions"
+                >
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Other non-recurring contribution (Total)"
+                            type="number"
+                            variant="standard"
+                            value={deal.otherNonRecurringContribution}
+                            onChange={(e) =>
+                                handleChange(e, "otherNonRecurringContribution")
+                            }
+                            inputProps={{ min: 0, step: 0.1 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Other recurring contribution (Total)"
+                            type="number"
+                            variant="standard"
+                            value={deal.otherRecurringContribution}
+                            onChange={(e) =>
+                                handleChange(e, "tenantImprovementAllowance")
+                            }
+                            inputProps={{ min: 0, step: 0.1 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                    </FormControl>
+                </Collapsible>
 
-                <Accordion>
-                    <AccordionSummary
-                        id="other-contribution-panel-content"
-                        aria-label="other-contribution-panel-content"
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        Other Contributions
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Other non-recurring contribution (Total)"
-                                type="number"
-                                variant="standard"
-                                value={deal.otherNonRecurringContribution}
-                                onChange={(e) =>
-                                    handleChange(
-                                        e,
-                                        "otherNonRecurringContribution"
-                                    )
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Other recurring contribution (Total)"
-                                type="number"
-                                variant="standard"
-                                value={deal.otherRecurringContribution}
-                                onChange={(e) =>
-                                    handleChange(
-                                        e,
-                                        "tenantImprovementAllowance"
-                                    )
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
-
-                <Accordion>
-                    <AccordionSummary
-                        id="commissions-panel-content"
-                        aria-label="commissions-panel-content"
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        Comissions
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Commission pct (yrs 1 to 5)"
-                                type="number"
-                                variant="standard"
-                                value={deal.commissionFirst}
-                                onChange={(e) =>
-                                    handleChange(e, "commissionFirst")
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ endAdornment: percentAdornment }}
-                            />
-                        </FormControl>
-                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                            <TextField
-                                label="Commission pct (yrs 6 to 10)"
-                                type="number"
-                                variant="standard"
-                                value={deal.commissionSecond}
-                                onChange={(e) =>
-                                    handleChange(e, "commissionSecond")
-                                }
-                                inputProps={{ min: 0, step: 0.1 }}
-                                InputProps={{ endAdornment: percentAdornment }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
+                <Collapsible
+                    id="commissions-panel-content"
+                    summary="Commissions"
+                >
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Commission pct (yrs 1 to 5)"
+                            type="number"
+                            variant="standard"
+                            value={deal.commissionFirst}
+                            onChange={(e) => handleChange(e, "commissionFirst")}
+                            inputProps={{ min: 0, step: 0.1 }}
+                            InputProps={{ endAdornment: percentAdornment }}
+                        />
+                    </FormControl>
+                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                        <TextField
+                            label="Commission pct (yrs 6 to 10)"
+                            type="number"
+                            variant="standard"
+                            value={deal.commissionSecond}
+                            onChange={(e) =>
+                                handleChange(e, "commissionSecond")
+                            }
+                            inputProps={{ min: 0, step: 0.1 }}
+                            InputProps={{ endAdornment: percentAdornment }}
+                        />
+                    </FormControl>
+                </Collapsible>
             </form>
         </React.Fragment>
+    );
+};
+
+const Collapsible = ({ id, summary, children, defaultExpanded = false }) => {
+    return (
+        <Accordion defaultExpanded={defaultExpanded}>
+            <AccordionSummary
+                id={id}
+                aria-label={id}
+                expandIcon={<ExpandMoreIcon />}
+            >
+                {summary}
+            </AccordionSummary>
+            <AccordionDetails>{children}</AccordionDetails>
+        </Accordion>
     );
 };
 
