@@ -24,9 +24,6 @@ const FORM_FIELDS = new Set([
     "landlordDiscountRate",
 ]);
 
-const DealsContext = React.createContext(null);
-const DealsDispatchContext = React.createContext(null);
-
 const dealsReducer = (deals, action) => {
     switch (action.type) {
         case "created": {
@@ -69,6 +66,9 @@ const dealsReducer = (deals, action) => {
         }
     }
 };
+
+const DealsContext = React.createContext(null);
+const DealsDispatchContext = React.createContext(null);
 
 const DealContainer = () => {
     const [deals, dispatch] = React.useReducer(dealsReducer, []);
