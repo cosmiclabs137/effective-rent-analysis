@@ -212,7 +212,7 @@ const DealForm = ({ dealId }) => {
                                     handleChange(e, "annualEscalations")
                                 }
                                 inputProps={{ min: 0 }}
-                                InputProps={{ startAdornment: dollarAdornment }}
+                                InputProps={{ endAdornment: percentAdornment }}
                             />
                         </FormControl>
 
@@ -380,6 +380,44 @@ const DealForm = ({ dealId }) => {
 
                 <Accordion>
                     <AccordionSummary
+                        id="tenant-improvement-panel-content"
+                        aria-label="tenant-improvement-panel-content"
+                        expandIcon={<ExpandMoreIcon />}
+                    >
+                        Discount Rates
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                            <TextField
+                                label="Tenant discount rate"
+                                type="number"
+                                variant="standard"
+                                value={deal.tenantDiscountRate}
+                                onChange={(e) =>
+                                    handleChange(e, "tenantDiscountRate")
+                                }
+                                inputProps={{ min: 0, step: 0.1 }}
+                                InputProps={{ startAdornment: dollarAdornment }}
+                            />
+                        </FormControl>
+                        <FormControl sx={{ paddingTop: 2 }} fullWidth>
+                            <TextField
+                                label="Lanlord discount rate"
+                                type="number"
+                                variant="standard"
+                                value={deal.landlordDiscountRate}
+                                onChange={(e) =>
+                                    handleChange(e, "landlordDiscountRate")
+                                }
+                                inputProps={{ min: 0, step: 0.01 }}
+                                InputProps={{ startAdornment: dollarAdornment }}
+                            />
+                        </FormControl>
+                    </AccordionDetails>
+                </Accordion>
+
+                <Accordion>
+                    <AccordionSummary
                         id="other-contribution-panel-content"
                         aria-label="other-contribution-panel-content"
                         expandIcon={<ExpandMoreIcon />}
@@ -462,6 +500,10 @@ const DealForm = ({ dealId }) => {
             </form>
         </React.Fragment>
     );
+};
+
+const DealTable = () => {
+    return <React.Fragment>Deal Table</React.Fragment>;
 };
 
 const PGTestPage = DealsContainer;
