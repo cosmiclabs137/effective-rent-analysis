@@ -18,7 +18,7 @@ function App() {
     }, [location]);
     return (
         <Grid container>
-            <BasicHeader title={title} />
+            {/* <BasicHeader title={title} /> */}
             <Outlet />
         </Grid>
     );
