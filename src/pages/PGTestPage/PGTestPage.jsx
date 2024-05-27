@@ -77,6 +77,7 @@ const DealsContainer = () => {
         {
             field: "month",
             headerName: "Month",
+            cellClassName: "bold",
         },
         {
             field: "monthlyPayment",
@@ -128,23 +129,6 @@ const DealsContainer = () => {
         },
     ];
 
-    // const columns = [
-    //     "Month",
-    //     "Monthly Payment",
-    //     "Operating Expenses",
-    //     "Tenant Improvement Cost",
-    //     "Other Non-Recurring Cost",
-    //     "Other Recurring Cost",
-    //     "Rent Abatement",
-    //     "Tenant Improvement Allowances",
-    //     "Commission",
-    //     "Before-Tax Occupancy Cost",
-    //     "Tenant Net Present Value",
-    //     "Occupancy OpEx Commission",
-
-    //     "Owner Net Present Value",
-    // ];
-
     return (
         <DealsContext.Provider value={deals}>
             <DealsDispatchContext.Provider value={dispatch}>
@@ -158,8 +142,10 @@ const DealsContainer = () => {
                 >
                     <Grid
                         container
+                        flexGrow={1}
                         direction="row"
-                        justifyContent="space-evenly"
+                        justifyContent="center"
+                        alignItems="flex-start"
                     >
                         <Grid item xs={12} marginBottom={5} marginTop={2}>
                             <Typography variant="h4" align="center">
@@ -173,21 +159,22 @@ const DealsContainer = () => {
                             lg={2}
                             component={Paper}
                             elevation={4}
+                            className="sticky"
                             sx={{
                                 display: "flex",
                                 justifyContent: "center",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 padding: 2,
+                                mt: 2,
                             }}
                         >
                             <DealForm dealId={dealId} />
                         </Grid>
                         <Grid
-                            item
+                            container
                             xs={12}
                             lg={9}
-                            // component={Paper}
                             elevation={4}
                             sx={{
                                 display: "flex",
@@ -196,14 +183,14 @@ const DealsContainer = () => {
                                 padding: 2,
                             }}
                         >
-                            {/* <Typography variant="p" align="center">
-                                This is where the table will be
-                            </Typography> */}
-                            <DealTable
-                                rows={calculatedDeal}
-                                // rows={row}
-                                columns={columns}
-                            />
+                            <div>
+                                <Grid item>
+                                    <DealTable
+                                        rows={calculatedDeal}
+                                        columns={columns}
+                                    />
+                                </Grid>
+                            </div>
                         </Grid>
                     </Grid>
                 </Box>
@@ -244,7 +231,7 @@ const DealForm = ({ dealId }) => {
                         <TextField
                             label="Deal name"
                             type="text"
-                            value={deal.name}
+                            value={deal?.name}
                             variant="standard"
                             onChange={(e) => handleChange(e, "name", "string")}
                         />
@@ -253,7 +240,7 @@ const DealForm = ({ dealId }) => {
                         <TextField
                             label="Sqft leased"
                             type="number"
-                            value={deal.sqft}
+                            value={deal?.sqft}
                             variant="standard"
                             onChange={(e) => handleChange(e, "sqft")}
                             inputProps={{ min: 0 }}
@@ -263,7 +250,7 @@ const DealForm = ({ dealId }) => {
                         <TextField
                             label="Term (in months)"
                             type="number"
-                            value={deal.term}
+                            value={deal?.term}
                             variant="standard"
                             onChange={(e) => handleChange(e, "term")}
                             inputProps={{ min: 0 }}
@@ -274,7 +261,7 @@ const DealForm = ({ dealId }) => {
                             label="Base rent"
                             type="number"
                             variant="standard"
-                            value={deal.baseRent}
+                            value={deal?.baseRent}
                             onChange={(e) => handleChange(e, "baseRent")}
                             inputProps={{ min: 0, step: 0.01 }}
                             InputProps={{ startAdornment: dollarAdornment }}
@@ -285,7 +272,7 @@ const DealForm = ({ dealId }) => {
                             label="Annual escalations"
                             type="number"
                             variant="standard"
-                            value={deal.annualEscalations}
+                            value={deal?.annualEscalations}
                             onChange={(e) =>
                                 handleChange(e, "annualEscalations")
                             }
@@ -298,7 +285,7 @@ const DealForm = ({ dealId }) => {
                         <TextField
                             label="Months free rent"
                             type="number"
-                            value={deal.monthsFreeRent}
+                            value={deal?.monthsFreeRent}
                             variant="standard"
                             onChange={(e) => handleChange(e, "monthsFreeRent")}
                             inputProps={{ min: 0 }}
@@ -315,7 +302,7 @@ const DealForm = ({ dealId }) => {
                             label="Occupancy expenses (psf/mo)"
                             type="number"
                             variant="standard"
-                            value={deal.opExPerMonth}
+                            value={deal?.opExPerMonth}
                             onChange={(e) => handleChange(e, "opExPerMonth")}
                             inputProps={{ min: 0 }}
                             InputProps={{ startAdornment: dollarAdornment }}
@@ -326,7 +313,7 @@ const DealForm = ({ dealId }) => {
                             label="Occupancy expenses growth rate (%)"
                             type="number"
                             variant="standard"
-                            value={deal.opExGrowthRate}
+                            value={deal?.opExGrowthRate}
                             onChange={(e) => handleChange(e, "opExGrowthRate")}
                             inputProps={{ min: 0 }}
                             InputProps={{ endAdornment: percentAdornment }}
@@ -343,7 +330,7 @@ const DealForm = ({ dealId }) => {
                             label="Other non-recurring cost"
                             type="number"
                             variant="standard"
-                            value={deal.otherNonRecurringCost}
+                            value={deal?.otherNonRecurringCost}
                             onChange={(e) =>
                                 handleChange(e, "otherNonRecurringCost")
                             }
@@ -356,7 +343,7 @@ const DealForm = ({ dealId }) => {
                             label="Other non-recurring cost (total)"
                             type="number"
                             variant="standard"
-                            value={deal.otherNonRecurringCostTotal}
+                            value={deal?.otherNonRecurringCostTotal}
                             onChange={(e) =>
                                 handleChange(e, "otherNonRecurringCostTotal")
                             }
@@ -369,7 +356,7 @@ const DealForm = ({ dealId }) => {
                             label="Other recurring cost"
                             type="number"
                             variant="standard"
-                            value={deal.otherRecurringCost}
+                            value={deal?.otherRecurringCost}
                             onChange={(e) =>
                                 handleChange(e, "otherRecurringCost")
                             }
@@ -382,7 +369,7 @@ const DealForm = ({ dealId }) => {
                             label="Other recurring cost (total)"
                             type="number"
                             variant="standard"
-                            value={deal.otherRecurringCostTotal}
+                            value={deal?.otherRecurringCostTotal}
                             onChange={(e) =>
                                 handleChange(e, "otherRecurringCostTotal")
                             }
@@ -401,7 +388,7 @@ const DealForm = ({ dealId }) => {
                             label="Tenant improvement cost"
                             type="number"
                             variant="standard"
-                            value={deal.tenantImprovementCost}
+                            value={deal?.tenantImprovementCost}
                             onChange={(e) =>
                                 handleChange(e, "tenantImprovementCost")
                             }
@@ -414,7 +401,7 @@ const DealForm = ({ dealId }) => {
                             label="Tenant improvement allowance"
                             type="number"
                             variant="standard"
-                            value={deal.tenantImprovementAllowance}
+                            value={deal?.tenantImprovementAllowance}
                             onChange={(e) =>
                                 handleChange(e, "tenantImprovementAllowance")
                             }
@@ -433,7 +420,7 @@ const DealForm = ({ dealId }) => {
                             label="Tenant discount rate"
                             type="number"
                             variant="standard"
-                            value={deal.tenantDiscountRate}
+                            value={deal?.tenantDiscountRate}
                             onChange={(e) =>
                                 handleChange(e, "tenantDiscountRate")
                             }
@@ -446,7 +433,7 @@ const DealForm = ({ dealId }) => {
                             label="Lanlord discount rate"
                             type="number"
                             variant="standard"
-                            value={deal.landlordDiscountRate}
+                            value={deal?.landlordDiscountRate}
                             onChange={(e) =>
                                 handleChange(e, "landlordDiscountRate")
                             }
@@ -465,7 +452,7 @@ const DealForm = ({ dealId }) => {
                             label="Other non-recurring contribution (Total)"
                             type="number"
                             variant="standard"
-                            value={deal.otherNonRecurringContribution}
+                            value={deal?.otherNonRecurringContribution}
                             onChange={(e) =>
                                 handleChange(e, "otherNonRecurringContribution")
                             }
@@ -478,7 +465,7 @@ const DealForm = ({ dealId }) => {
                             label="Other recurring contribution (Total)"
                             type="number"
                             variant="standard"
-                            value={deal.otherRecurringContribution}
+                            value={deal?.otherRecurringContribution}
                             onChange={(e) =>
                                 handleChange(e, "tenantImprovementAllowance")
                             }
@@ -497,7 +484,7 @@ const DealForm = ({ dealId }) => {
                             label="Commission pct (yrs 1 to 5)"
                             type="number"
                             variant="standard"
-                            value={deal.commissionFirst}
+                            value={deal?.commissionFirst}
                             onChange={(e) => handleChange(e, "commissionFirst")}
                             inputProps={{ min: 0, step: 0.1 }}
                             InputProps={{ endAdornment: percentAdornment }}
@@ -508,7 +495,7 @@ const DealForm = ({ dealId }) => {
                             label="Commission pct (yrs 6 to 10)"
                             type="number"
                             variant="standard"
-                            value={deal.commissionSecond}
+                            value={deal?.commissionSecond}
                             onChange={(e) =>
                                 handleChange(e, "commissionSecond")
                             }
@@ -549,6 +536,7 @@ const DealTable = ({
                     columns={columns}
                     rows={rows}
                     className="MuiPaper-root"
+                    sx={{ p: 1 }}
                 />
             </div>
         </ErrorBoundary>
@@ -699,19 +687,23 @@ const useCalculateDeal = (deal) => {
             );
 
             beforeTaxOccupancyCostTotal.current = beforeTaxOccupancyCost.reduce(
-                (acc, cost) => acc + cost
+                (acc, cost) => acc + cost,
+                0
             );
 
             const tenantNetPV = beforeTaxOccupancyCost.map(
                 (cost, period) =>
                     -pv(deal.tenantDiscountRate / 1200, period, 0, cost)
             );
+
             tenantNetPresentValue.current = tenantNetPV.reduce(
-                (acc, value) => acc + value
+                (acc, value) => acc + value,
+                0
             );
 
             const totalCommission = commissions.reduce(
-                (acc, commission) => acc + commission
+                (acc, commission) => acc + commission,
+                0
             );
 
             const firstCommissions = Array.from(
@@ -734,7 +726,7 @@ const useCalculateDeal = (deal) => {
             );
 
             occupancyOpExCommissionsTotal.current =
-                occupancyOpExCommissions.reduce((acc, value) => acc + value);
+                occupancyOpExCommissions.reduce((acc, value) => acc + value, 0);
 
             const ownerNetPV = occupancyOpExCommissions.map(
                 (cost, period) =>
@@ -742,7 +734,8 @@ const useCalculateDeal = (deal) => {
             );
 
             ownerNetPresentValue.current = ownerNetPV.reduce(
-                (acc, value) => acc + value
+                (acc, value) => acc + value,
+                0
             );
 
             // combine all the data into a table-friendly format
