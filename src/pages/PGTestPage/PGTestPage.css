@@ -1,0 +1,8 @@
+.MuiDataGrid-columnHeaderTitle {
+    font-weight: bold !important;
+}
+
+.MuiDataGrid-scrollbar {
+    scrollbar-color: lightgray white;
+    scrollbar-width: thin;
+}
