@@ -533,6 +533,7 @@ const DealTable = ({
         <ErrorBoundary fallback={<p>Looks like something went wrong!</p>}>
             <div style={style}>
                 <DataGrid
+                    density="compact"
                     columns={columns}
                     rows={rows}
                     className="MuiPaper-root"
