@@ -13,6 +13,9 @@ import {
     Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { DataGrid } from "@mui/x-data-grid";
+
+import "./PGTestPage.css";
 
 const dealFactory = (id) => ({
     id: id,
@@ -69,7 +72,78 @@ const DealsContainer = () => {
     const [dealId, setDealId] = React.useState(0);
 
     const calculatedDeal = useCalculateDeal(deals[dealId]);
-    console.log("calculatedDeal", calculatedDeal);
+
+    const columns = [
+        {
+            field: "month",
+            headerName: "Month",
+        },
+        {
+            field: "monthlyPayment",
+            headerName: "Monthly Payment",
+        },
+        {
+            field: "operatingExpense",
+            headerName: "Operating Expenses",
+        },
+        {
+            field: "tenantImprovementCost",
+            headerName: "Tenant Improvement Cost",
+        },
+        {
+            field: "otherNonRecurringCost",
+            headerName: "Other Non-Recurring Cost",
+        },
+        {
+            field: "otherRecurringCost",
+            headerName: "Other Recurring Cost",
+        },
+        {
+            field: "rentAbatement",
+            headerName: "Rent Abatement",
+        },
+        {
+            field: "tenantImprovementAllowance",
+            headerName: "Tenant Improvement Allowances",
+        },
+        {
+            field: "commission",
+            headerName: "Commission",
+        },
+        {
+            field: "beforeTaxOccupancyCost",
+            headerName: "Bfore-Tax Occupancy Cost",
+        },
+        {
+            field: "tenantNetPV",
+            headerName: "Tenant Net Present Value",
+        },
+        {
+            field: "occupancyOpExCommission",
+            headerName: "Occupancy OpEx Commission",
+        },
+        {
+            field: "ownerNetPV",
+            headerName: "Owner Net Present Value",
+        },
+    ];
+
+    // const columns = [
+    //     "Month",
+    //     "Monthly Payment",
+    //     "Operating Expenses",
+    //     "Tenant Improvement Cost",
+    //     "Other Non-Recurring Cost",
+    //     "Other Recurring Cost",
+    //     "Rent Abatement",
+    //     "Tenant Improvement Allowances",
+    //     "Commission",
+    //     "Before-Tax Occupancy Cost",
+    //     "Tenant Net Present Value",
+    //     "Occupancy OpEx Commission",
+
+    //     "Owner Net Present Value",
+    // ];
 
     return (
         <DealsContext.Provider value={deals}>
@@ -113,7 +187,7 @@ const DealsContainer = () => {
                             item
                             xs={12}
                             lg={9}
-                            component={Paper}
+                            // component={Paper}
                             elevation={4}
                             sx={{
                                 display: "flex",
@@ -122,9 +196,14 @@ const DealsContainer = () => {
                                 padding: 2,
                             }}
                         >
-                            <Typography variant="p" align="center">
+                            {/* <Typography variant="p" align="center">
                                 This is where the table will be
-                            </Typography>
+                            </Typography> */}
+                            <DealTable
+                                rows={calculatedDeal}
+                                // rows={row}
+                                columns={columns}
+                            />
                         </Grid>
                     </Grid>
                 </Box>
@@ -458,8 +537,22 @@ const Collapsible = ({ id, summary, children, defaultExpanded = false }) => {
     );
 };
 
-const DealTable = ({ children }) => {
-    return <React.Fragment>{children}</React.Fragment>;
+const DealTable = ({
+    columns,
+    rows,
+    style = { height: "100%", width: "100%", backgroundColor: "white" },
+}) => {
+    return (
+        <ErrorBoundary fallback={<p>Looks like something went wrong!</p>}>
+            <div style={style}>
+                <DataGrid
+                    columns={columns}
+                    rows={rows}
+                    className="MuiPaper-root"
+                />
+            </div>
+        </ErrorBoundary>
+    );
 };
 
 const toCurrency = (num) => {
@@ -654,43 +747,35 @@ const useCalculateDeal = (deal) => {
 
             // combine all the data into a table-friendly format
             const data = rates.map((rate, period) => {
-                return [
-                    {
-                        month: (
-                            <Typography>
-                                <Box component="span" fontWeight="bold">
-                                    {period + 1}
-                                </Box>
-                            </Typography>
-                        ),
-                        monthlyPayments: toCurrency(monthlyPayments[period]),
-                        operatingExpenses: toCurrency(
-                            operatingExpenses[period]
-                        ),
-                        tenantImprovementCost: toCurrency(
-                            tenantImprovementCosts[period]
-                        ),
-                        otherNonRecurringCost: toCurrency(
-                            otherNonRecurringCosts[period]
-                        ),
-                        otherRecurringCost: toCurrency(
-                            otherRecurringCosts[period]
-                        ),
-                        rentAbatements: toCurrency(rentAbatements[period]),
-                        tenantImprovementAllowances: toCurrency(
-                            tenantImprovementAllowances[period]
-                        ),
-                        commission: toCurrency(commissions[period]),
-                        beforeTaxOccupancyCost: toCurrency(
-                            beforeTaxOccupancyCost[period]
-                        ),
-                        tenantNetPV: toCurrency(tenantNetPV[period]),
-                        occupancyOpExCommission: toCurrency(
-                            occupancyOpExCommissions[period]
-                        ),
-                        ownerNetPV: toCurrency(ownerNetPV[period]),
-                    },
-                ];
+                return {
+                    id: period,
+                    month: period + 1,
+                    monthlyPayment: toCurrency(monthlyPayments[period]),
+                    operatingExpense: toCurrency(operatingExpenses[period]),
+                    tenantImprovementCost: toCurrency(
+                        tenantImprovementCosts[period]
+                    ),
+                    otherNonRecurringCost: toCurrency(
+                        otherNonRecurringCosts[period]
+                    ),
+                    otherRecurringCost: toCurrency(otherRecurringCosts[period]),
+                    rentAbatement: toCurrency(rentAbatements[period]),
+                    tenantImprovementAllowances: toCurrency(
+                        tenantImprovementAllowances[period]
+                    ),
+                    commission: toCurrency(commissions[period]),
+                    beforeTaxOccupancyCost: toCurrency(
+                        beforeTaxOccupancyCost[period]
+                    ),
+                    tenantNetPV: toCurrency(tenantNetPV[period]),
+                    occupancyOpExCommission: toCurrency(
+                        occupancyOpExCommissions[period]
+                    ),
+                    ownerNetPV: toCurrency(ownerNetPV[period]),
+                    tenantImprovementAllowance: toCurrency(
+                        tenantImprovementAllowances[period]
+                    ),
+                };
             });
 
             return data;
@@ -700,6 +785,36 @@ const useCalculateDeal = (deal) => {
 
     return results;
 };
+
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+    }
+
+    static getDerivedStateFromError(error) {
+        // Update state so the next render will show the fallback UI.
+        return { hasError: true };
+    }
+
+    componentDidCatch(error, info) {
+        // Example "componentStack":
+        //   in ComponentThatThrows (created by App)
+        //   in ErrorBoundary (created by App)
+        //   in div (created by App)
+        //   in App
+        console.error(error, info.componentStack);
+    }
+
+    render() {
+        if (this.state.hasError) {
+            // You can render any custom fallback UI
+            return this.props.fallback;
+        }
+
+        return this.props.children;
+    }
+}
 
 const PGTestPage = DealsContainer;
 
