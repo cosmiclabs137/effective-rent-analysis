@@ -6,3 +6,13 @@
     scrollbar-color: lightgray white;
     scrollbar-width: thin;
 }
+
+.bold {
+    font-weight: bold;
+}
+
+.deal-input {
+    position: sticky;
+    left: 20px;
+    top: 20px;
+}
