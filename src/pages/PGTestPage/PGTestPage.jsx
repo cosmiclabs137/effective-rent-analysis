@@ -171,11 +171,10 @@ const DealsContainer = () => {
                         >
                             <DealForm dealId={dealId} />
                         </Grid>
-                        <Grid
-                            container
+                        <Box
+                            container="true"
                             xs={12}
                             lg={9}
-                            elevation={4}
                             sx={{
                                 display: "flex",
                                 justifyContent: "center",
@@ -191,7 +190,7 @@ const DealsContainer = () => {
                                     />
                                 </Grid>
                             </div>
-                        </Grid>
+                        </Box>
                     </Grid>
                 </Box>
             </DealsDispatchContext.Provider>
