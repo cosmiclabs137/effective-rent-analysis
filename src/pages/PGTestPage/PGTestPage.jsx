@@ -150,12 +150,6 @@ const DealsContainer = () => {
                         justifyContent="center"
                         alignItems="flex-start"
                     >
-                        <Grid item xs={12} marginBottom={5} marginTop={2}>
-                            <Typography variant="h4" align="center">
-                                Effective Rent Analysis
-                            </Typography>
-                        </Grid>
-
                         <Grid
                             item
                             xs={12}
