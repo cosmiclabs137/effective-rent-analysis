@@ -537,6 +537,7 @@ const DealTable = ({
                     rows={rows}
                     className="MuiPaper-root"
                     sx={{ p: 1 }}
+                    getRowId={(row) => row.month - 1}
                 />
             </div>
         </ErrorBoundary>
@@ -559,6 +560,7 @@ const useCalculateDeal = (deal) => {
     const ownerNetPresentValue = React.useRef(0);
 
     const [results, setResults] = React.useState([]);
+    console.log(deal);
 
     React.useEffect(() => {
         const calculateDeal = () => {
@@ -741,7 +743,6 @@ const useCalculateDeal = (deal) => {
             // combine all the data into a table-friendly format
             const data = rates.map((rate, period) => {
                 return {
-                    id: period,
                     month: period + 1,
                     monthlyPayment: toCurrency(monthlyPayments[period]),
                     operatingExpense: toCurrency(operatingExpenses[period]),
@@ -776,6 +777,7 @@ const useCalculateDeal = (deal) => {
         setResults(calculateDeal());
     }, [deal]);
 
+    console.log(results);
     return results;
 };
 
