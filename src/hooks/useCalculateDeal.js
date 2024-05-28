@@ -10,7 +10,6 @@ const useCalculateDeal = (deal) => {
     const ownerNetPresentValue = React.useRef(0);
 
     const [results, setResults] = React.useState([]);
-    console.log(deal);
 
     React.useEffect(() => {
         const calculateDeal = () => {
@@ -77,11 +76,11 @@ const useCalculateDeal = (deal) => {
             );
 
             let currentGrowthRate = 1;
-            const opExConstant = deal.occupancyExpensesPsf * deal.sqft;
+            const opExConstant = deal.opExPerMonthPsf * deal.sqft;
             for (let period = 0; period < deal.term; period++) {
                 if (period > 11 && period % 12 === 0) {
                     currentGrowthRate =
-                        currentGrowthRate * (1 + deal.growthRateInOpEx / 100);
+                        currentGrowthRate * (1 + deal.opExGrowthRate / 100);
                 }
                 operatingExpenses[period] = opExConstant * currentGrowthRate;
             }
@@ -114,8 +113,8 @@ const useCalculateDeal = (deal) => {
                 if (abatement >= 0) {
                     let commissionPercentIncrease =
                         period < 60
-                            ? deal.commissionPercent1st
-                            : deal.commissionPercent2nd;
+                            ? deal.commissionFirst
+                            : deal.commissionSecond;
                     const commission =
                         (commissionPercentIncrease / 100) *
                         monthlyPayments[period];
@@ -227,7 +226,6 @@ const useCalculateDeal = (deal) => {
         setResults(calculateDeal());
     }, [deal]);
 
-    console.log(results);
     return results;
 };
 
