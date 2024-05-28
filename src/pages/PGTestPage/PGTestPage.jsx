@@ -115,7 +115,7 @@ const DealsContainer = () => {
         },
         {
             field: "beforeTaxOccupancyCost",
-            headerName: "Bfore-Tax Occupancy Cost",
+            headerName: "Before-Tax Occupancy Cost",
         },
         {
             field: "tenantNetPV",
