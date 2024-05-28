@@ -26,11 +26,12 @@ const dealFactory = (id) => ({
     term: 12,
     baseRent: 0,
     annualEscalations: 0,
-    opExPerMonth: 0,
+    opExPerMonthPsf: 0,
     opExGrowthRate: 0,
     otherNonRecurringCost: 0,
     otherNonRecurringCostTotal: 0,
     otherRecurringCost: 0,
+    recurringCostGrowthRate: 0,
     otherRecurringCostTotal: 0,
     otherNonRecurringContribution: 0,
     otherRecurringContribution: 0,
@@ -303,8 +304,8 @@ const DealForm = ({ dealId }) => {
                             label="Occupancy expenses (psf/mo)"
                             type="number"
                             variant="standard"
-                            value={deal?.opExPerMonth}
-                            onChange={(e) => handleChange(e, "opExPerMonth")}
+                            value={deal?.opExPerMonthPsf}
+                            onChange={(e) => handleChange(e, "opExPerMonthPsf")}
                             inputProps={{ min: 0 }}
                             InputProps={{ startAdornment: dollarAdornment }}
                         />
@@ -362,6 +363,18 @@ const DealForm = ({ dealId }) => {
                                 handleChange(e, "otherRecurringCost")
                             }
                             inputProps={{ min: 0, step: 0.01 }}
+                            InputProps={{ startAdornment: dollarAdornment }}
+                        />
+                        <TextField
+                            label="Recurring cost growth rate"
+                            helperText="In months"
+                            type="number"
+                            variant="standard"
+                            value={deal?.recurringCostGrowthRate}
+                            onChange={(e) =>
+                                handleChange(e, "recurringCostGrowthRate")
+                            }
+                            inputProps={{ min: 0, step: 0.1 }}
                             InputProps={{ startAdornment: dollarAdornment }}
                         />
                     </FormControl>
