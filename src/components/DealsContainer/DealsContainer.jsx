@@ -6,11 +6,7 @@ import {
     DealsContext,
     DealsDispatchContext,
 } from "../../contexts/DealsContexts";
-// import DealForm from "../DealForm";
-// import DealTable from "../DealTable";
 import useCalculateDeal from "../../hooks/useCalculateDeal";
-// import { dealsReducer } from "../reducers/dealsReducer";
-// import dealFactory from "../utils";
 import DealForm from "../DealForm/DealForm";
 import DealTable from "../DealTable/DealTable";
 import { dealsReducer } from "../../reducers/dealsReducer";
