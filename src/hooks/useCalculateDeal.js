@@ -11,7 +11,7 @@ const useCalculateDeal = (deal) => {
 
     const [results, setResults] = React.useState([]);
 
-    console.table(deal);
+    // console.table(deal);
 
     React.useEffect(() => {
         const calculateDeal = () => {
