@@ -10,7 +10,9 @@ import {
     InputAdornment,
     Paper,
     TextField,
+    Tooltip,
     Typography,
+    styled,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DataGrid } from "@mui/x-data-grid";
@@ -22,27 +24,23 @@ import "./PGTestPage.css";
 const dealFactory = (id) => ({
     id: id,
     name: `Deal ${id + 1}`,
-    sqft: 0,
-    term: 12,
-    baseRent: 0,
-    annualEscalations: 0,
-    opExPerMonthPsf: 0,
-    opExGrowthRate: 0,
-    otherNonRecurringCost: 0,
-    otherNonRecurringCostTotal: 0,
-    otherRecurringCost: 0,
-    recurringCostGrowthRate: 0,
-    otherRecurringCostTotal: 0,
-    otherNonRecurringContribution: 0,
-    otherRecurringContribution: 0,
-    contributionGrowthRate: 0,
-    monthsFreeRent: 0,
-    commissionFirst: 0,
+    sqft: 2794,
+    term: 65,
+    baseRent: 3.45,
+    annualEscalations: 3,
+    opExPerMonthRsf: 0,
+    globalInflation: 0,
+    otherOneTimeLandlordCost: 0,
+    otherOneTimeTenantCost: 0,
+    otherMonthlyLandlordCost: 0,
+    otherMonthlyTenantCost: 0,
+    monthsFreeRent: 5,
+    commissionFirst: 4,
     commissionSecond: 0,
-    tenantDiscountRate: 0,
-    tenantImprovementCost: 0,
-    tenantImprovementAllowance: 0,
-    landlordDiscountRate: 0,
+    tenantDiscountRate: 7,
+    tiCostPerRsf: 0,
+    tiAllowancePerRsf: 0,
+    landlordDiscountRate: 5,
 });
 
 const dealsReducer = (deals, action) => {
@@ -72,7 +70,8 @@ const DealsDispatchContext = React.createContext(null);
 
 const DealsContainer = () => {
     const [deals, dispatch] = React.useReducer(dealsReducer, [dealFactory(0)]);
-    const [dealId, setDealId] = React.useState(0);
+    // const [dealId, setDealId] = React.useState(0);
+    const dealId = 0;
 
     const calculatedDeal = useCalculateDeal(deals[dealId]);
 
@@ -87,27 +86,27 @@ const DealsContainer = () => {
             headerName: "Monthly Payment",
         },
         {
-            field: "operatingExpense",
+            field: "opExPerMonthRsf",
             headerName: "Operating Expenses",
         },
         {
-            field: "tenantImprovementCost",
+            field: "tiCostPerRsf",
             headerName: "Tenant Improvement Cost",
         },
         {
-            field: "otherNonRecurringCost",
+            field: "otherOneTimeLandlordCost",
             headerName: "Other Non-Recurring Cost",
         },
         {
-            field: "otherRecurringCost",
-            headerName: "Other Recurring Cost",
+            field: "otherMonthlyTenantCost",
+            headerName: "Other Monthly Tenant Cost",
         },
         {
             field: "rentAbatement",
             headerName: "Rent Abatement",
         },
         {
-            field: "tenantImprovementAllowance",
+            field: "tiAllowancePerRsf",
             headerName: "Tenant Improvement Allowances",
         },
         {
@@ -195,22 +194,24 @@ const DealsContainer = () => {
     );
 };
 
+const dollarAdornment = <InputAdornment position="start">$</InputAdornment>;
+const percentAdornment = <InputAdornment position="end">%</InputAdornment>;
+
 const DealForm = ({ dealId }) => {
     const deals = React.useContext(DealsContext);
     const dispatch = React.useContext(DealsDispatchContext);
     const deal = deals.filter((deal) => deal.id === dealId)[0];
 
     const handleChange = (e, key, type = "number") => {
+        const value = e.target.value;
+
         dispatch({
             type: "updated",
-            value: type === "string" ? e.target.value : Number(e.target.value),
+            value: type === "string" ? value : Number(value),
             key: key,
             id: dealId,
         });
     };
-
-    const dollarAdornment = <InputAdornment position="start">$</InputAdornment>;
-    const percentAdornment = <InputAdornment position="end">%</InputAdornment>;
 
     return (
         <React.Fragment>
@@ -218,300 +219,9 @@ const DealForm = ({ dealId }) => {
                 {deal?.name.length > 0 ? deal?.name : "New Deal"}
             </Typography>
             <form>
-                <Collapsible
-                    defaultExpanded={true}
-                    id="basic-input-panel-content"
-                    summary="Basic Inputs"
-                >
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Deal name"
-                            type="text"
-                            value={deal?.name}
-                            variant="standard"
-                            onChange={(e) => handleChange(e, "name", "string")}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Sqft leased"
-                            type="number"
-                            value={deal?.sqft}
-                            variant="standard"
-                            onChange={(e) => handleChange(e, "sqft")}
-                            inputProps={{ min: 0 }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Term (in months)"
-                            type="number"
-                            value={deal?.term}
-                            variant="standard"
-                            onChange={(e) => handleChange(e, "term")}
-                            inputProps={{ min: 0 }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Base rent"
-                            type="number"
-                            variant="standard"
-                            value={deal?.baseRent}
-                            onChange={(e) => handleChange(e, "baseRent")}
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Annual escalations"
-                            type="number"
-                            variant="standard"
-                            value={deal?.annualEscalations}
-                            onChange={(e) =>
-                                handleChange(e, "annualEscalations")
-                            }
-                            inputProps={{ min: 0 }}
-                            InputProps={{ endAdornment: percentAdornment }}
-                        />
-                    </FormControl>
-
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Months free rent"
-                            type="number"
-                            value={deal?.monthsFreeRent}
-                            variant="standard"
-                            onChange={(e) => handleChange(e, "monthsFreeRent")}
-                            inputProps={{ min: 0 }}
-                        />
-                    </FormControl>
-                </Collapsible>
-
-                <Collapsible
-                    id="occupancy-expenses-panel-content"
-                    summary="Occupancy Expenses"
-                >
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Occupancy expenses (psf/mo)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.opExPerMonthPsf}
-                            onChange={(e) => handleChange(e, "opExPerMonthPsf")}
-                            inputProps={{ min: 0 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Occupancy expenses growth rate (%)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.opExGrowthRate}
-                            onChange={(e) => handleChange(e, "opExGrowthRate")}
-                            inputProps={{ min: 0 }}
-                            InputProps={{ endAdornment: percentAdornment }}
-                        />
-                    </FormControl>
-                </Collapsible>
-
-                <Collapsible
-                    id="other-costs-panel-content"
-                    summary="Other Costs"
-                >
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Other non-recurring cost"
-                            type="number"
-                            variant="standard"
-                            value={deal?.otherNonRecurringCost}
-                            onChange={(e) =>
-                                handleChange(e, "otherNonRecurringCost")
-                            }
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Other non-recurring cost (total)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.otherNonRecurringCostTotal}
-                            onChange={(e) =>
-                                handleChange(e, "otherNonRecurringCostTotal")
-                            }
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Other recurring cost"
-                            type="number"
-                            variant="standard"
-                            value={deal?.otherRecurringCost}
-                            onChange={(e) =>
-                                handleChange(e, "otherRecurringCost")
-                            }
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                        <TextField
-                            label="Recurring cost growth rate"
-                            helperText="In months"
-                            type="number"
-                            variant="standard"
-                            value={deal?.recurringCostGrowthRate}
-                            onChange={(e) =>
-                                handleChange(e, "recurringCostGrowthRate")
-                            }
-                            inputProps={{ min: 0, step: 0.1 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Other recurring cost (total)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.otherRecurringCostTotal}
-                            onChange={(e) =>
-                                handleChange(e, "otherRecurringCostTotal")
-                            }
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                </Collapsible>
-
-                <Collapsible
-                    id="tenant-improvement-panel-content"
-                    summary="Tenant Improvements"
-                >
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Tenant improvement cost"
-                            type="number"
-                            variant="standard"
-                            value={deal?.tenantImprovementCost}
-                            onChange={(e) =>
-                                handleChange(e, "tenantImprovementCost")
-                            }
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Tenant improvement allowance"
-                            type="number"
-                            variant="standard"
-                            value={deal?.tenantImprovementAllowance}
-                            onChange={(e) =>
-                                handleChange(e, "tenantImprovementAllowance")
-                            }
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                </Collapsible>
-
-                <Collapsible
-                    id="tenant-improvement-panel-content"
-                    summary="Discount Rates"
-                >
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Tenant discount rate"
-                            type="number"
-                            variant="standard"
-                            value={deal?.tenantDiscountRate}
-                            onChange={(e) =>
-                                handleChange(e, "tenantDiscountRate")
-                            }
-                            inputProps={{ min: 0, step: 0.1 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Lanlord discount rate"
-                            type="number"
-                            variant="standard"
-                            value={deal?.landlordDiscountRate}
-                            onChange={(e) =>
-                                handleChange(e, "landlordDiscountRate")
-                            }
-                            inputProps={{ min: 0, step: 0.01 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                </Collapsible>
-
-                <Collapsible
-                    id="other-contribution-panel-content"
-                    summary="Other Contributions"
-                >
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Other non-recurring contribution (Total)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.otherNonRecurringContribution}
-                            onChange={(e) =>
-                                handleChange(e, "otherNonRecurringContribution")
-                            }
-                            inputProps={{ min: 0, step: 0.1 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Other recurring contribution (Total)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.otherRecurringContribution}
-                            onChange={(e) =>
-                                handleChange(e, "tenantImprovementAllowance")
-                            }
-                            inputProps={{ min: 0, step: 0.1 }}
-                            InputProps={{ startAdornment: dollarAdornment }}
-                        />
-                    </FormControl>
-                </Collapsible>
-
-                <Collapsible
-                    id="commissions-panel-content"
-                    summary="Commissions"
-                >
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Commission pct (yrs 1 to 5)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.commissionFirst}
-                            onChange={(e) => handleChange(e, "commissionFirst")}
-                            inputProps={{ min: 0, step: 0.1 }}
-                            InputProps={{ endAdornment: percentAdornment }}
-                        />
-                    </FormControl>
-                    <FormControl sx={{ paddingTop: 2 }} fullWidth>
-                        <TextField
-                            label="Commission pct (yrs 6 to 10)"
-                            type="number"
-                            variant="standard"
-                            value={deal?.commissionSecond}
-                            onChange={(e) =>
-                                handleChange(e, "commissionSecond")
-                            }
-                            inputProps={{ min: 0, step: 0.1 }}
-                            InputProps={{ endAdornment: percentAdornment }}
-                        />
-                    </FormControl>
-                </Collapsible>
+                <BasicInputs deal={deal} handleChange={handleChange} />
+                <ConcessionsInputs deal={deal} handleChange={handleChange} />
+                <OtherInputs deal={deal} handleChange={handleChange} />
             </form>
         </React.Fragment>
     );
@@ -532,15 +242,66 @@ const Collapsible = ({ id, summary, children, defaultExpanded = false }) => {
     );
 };
 
+const InputWithToolTip = ({
+    value,
+    handleChange,
+    label,
+    title,
+    adornment,
+    type = "number",
+    variant = "standard",
+    inputProps = { min: 0, step: 0.01 },
+    placement = "top",
+    sx = { paddingTop: 2 },
+    describeChild = true,
+}) => {
+    return (
+        <Tooltip
+            title={title}
+            placement={placement}
+            describeChild={describeChild}
+        >
+            <FormControl sx={sx} fullWidth>
+                <TextField
+                    label={label}
+                    type={type}
+                    variant={variant}
+                    value={value}
+                    onChange={handleChange}
+                    inputProps={inputProps}
+                    InputProps={adornment}
+                />
+            </FormControl>
+        </Tooltip>
+    );
+};
+
+export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+    "& .MuiDataGrid-main": {
+        // remove overflow hidden overwise sticky does not work
+        overflow: "unset",
+    },
+    "& .MuiDataGrid-columnHeaders": {
+        position: "sticky",
+        // backgroundColor: "white",
+        zIndex: 1,
+        top: 62,
+    },
+    "& .MuiDataGrid-virtualScroller": {
+        // remove the space left for the header
+        marginTop: "0!important",
+    },
+}));
+
 const DealTable = ({
     columns,
     rows,
-    style = { height: "100%", width: "100%", backgroundColor: "white" },
+    style = { minHeight: 300, width: "100%", backgroundColor: "white" },
 }) => {
     return (
         <ErrorBoundary fallback={<p>Looks like something went wrong!</p>}>
             <div style={style}>
-                <DataGrid
+                <StyledDataGrid
                     density="compact"
                     columns={columns}
                     rows={rows}
@@ -550,6 +311,163 @@ const DealTable = ({
                 />
             </div>
         </ErrorBoundary>
+    );
+};
+
+const BasicInputs = ({ deal, handleChange }) => {
+    return (
+        <Collapsible
+            defaultExpanded={true}
+            id="basic-input-panel-content"
+            summary="Basic Inputs"
+        >
+            <InputWithToolTip
+                label="Deal name"
+                type="text"
+                value={deal?.name}
+                handleChange={(e) => handleChange(e, "name", "string")}
+                title="Include a name for the deal or stage of negotiation for easy tracking."
+            />
+            <InputWithToolTip
+                label="Base rent (RSF/month)"
+                value={deal?.sqft}
+                handleChange={(e) => handleChange(e, "sqft")}
+                inputProps={{ min: 0 }}
+                title="The number of rentable square feet leased."
+            />
+            <InputWithToolTip
+                label="Term (months)"
+                value={deal?.term}
+                handleChange={(e) => handleChange(e, "term")}
+                inputProps={{ min: 0 }}
+                title="Total number of months of the initial term—not including option periods."
+            />
+            <InputWithToolTip
+                label="Base rent (RSF/month)"
+                value={deal?.baseRent}
+                handleChange={(e) => handleChange(e, "baseRent")}
+                adornment={{ startAdornment: dollarAdornment }}
+                title="The dollar amount per rentable square foot per month."
+            />
+            <InputWithToolTip
+                label="Annual escalations"
+                value={deal?.annualEscalations}
+                handleChange={(e) => handleChange(e, "annualEscalations")}
+                inputProps={{ min: 0 }}
+                adornment={{ endAdornment: percentAdornment }}
+                title="The percentage that the rent is increased per year."
+            />
+            <InputWithToolTip
+                label="Occupancy expenses (RSF/month)"
+                value={deal?.opExPerMonthRsf}
+                handleChange={(e) => handleChange(e, "opExPerMonthRsf")}
+                inputProps={{ min: 0 }}
+                adornment={{ startAdornment: dollarAdornment }}
+                title="Tenant's monthly share of operating expenses per rentable square foot."
+            />
+        </Collapsible>
+    );
+};
+
+const ConcessionsInputs = ({ deal, handleChange }) => {
+    return (
+        <Collapsible id="concessions-panel-content" summary="Concessions">
+            <InputWithToolTip
+                label="Other one-time tenant cost."
+                value={deal?.otherOneTimeTenantCost}
+                handleChange={(e) => handleChange(e, "otherOneTimeTenantCost")}
+                inputProps={{ min: 0, step: 0.01 }}
+                adornment={{ startAdornment: dollarAdornment }}
+                title="Another one-time cost for tenant to be paid up front (e.g., key money)."
+            />
+            <InputWithToolTip
+                label="Other monthly tenant cost"
+                value={deal?.otherMonthlyTenantCost}
+                handleChange={(e) => handleChange(e, "otherMonthlyTenantCost")}
+                inputProps={{ min: 0, step: 0.01 }}
+                adornment={{ startAdornment: dollarAdornment }}
+                title="Another monthly cost for tenant (e.g., parking)."
+            />
+            <InputWithToolTip
+                label="Other one-time landlord cost"
+                value={deal?.otherOneTimeLandlordCost}
+                handleChange={(e) =>
+                    handleChange(e, "otherOneTimeLandlordCost")
+                }
+                inputProps={{ min: 0, step: 0.01 }}
+                adornment={{ startAdornment: dollarAdornment }}
+                title="Another one-time cost for landlord to be paid up front (e.g., lease buyout)."
+            />
+
+            <InputWithToolTip
+                label="Other monthly landlord cost"
+                type="number"
+                variant="standard"
+                value={deal?.otherMonthlyLandlordCost}
+                handleChange={(e) =>
+                    handleChange(e, "otherMonthlyLandlordCost")
+                }
+                inputProps={{ min: 0, step: 0.01 }}
+                adornment={{ startAdornment: dollarAdornment }}
+                title="Another monthly cost for landlord (e.g., parking discount)."
+            />
+
+            <InputWithToolTip
+                label="TI cost per RSF"
+                value={deal?.tiCostPerRsf}
+                handleChange={(e) => handleChange(e, "tiCostPerRsf")}
+                inputProps={{ min: 0, step: 0.01 }}
+                adornment={{ startAdornment: dollarAdornment }}
+                title=""
+            />
+            <InputWithToolTip
+                label="TI allowance per RSF"
+                value={deal?.tiAllowancePerRsf}
+                handleChange={(e) => handleChange(e, "tiAllowancePerRsf")}
+                inputProps={{ min: 0, step: 0.01 }}
+                adornment={{ startAdornment: dollarAdornment }}
+                title=""
+            />
+        </Collapsible>
+    );
+};
+
+const OtherInputs = ({ deal, handleChange }) => {
+    return (
+        <Collapsible id="other-panel-content" summary="Other">
+            <InputWithToolTip
+                label="Tenant discount rate"
+                value={deal?.tenantDiscountRate}
+                handleChange={(e) => handleChange(e, "tenantDiscountRate")}
+                inputProps={{ min: 0, step: 0.1 }}
+                adornment={{ endAdornment: percentAdornment }}
+                title="The percentage rate the tenant would be charged on an unsecured loan."
+            />
+            <InputWithToolTip
+                label="Lanlord discount rate"
+                value={deal?.landlordDiscountRate}
+                handleChange={(e) => handleChange(e, "landlordDiscountRate")}
+                inputProps={{ min: 0, step: 0.1 }}
+                InputProps={{ endAdornment: percentAdornment }}
+                title="The return percent the landlord would make on an alternate investment."
+            />
+            <InputWithToolTip
+                label="Commission percent (months 1 to 60)"
+                value={deal?.commissionFirst}
+                handleChange={(e) => handleChange(e, "commissionFirst")}
+                inputProps={{ min: 0, step: 0.1 }}
+                adornment={{ endAdornment: percentAdornment }}
+                title="The percent of the landlord's commission costs for the first 60 months."
+            />
+            <InputWithToolTip
+                label="Commission pct (months 61+)"
+                value={deal?.commissionSecond}
+                handleChange={(e) => handleChange(e, "commissionSecond")}
+                inputProps={{ min: 0, step: 0.1 }}
+                adornment={{ endAdornment: percentAdornment }}
+                title="The percent of the landlord's commission costs from month 61 onward."
+            />
+        </Collapsible>
     );
 };
 

@@ -11,6 +11,8 @@ const useCalculateDeal = (deal) => {
 
     const [results, setResults] = React.useState([]);
 
+    console.table(deal);
+
     React.useEffect(() => {
         const calculateDeal = () => {
             const pv = (rate, nper, pmt, fv) => {
@@ -42,33 +44,34 @@ const useCalculateDeal = (deal) => {
             const tenantImprovementCosts = Array.from(
                 new Float32Array(rates.length).fill(0.0)
             );
-            tenantImprovementCosts[0] = deal.sqft * deal.tenantImprovementCost;
+            tenantImprovementCosts[0] = deal.sqft * deal.tiCostPerRsf;
 
             const tenantImprovementAllowances = Array.from(
                 new Float32Array(rates.length).fill(0.0)
             );
             tenantImprovementAllowances[0] =
-                deal.tenantImprovementAllowance > 0
-                    ? -deal.sqftLeased * deal.tenantImprovementAllowance
+                deal.tiAllowancePerRsf > 0
+                    ? -deal.sqft * deal.tiAllowancePerRsf
                     : 0;
 
             const otherNonRecurringCosts = Array.from(
                 new Float32Array(rates.length).fill(0.0)
             );
-            otherNonRecurringCosts[0] = -Number(deal.otherNonRecurringCost);
+            otherNonRecurringCosts[0] = -Number(deal.otherOneTimeTenantCost);
 
             const otherRecurringCosts = Array.from(
-                new Float32Array(rates.length).fill(deal.otherRecurringCost)
+                new Float32Array(rates.length).fill(deal.otherOneTimeTenantCost)
             );
             let currentRecurringCostGrowthRate = 1;
             for (let period = 0; period < deal.term; period++) {
                 if (period > 11 && period % 12 === 0) {
                     currentRecurringCostGrowthRate =
                         currentRecurringCostGrowthRate *
-                        (1 + deal.recurringCostGrowthRate / 100);
+                        (1 + deal.globalInflation / 100);
                 }
                 otherRecurringCosts[period] =
-                    deal.otherRecurringCost * currentRecurringCostGrowthRate;
+                    deal.otherOneTimeTenantCost *
+                    currentRecurringCostGrowthRate;
             }
 
             const operatingExpenses = Array.from(
@@ -76,11 +79,11 @@ const useCalculateDeal = (deal) => {
             );
 
             let currentGrowthRate = 1;
-            const opExConstant = deal.opExPerMonthPsf * deal.sqft;
+            const opExConstant = deal.opExPerMonthRsf * deal.sqft;
             for (let period = 0; period < deal.term; period++) {
                 if (period > 11 && period % 12 === 0) {
                     currentGrowthRate =
-                        currentGrowthRate * (1 + deal.opExGrowthRate / 100);
+                        currentGrowthRate * (1 + deal.globalInflation / 100);
                 }
                 operatingExpenses[period] = opExConstant * currentGrowthRate;
             }
@@ -93,10 +96,10 @@ const useCalculateDeal = (deal) => {
                 if (period > 11 && period % 12 === 0) {
                     currentContribGrowthRate =
                         currentContribGrowthRate *
-                        (1 + deal.contributionGrowthRate / 100);
+                        (1 + deal.globalInflation / 100);
                 }
                 otherRecurringContributions[period] =
-                    -deal.otherRecurringContribution * currentContribGrowthRate;
+                    -deal.otherMonthlyLandlordCost * currentContribGrowthRate;
             }
 
             const monthlyPayments = rates.map(
@@ -194,16 +197,16 @@ const useCalculateDeal = (deal) => {
                 return {
                     month: period + 1,
                     monthlyPayment: toCurrency(monthlyPayments[period]),
-                    operatingExpense: toCurrency(operatingExpenses[period]),
-                    tenantImprovementCost: toCurrency(
-                        tenantImprovementCosts[period]
-                    ),
-                    otherNonRecurringCost: toCurrency(
+                    opExPerMonthRsf: toCurrency(operatingExpenses[period]),
+                    tiCostPerRsf: toCurrency(tenantImprovementCosts[period]),
+                    otherOneTimeLandlordCost: toCurrency(
                         otherNonRecurringCosts[period]
                     ),
-                    otherRecurringCost: toCurrency(otherRecurringCosts[period]),
+                    otherMonthlyTenantCost: toCurrency(
+                        otherRecurringCosts[period]
+                    ),
                     rentAbatement: toCurrency(rentAbatements[period]),
-                    tenantImprovementAllowances: toCurrency(
+                    tiAllowancePerRsf: toCurrency(
                         tenantImprovementAllowances[period]
                     ),
                     commission: toCurrency(commissions[period]),
