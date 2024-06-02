@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 
 import BasicInputs from "../Inputs/BasicInputs";
 import ConcessionsInputs from "../Inputs/ConcessionInputs";
@@ -32,10 +32,15 @@ const DealForm = ({ dealId }) => {
     };
 
     return (
-        <React.Fragment>
+        <Paper sx={{ p: 2 }}>
             <Typography variant="h6">
                 {deal?.name.length > 0 ? deal?.name : "New Deal"}
             </Typography>
+            <DealMenu
+                dealId={dealId}
+                disabled={disabled}
+                setDisabled={setDisabled}
+            />
             <form>
                 <BasicInputs
                     deal={deal}
@@ -58,7 +63,7 @@ const DealForm = ({ dealId }) => {
                 disabled={disabled}
                 setDisabled={setDisabled}
             />
-        </React.Fragment>
+        </Paper>
     );
 };
 
