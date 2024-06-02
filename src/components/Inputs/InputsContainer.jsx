@@ -3,10 +3,7 @@ import React from "react";
 import { Grid } from "@mui/material";
 
 import DealForm from "../DealForm/DealForm";
-import {
-    DealsContext,
-    DealsDispatchContext,
-} from "../../contexts/DealsContexts";
+import { DealsContext } from "../../contexts/DealsContexts";
 
 const classes = {
     root: {
@@ -20,12 +17,6 @@ const classes = {
 
 const InputsContainer = () => {
     const deals = React.useContext(DealsContext);
-    const dispatch = React.useContext(DealsDispatchContext);
-
-    const handleChange = () =>
-        dispatch({
-            type: "added",
-        });
 
     return (
         <div style={classes.root}>
