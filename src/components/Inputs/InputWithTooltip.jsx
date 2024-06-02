@@ -16,6 +16,8 @@ const InputWithTooltip = ({
 }) => {
     return (
         <Tooltip
+            arrow
+            followCursor
             title={title}
             placement={placement}
             describeChild={describeChild}
