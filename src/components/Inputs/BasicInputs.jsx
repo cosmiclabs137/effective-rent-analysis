@@ -21,7 +21,7 @@ const BasicInputs = ({ deal, handleChange }) => {
                 label="Base rent (RSF/month)"
                 value={deal?.sqft}
                 handleChange={(e) => handleChange(e, "sqft")}
-                inputProps={{ min: 0, step: 0.01 }}
+                inputProps={{ min: 0, step: 1 }}
                 title="The number of rentable square feet leased."
             />
             <InputWithTooltip

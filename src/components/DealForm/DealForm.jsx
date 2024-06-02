@@ -11,10 +11,12 @@ import {
     DealsDispatchContext,
 } from "../../contexts/DealsContexts";
 
+import DealMenu from "../DealMenu/DealMenu";
+
 const DealForm = ({ dealId }) => {
     const deals = React.useContext(DealsContext);
     const dispatch = React.useContext(DealsDispatchContext);
-    const deal = deals.filter((deal) => deal.id === dealId)[0];
+    const deal = deals[dealId];
 
     const handleChange = (e, key, type = "number") => {
         const value = e.target.value;
@@ -37,6 +39,7 @@ const DealForm = ({ dealId }) => {
                 <ConcessionsInputs deal={deal} handleChange={handleChange} />
                 <OtherInputs deal={deal} handleChange={handleChange} />
             </form>
+            <DealMenu dealId={dealId} />
         </React.Fragment>
     );
 };

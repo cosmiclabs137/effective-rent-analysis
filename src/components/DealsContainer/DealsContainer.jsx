@@ -12,6 +12,8 @@ import DealTable from "../DealTable/DealTable";
 import { dealsReducer } from "../../reducers/dealsReducer";
 import { dealFactory } from "../../utils";
 
+import InputsContainer from "../Inputs/InputsContainer";
+
 const DealsContainer = () => {
     const [deals, dispatch] = React.useReducer(dealsReducer, [dealFactory(0)]);
     // const [dealId, setDealId] = React.useState(0);
