@@ -11,15 +11,9 @@ import {
     Typography,
 } from "@mui/material";
 
-const SummaryTable = ({ deals, title }) => {
-    const toCurrency = (num) => {
-        const formatted = Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-        }).format(num >= 0 ? num : -num);
-        return num >= 0 ? formatted : `(${formatted})`;
-    };
+import { toCurrency } from "../../utils";
 
+const SummaryTable = ({ deals, title }) => {
     const pmt = (rate, nper, pv, fv = 0) => {
         // adapted from: https://numpy.org/numpy-financial/latest/pmt.html
         const temp = (1 + rate) ** nper;
