@@ -31,7 +31,13 @@ const InputsContainer = () => {
         <div style={classes.root}>
             <Grid container justifyContent="center" spacing={2}>
                 {deals.map((deal) => (
-                    <Grid item key={deal.id} style={classes.gridItem}>
+                    <Grid
+                        item
+                        key={deal.id}
+                        style={classes.gridItem}
+                        xs={12}
+                        md={3}
+                    >
                         <DealForm dealId={deal.id} />
                     </Grid>
                 ))}
