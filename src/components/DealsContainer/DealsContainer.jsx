@@ -16,10 +16,15 @@ import DealTable from "../DealTable/DealTable";
 import { dealsReducer } from "../../reducers/dealsReducer";
 import { dealFactory } from "../../utils";
 import { columns } from "../../constants/columns";
+import InputsContainer from "../Inputs/InputsContainer";
 
 const DealsContainer = () => {
     const [currentTabIndex, setCurrentTabIndex] = React.useState("0");
-    const [deals, dispatch] = React.useReducer(dealsReducer, [dealFactory(0)]);
+    const [deals, dispatch] = React.useReducer(dealsReducer, [
+        dealFactory(0),
+        dealFactory(1),
+        dealFactory(2),
+    ]);
     // const [dealId, setDealId] = React.useState(0);
     const dealId = 0;
 
@@ -77,7 +82,6 @@ const DealsContainer = () => {
                                     <Grid
                                         item
                                         xs={12}
-                                        component={Paper}
                                         elevation={4}
                                         className="sticky"
                                         sx={{
@@ -89,7 +93,8 @@ const DealsContainer = () => {
                                             mt: 2,
                                         }}
                                     >
-                                        <DealForm dealId={dealId} />
+                                        {/* <DealForm dealId={dealId} /> */}
+                                        <InputsContainer />
                                     </Grid>
                                 </TabPanel>
                             )}
