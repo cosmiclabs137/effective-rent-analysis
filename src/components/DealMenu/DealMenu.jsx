@@ -11,9 +11,10 @@ import {
     IconButton,
     Tooltip,
 } from "@mui/material";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
 import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import LockIcon from "@mui/icons-material/Lock";
 import SaveIcon from "@mui/icons-material/Save";
 
 import {
@@ -22,7 +23,7 @@ import {
     bindDialog,
 } from "material-ui-popup-state/hooks";
 
-const DealMenu = ({ dealId }) => {
+const DealMenu = ({ dealId, disabled, setDisabled }) => {
     const popupState = usePopupState({
         variant: "dialog",
     });
@@ -39,8 +40,8 @@ const DealMenu = ({ dealId }) => {
                 }}
             >
                 <Tooltip title="Freeze input">
-                    <IconButton>
-                        <AcUnitIcon />
+                    <IconButton onClick={() => setDisabled(!disabled)}>
+                        {disabled ? <LockIcon /> : <LockOpenOutlinedIcon />}
                     </IconButton>
                 </Tooltip>
 

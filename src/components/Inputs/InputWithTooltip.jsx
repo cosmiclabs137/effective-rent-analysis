@@ -12,6 +12,7 @@ const InputWithTooltip = ({
     placement = "top",
     sx = { paddingTop: 2 },
     describeChild = true,
+    disabled = false,
 }) => {
     return (
         <Tooltip
@@ -28,6 +29,7 @@ const InputWithTooltip = ({
                     onChange={handleChange}
                     inputProps={inputProps}
                     InputProps={adornment}
+                    disabled={disabled}
                 />
             </FormControl>
         </Tooltip>

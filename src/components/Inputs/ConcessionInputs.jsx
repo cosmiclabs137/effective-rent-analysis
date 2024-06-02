@@ -2,7 +2,7 @@ import Collapsible from "../common/Collapsible/Collapsible";
 import InputWithTooltip from "./InputWithTooltip";
 import { dollarAdornment } from "../../constants";
 
-const ConcessionsInputs = ({ deal, handleChange }) => {
+const ConcessionsInputs = ({ deal, handleChange, disabled }) => {
     return (
         <Collapsible id="concessions-panel-content" summary="Concessions">
             <InputWithTooltip
@@ -11,6 +11,7 @@ const ConcessionsInputs = ({ deal, handleChange }) => {
                 handleChange={(e) => handleChange(e, "monthsFreeRent")}
                 inputProps={{ min: 0, step: 1 }}
                 title="The number of free months. (Front loaded, evenly spread, back loaded)?"
+                disabled={disabled}
             />
             <InputWithTooltip
                 label="Other one-time tenant cost."
@@ -19,6 +20,7 @@ const ConcessionsInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
                 title="Another one-time cost for tenant to be paid up front (e.g., key money)."
+                disabled={disabled}
             />
             <InputWithTooltip
                 label="Other monthly tenant cost"
@@ -27,6 +29,7 @@ const ConcessionsInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
                 title="Another monthly cost for tenant (e.g., parking)."
+                disabled={disabled}
             />
             <InputWithTooltip
                 label="Other one-time landlord cost"
@@ -37,6 +40,7 @@ const ConcessionsInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
                 title="Another one-time cost for landlord to be paid up front (e.g., lease buyout)."
+                disabled={disabled}
             />
 
             <InputWithTooltip
@@ -48,6 +52,7 @@ const ConcessionsInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
                 title="Another monthly cost for landlord (e.g., parking discount)."
+                disabled={disabled}
             />
 
             <InputWithTooltip
@@ -57,6 +62,7 @@ const ConcessionsInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
                 title=""
+                disabled={disabled}
             />
             <InputWithTooltip
                 label="TI allowance per RSF"
@@ -65,6 +71,7 @@ const ConcessionsInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
                 title=""
+                disabled={disabled}
             />
         </Collapsible>
     );

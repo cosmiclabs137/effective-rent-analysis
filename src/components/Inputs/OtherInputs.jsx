@@ -2,7 +2,7 @@ import Collapsible from "../common/Collapsible/Collapsible";
 import InputWithTooltip from "./InputWithTooltip";
 import { percentAdornment } from "../../constants";
 
-const OtherInputs = ({ deal, handleChange }) => {
+const OtherInputs = ({ deal, handleChange, disabled }) => {
     return (
         <Collapsible id="other-panel-content" summary="Other">
             <InputWithTooltip
@@ -12,6 +12,7 @@ const OtherInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.1 }}
                 adornment={{ endAdornment: percentAdornment }}
                 title="The percentage rate the tenant would be charged on an unsecured loan."
+                disabled={disabled}
             />
             <InputWithTooltip
                 label="Lanlord discount rate"
@@ -20,6 +21,7 @@ const OtherInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.1 }}
                 InputProps={{ endAdornment: percentAdornment }}
                 title="The return percent the landlord would make on an alternate investment."
+                disabled={disabled}
             />
             <InputWithTooltip
                 label="Commission percent (months 1 to 60)"
@@ -28,6 +30,7 @@ const OtherInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.1 }}
                 adornment={{ endAdornment: percentAdornment }}
                 title="The percent of the landlord's commission costs for the first 60 months."
+                disabled={disabled}
             />
             <InputWithTooltip
                 label="Commission pct (months 61+)"
@@ -36,6 +39,7 @@ const OtherInputs = ({ deal, handleChange }) => {
                 inputProps={{ min: 0, step: 0.1 }}
                 adornment={{ endAdornment: percentAdornment }}
                 title="The percent of the landlord's commission costs from month 61 onward."
+                disabled={disabled}
             />
         </Collapsible>
     );
