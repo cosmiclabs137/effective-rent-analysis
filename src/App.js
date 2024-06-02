@@ -1,6 +1,9 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+
+import CssBaseline from "@mui/material/CssBaseline";
 
 import { Grid } from "@mui/material";
 
@@ -17,10 +20,13 @@ function App() {
         setTitle(parsedTitle);
     }, [location]);
     return (
-        <Grid container>
-            {/* <BasicHeader title={title} /> */}
-            <Outlet />
-        </Grid>
+        <React.Fragment>
+            <CssBaseline />
+            <Grid container>
+                {/* <BasicHeader title={title} /> */}
+                <Outlet />
+            </Grid>
+        </React.Fragment>
     );
 }
 
