@@ -1,6 +1,6 @@
 import Collapsible from "../common/Collapsible/Collapsible";
 import InputWithTooltip from "./InputWithTooltip";
-import { percentAdornment } from "../../constants";
+import { percentAdornment } from "../../constants/adornments";
 
 const OtherInputs = ({ deal, handleChange, disabled }) => {
     return (

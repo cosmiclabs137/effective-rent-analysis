@@ -1,7 +1,7 @@
 import Collapsible from "../common/Collapsible/Collapsible";
 import InputWithTooltip from "../Inputs/InputWithTooltip";
 
-import { dollarAdornment, percentAdornment } from "../../constants";
+import { dollarAdornment, percentAdornment } from "../../constants/adornments";
 
 const BasicInputs = ({ deal, handleChange, disabled }) => {
     return (
