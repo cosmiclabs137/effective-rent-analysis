@@ -39,7 +39,7 @@ const DealMenu = ({ dealId, disabled, setDisabled }) => {
                     m: 1,
                 }}
             >
-                <Tooltip title="Freeze input">
+                <Tooltip title={disabled ? "Enable input" : "Disable input"}>
                     <IconButton onClick={() => setDisabled(!disabled)}>
                         {disabled ? <LockIcon /> : <LockOpenOutlinedIcon />}
                     </IconButton>
