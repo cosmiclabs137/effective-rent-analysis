@@ -4,14 +4,13 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import TableViewIcon from "@mui/icons-material/TableView";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Grid, Paper, Tab } from "@mui/material";
+import { Box, Grid, Tab } from "@mui/material";
 
 import {
     DealsContext,
     DealsDispatchContext,
 } from "../../contexts/DealsContexts";
 import useCalculateDeal from "../../hooks/useCalculateDeal";
-import DealForm from "../DealForm/DealForm";
 import DealTable from "../DealTable/DealTable";
 import { dealsReducer } from "../../reducers/dealsReducer";
 import { dealFactory } from "../../utils";
