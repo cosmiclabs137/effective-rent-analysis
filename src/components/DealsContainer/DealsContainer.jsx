@@ -16,6 +16,7 @@ import { dealsReducer } from "../../reducers/dealsReducer";
 import { dealFactory } from "../../utils";
 import { columns } from "../../constants/columns";
 import InputsContainer from "../Inputs/InputsContainer";
+import Summary from "../Summary/Summary";
 
 const DealsContainer = () => {
     const [currentTabIndex, setCurrentTabIndex] = React.useState("0");
@@ -27,8 +28,9 @@ const DealsContainer = () => {
     // const [dealId, setDealId] = React.useState(0);
     const dealId = 0;
 
-    const calculatedDeal = useCalculateDeal(deals[dealId]);
-
+    const { calculatedDeal, landlordResults, tenantResults } = useCalculateDeal(
+        deals[dealId]
+    );
     const handleTabChange = (e, tabIndex) => setCurrentTabIndex(tabIndex);
 
     return (
@@ -103,7 +105,7 @@ const DealsContainer = () => {
                                     <Box
                                         container="true"
                                         xs={12}
-                                        lg={9}
+                                        // lg={9}
                                         sx={{
                                             display: "flex",
                                             justifyContent: "center",
@@ -113,9 +115,13 @@ const DealsContainer = () => {
                                     >
                                         <div>
                                             <Grid item>
-                                                <DealTable
-                                                    rows={calculatedDeal}
-                                                    columns={columns}
+                                                <Summary
+                                                    tenantDeals={[
+                                                        tenantResults,
+                                                    ]}
+                                                    landlordDeals={[
+                                                        landlordResults,
+                                                    ]}
                                                 />
                                             </Grid>
                                         </div>
