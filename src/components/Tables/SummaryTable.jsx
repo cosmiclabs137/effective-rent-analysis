@@ -20,6 +20,12 @@ const SummaryTable = ({ deals, title }) => {
         const fact = ((1 + rate) * (temp - 1)) / rate;
         return -(fv + pv * temp) / fact;
     };
+    console.table(deals);
+
+    const netEffectiveRate = deals.map(
+        (deal) => -pmt(deal.rate / 12, deal.term, deal.pv)
+    )[0];
+    console.log(netEffectiveRate / deals[0].sqftLeased);
 
     return (
         <TableContainer component={Paper} sx={{ overflow: "scroll" }}>
@@ -32,7 +38,7 @@ const SummaryTable = ({ deals, title }) => {
                             </Typography>
                         </TableCell>
                         {deals.map((deal, index) => (
-                            <TableCell align="right">
+                            <TableCell align="right" key={index}>
                                 <Typography fontWeight="bold">
                                     {deal.name
                                         ? deal.name
@@ -47,8 +53,8 @@ const SummaryTable = ({ deals, title }) => {
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Total Cost For Occupancy
                         </TableCell>
-                        {deals.map((deal) => (
-                            <TableCell align="right">
+                        {deals.map((deal, index) => (
+                            <TableCell align="right" key={index}>
                                 {toCurrency(deal.totalCost)}
                             </TableCell>
                         ))}
@@ -57,8 +63,8 @@ const SummaryTable = ({ deals, title }) => {
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Present Value
                         </TableCell>
-                        {deals.map((deal) => (
-                            <TableCell align="right">
+                        {deals.map((deal, index) => (
+                            <TableCell align="right" key={index}>
                                 {toCurrency(deal.pv)}
                             </TableCell>
                         ))}
@@ -67,8 +73,8 @@ const SummaryTable = ({ deals, title }) => {
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Net Effective Rate per Annum
                         </TableCell>
-                        {deals.map((deal) => (
-                            <TableCell align="right">
+                        {deals.map((deal, index) => (
+                            <TableCell align="right" key={index}>
                                 {toCurrency(
                                     -pmt(deal.rate / 12, deal.term, deal.pv) *
                                         12
@@ -80,8 +86,8 @@ const SummaryTable = ({ deals, title }) => {
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Net Effective Rate per Month
                         </TableCell>
-                        {deals.map((deal) => (
-                            <TableCell align="right">
+                        {deals.map((deal, index) => (
+                            <TableCell align="right" key={index}>
                                 {toCurrency(
                                     -pmt(deal.rate / 12, deal.term, deal.pv)
                                 )}
@@ -90,28 +96,23 @@ const SummaryTable = ({ deals, title }) => {
                     </TableRow>
                     <TableRow key="net-effective-rate-per-annum-per-sf">
                         <TableCell sx={{ paddingLeft: 5 }}>
-                            Net Effective Rate per Annum/SF
+                            Net Effective Rate per Annum/RSF
                         </TableCell>
-                        {deals.map((deal) => (
-                            <TableCell align="right">
+                        {deals.map((deal, index) => (
+                            <TableCell align="right" key={index}>
                                 {toCurrency(
-                                    (-pmt(deal.rate / 12, deal.term, deal.pv) /
-                                        deal.sqftLeased) *
-                                        12
+                                    (netEffectiveRate * 12) / deal.sqftLeased
                                 )}
                             </TableCell>
                         ))}
                     </TableRow>
                     <TableRow key="net-effective-rate-per-month-per-sf">
                         <TableCell sx={{ paddingLeft: 5 }}>
-                            Net Effective Rate per Month/SF
+                            Net Effective Rate per Month/RSF
                         </TableCell>
-                        {deals.map((deal) => (
-                            <TableCell align="right">
-                                {toCurrency(
-                                    -pmt(deal.rate / 12, deal.term, deal.pv) /
-                                        deal.sqftLeased
-                                )}
+                        {deals.map((deal, index) => (
+                            <TableCell align="right" key={index}>
+                                {toCurrency(netEffectiveRate / deal.sqftLeased)}
                             </TableCell>
                         ))}
                     </TableRow>
