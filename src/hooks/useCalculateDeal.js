@@ -7,11 +7,9 @@ const useCalculateDeal = (deal) => {
     const beforeTaxOccupancyCostTotal = React.useRef(0);
     const tenantNetPresentValue = React.useRef(0);
     const occupancyOpExCommissionsTotal = React.useRef(0);
-    const ownerNetPresentValue = React.useRef(0);
+    const landlordNetPresentValue = React.useRef(0);
 
     const [results, setResults] = React.useState([]);
-
-    // console.table(deal);
 
     React.useEffect(() => {
         const calculateDeal = () => {
@@ -182,12 +180,12 @@ const useCalculateDeal = (deal) => {
             occupancyOpExCommissionsTotal.current =
                 occupancyOpExCommissions.reduce((acc, value) => acc + value, 0);
 
-            const ownerNetPV = occupancyOpExCommissions.map(
+            const landlordNetPV = occupancyOpExCommissions.map(
                 (cost, period) =>
                     -pv(deal.landlordDiscountRate / 1200, period, 0, cost)
             );
 
-            ownerNetPresentValue.current = ownerNetPV.reduce(
+            landlordNetPresentValue.current = landlordNetPV.reduce(
                 (acc, value) => acc + value,
                 0
             );
@@ -217,7 +215,7 @@ const useCalculateDeal = (deal) => {
                     occupancyOpExCommission: toCurrency(
                         occupancyOpExCommissions[period]
                     ),
-                    ownerNetPV: toCurrency(ownerNetPV[period]),
+                    ownerNetPV: toCurrency(landlordNetPV[period]),
                     tenantImprovementAllowance: toCurrency(
                         tenantImprovementAllowances[period]
                     ),
@@ -226,10 +224,33 @@ const useCalculateDeal = (deal) => {
 
             return data;
         };
-        setResults(calculateDeal());
+        const { calculatedDeal } = calculateDeal();
+        setResults(calculatedDeal);
     }, [deal]);
 
-    return results;
+    const landlordResults = {
+        name: deal.name,
+        rate: deal.landlordDiscountRate / 100,
+        totalCost: occupancyOpExCommissionsTotal.current,
+        pv: landlordNetPresentValue.current,
+        sqftLeased: deal.sqft,
+        term: deal.term,
+    };
+
+    const tenantResults = {
+        name: deal.name,
+        rate: deal.tenantDiscountRate / 100,
+        totalCost: beforeTaxOccupancyCostTotal.current,
+        pv: tenantNetPresentValue.current,
+        sqftLeased: deal.sqft,
+        term: deal.term,
+    };
+
+    return {
+        calculatedDeal: results,
+        landlordResults: landlordResults,
+        tenantResults: tenantResults,
+    };
 };
 
 export default useCalculateDeal;
