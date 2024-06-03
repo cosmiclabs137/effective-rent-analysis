@@ -20,12 +20,10 @@ const SummaryTable = ({ deals, title }) => {
         const fact = ((1 + rate) * (temp - 1)) / rate;
         return -(fv + pv * temp) / fact;
     };
-    console.table(deals);
 
     const netEffectiveRate = deals.map(
         (deal) => -pmt(deal.rate / 12, deal.term, deal.pv)
     )[0];
-    console.log(netEffectiveRate / deals[0].sqftLeased);
 
     return (
         <TableContainer component={Paper} sx={{ overflow: "scroll" }}>
