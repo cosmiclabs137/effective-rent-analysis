@@ -16,8 +16,6 @@ const DealTablesContainer = ({ deals }) => {
         setCurrentTabIndex(tabIndex);
     };
 
-    console.table(deals);
-
     return (
         <Box
             sx={{
