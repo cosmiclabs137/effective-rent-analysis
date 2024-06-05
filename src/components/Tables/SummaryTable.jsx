@@ -11,19 +11,12 @@ import {
     Typography,
 } from "@mui/material";
 
-import { toCurrency } from "../../utils";
+import { toCurrency, pmt } from "../../utils";
 
 const SummaryTable = ({ deals, title }) => {
-    const pmt = (rate, nper, pv, fv = 0) => {
-        // adapted from: https://numpy.org/numpy-financial/latest/pmt.html
-        const temp = (1 + rate) ** nper;
-        const fact = ((1 + rate) * (temp - 1)) / rate;
-        return -(fv + pv * temp) / fact;
-    };
-
-    const netEffectiveRate = deals.map(
+    const netEffectiveRates = deals.map(
         (deal) => -pmt(deal.rate / 12, deal.term, deal.pv)
-    )[0];
+    );
 
     return (
         <TableContainer component={Paper} sx={{ overflow: "scroll" }}>
@@ -99,7 +92,8 @@ const SummaryTable = ({ deals, title }) => {
                         {deals.map((deal, index) => (
                             <TableCell align="right" key={index}>
                                 {toCurrency(
-                                    (netEffectiveRate * 12) / deal.sqftLeased
+                                    (netEffectiveRates[index] * 12) /
+                                        deal.sqftLeased
                                 )}
                             </TableCell>
                         ))}
@@ -110,7 +104,9 @@ const SummaryTable = ({ deals, title }) => {
                         </TableCell>
                         {deals.map((deal, index) => (
                             <TableCell align="right" key={index}>
-                                {toCurrency(netEffectiveRate / deal.sqftLeased)}
+                                {toCurrency(
+                                    netEffectiveRates[index] / deal.sqftLeased
+                                )}
                             </TableCell>
                         ))}
                     </TableRow>
