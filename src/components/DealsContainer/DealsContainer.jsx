@@ -11,10 +11,8 @@ import {
     DealsDispatchContext,
 } from "../../contexts/DealsContexts";
 import useCalculateDeals from "../../hooks/useCalculateDeals";
-import DealTable from "../DealTable/DealTable";
 import { dealsReducer } from "../../reducers/dealsReducer";
 import { dealFactory } from "../../utils";
-import { columns } from "../../constants/columns";
 import InputsContainer from "../Inputs/InputsContainer";
 import Summary from "../Summary/Summary";
 
