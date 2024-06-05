@@ -215,37 +215,32 @@ const useCalculateDeal = (deals) => {
 
         setDealsResults(deals.map((deal) => calculateDeal(deal)));
 
-        deals.forEach((deal) => {
-            setLandlordDealResults(
-                landlordDealResults.concat([
-                    {
-                        name: deal.name,
-                        rate: deal.landlordDiscountRate / 100,
-                        totalCost: occupancyOpExCommissionsTotal.current,
-                        pv: landlordNetPresentValue.current,
-                        sqftLeased: deal.sqft,
-                        term: deal.term,
-                    },
-                ])
-            );
+        setLandlordDealResults(
+            deals.map((deal) => ({
+                id: deal.id,
+                name: deal.name,
+                rate: deal.landlordDiscountRate / 100,
+                totalCost: occupancyOpExCommissionsTotal.current,
+                pv: landlordNetPresentValue.current,
+                sqftLeased: deal.sqft,
+                term: deal.term,
+            }))
+        );
 
-            setTenantDealResults(
-                tenantDealResults.concat([
-                    {
-                        name: deal.name,
-                        rate: deal.tenantDiscountRate / 100,
-                        totalCost: beforeTaxOccupancyCostTotal.current,
-                        pv: tenantNetPresentValue.current,
-                        sqftLeased: deal.sqft,
-                        term: deal.term,
-                    },
-                ])
-            );
-        });
+        setTenantDealResults(
+            deals.map((deal) => ({
+                id: deal.id,
+                name: deal.name,
+                rate: deal.tenantDiscountRate / 100,
+                totalCost: beforeTaxOccupancyCostTotal.current,
+                pv: tenantNetPresentValue.current,
+                sqftLeased: deal.sqft,
+                term: deal.term,
+            }))
+        );
     }, [deals]);
 
     return {
-        // calculatedDeals: [dealsResults[0]],
         calculatedDeals: dealsResults,
         landlordResults: landlordDealResults,
         tenantResults: tenantDealResults,
