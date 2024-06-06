@@ -4,7 +4,7 @@ import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 const DealTab = ({ tabs, tabNames }) => {
-    const [value, setValue] = React.useState("1");
+    const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -15,7 +15,7 @@ const DealTab = ({ tabs, tabNames }) => {
                 <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                     <TabList onChange={handleChange} aria-label="tabs">
                         {tabNames.map((name, index) => (
-                            <Tab label={name} value={index + 1} />
+                            <Tab label={name} value={index} />
                         ))}
                     </TabList>
                 </Box>
