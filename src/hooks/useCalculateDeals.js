@@ -10,8 +10,43 @@ const useCalculateDeal = (deals) => {
     const landlordNetPresentValue = React.useRef(0);
 
     const [dealsResults, setDealsResults] = React.useState([]);
-    const [landlordDealResults, setLandlordDealResults] = React.useState([]);
-    const [tenantDealResults, setTenantDealResults] = React.useState([]);
+    const landlordDealResults = React.useRef([]);
+    const tenantDealResults = React.useRef([]);
+
+    const isNew = (arr, deal) =>
+        arr.filter((res) => res.id === deal.id).length === 0;
+
+    const updateLandlordResults = (deal) => {
+        const results = {
+            id: deal.id,
+            name: deal.name,
+            rate: deal.landlordDiscountRate / 100,
+            totalCost: occupancyOpExCommissionsTotal.current,
+            pv: landlordNetPresentValue.current,
+            sqftLeased: deal.sqft,
+            term: deal.term,
+        };
+        const currentResults = landlordDealResults.current;
+        landlordDealResults.current = isNew(currentResults, deal)
+            ? [...currentResults, results]
+            : [...currentResults.filter((res) => res.id !== deal.id), results];
+    };
+
+    const updateTenantResults = (deal) => {
+        const results = {
+            id: deal.id,
+            name: deal.name,
+            rate: deal.tenantDiscountRate / 100,
+            totalCost: beforeTaxOccupancyCostTotal.current,
+            pv: tenantNetPresentValue.current,
+            sqftLeased: deal.sqft,
+            term: deal.term,
+        };
+        const currentResults = tenantDealResults.current;
+        tenantDealResults.current = isNew(tenantDealResults.current, deal)
+            ? [...currentResults, results]
+            : [...currentResults.filter((res) => res.id !== deal.id), results];
+    };
 
     React.useEffect(() => {
         const calculateDeal = (deal) => {
@@ -177,6 +212,9 @@ const useCalculateDeal = (deals) => {
                 0
             );
 
+            updateLandlordResults(deal);
+            updateTenantResults(deal);
+
             // combine all the data into a table-friendly format
             const data = rates.map((rate, period) => {
                 return {
@@ -214,36 +252,12 @@ const useCalculateDeal = (deals) => {
         };
 
         setDealsResults(deals.map((deal) => calculateDeal(deal)));
-
-        setLandlordDealResults(
-            deals.map((deal) => ({
-                id: deal.id,
-                name: deal.name,
-                rate: deal.landlordDiscountRate / 100,
-                totalCost: occupancyOpExCommissionsTotal.current,
-                pv: landlordNetPresentValue.current,
-                sqftLeased: deal.sqft,
-                term: deal.term,
-            }))
-        );
-
-        setTenantDealResults(
-            deals.map((deal) => ({
-                id: deal.id,
-                name: deal.name,
-                rate: deal.tenantDiscountRate / 100,
-                totalCost: beforeTaxOccupancyCostTotal.current,
-                pv: tenantNetPresentValue.current,
-                sqftLeased: deal.sqft,
-                term: deal.term,
-            }))
-        );
     }, [deals]);
 
     return {
         calculatedDeals: dealsResults,
-        landlordResults: landlordDealResults,
-        tenantResults: tenantDealResults,
+        landlordResults: landlordDealResults.current,
+        tenantResults: tenantDealResults.current,
     };
 };
 
