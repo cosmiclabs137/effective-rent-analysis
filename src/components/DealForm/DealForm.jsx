@@ -6,6 +6,8 @@ import BasicInputs from "../Inputs/BasicInputs";
 import ConcessionsInputs from "../Inputs/ConcessionInputs";
 import OtherInputs from "../Inputs/OtherInputs";
 
+import DealMetrics from "../DealMetrics/DealMetrics";
+
 import {
     DealsContext,
     DealsDispatchContext,
@@ -41,6 +43,7 @@ const DealForm = ({ dealId }) => {
                 disabled={disabled}
                 setDisabled={setDisabled}
             />
+            <DealMetrics landlord={[]} tenant={[]} />
             <form>
                 <BasicInputs
                     deal={deal}
