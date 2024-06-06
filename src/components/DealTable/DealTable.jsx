@@ -17,6 +17,7 @@ const DealTable = ({
                     className="MuiPaper-root"
                     sx={{ p: 1 }}
                     getRowId={(row) => row.month - 1}
+                    autoHeight={true}
                 />
             </div>
         </ErrorBoundary>
