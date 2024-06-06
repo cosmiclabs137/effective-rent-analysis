@@ -11,16 +11,12 @@ const DealPanel = ({ children, value, index }) =>
 const DealTablesContainer = ({ deals }) => {
     const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
-    const handleTabChange = (e, tabIndex) => {
-        console.log("clicked tab!");
-        setCurrentTabIndex(tabIndex);
-    };
+    const handleTabChange = (e, tabIndex) => setCurrentTabIndex(tabIndex);
 
     return (
         <Box
             sx={{
                 flexGrow: 1,
-                backgroundColor: "#f8f8ff",
                 minHeight: "90vh",
                 padding: 0,
             }}
