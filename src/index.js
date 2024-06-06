@@ -17,10 +17,10 @@ root.render(
         <HashRouter>
             <Routes>
                 <Route path="/" element={<App />}>
-                    <Route path="/" element={<DealPage />} />
+                    <Route path="/" element={<PGTestPage />} />
                     <Route path="test" element={<IndexPage />} />
                     <Route path="testes" element={<TestPage />} />
-                    <Route path="pg" element={<PGTestPage />} />
+                    <Route path="pg" element={<DealPage />} />
                 </Route>
             </Routes>
         </HashRouter>
