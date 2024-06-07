@@ -1,6 +1,7 @@
 import React from "react";
 
-import { toCurrency, pv } from "../utils";
+import { MetricsDispatchContext } from "../contexts/MetricsContext";
+import { toCurrency, pv, pmt } from "../utils";
 
 // custom hook for calculating the deals
 const useCalculateDeal = (deals) => {
@@ -12,6 +13,8 @@ const useCalculateDeal = (deals) => {
     const [dealsResults, setDealsResults] = React.useState([]);
     const landlordDealResults = React.useRef([]);
     const tenantDealResults = React.useRef([]);
+
+    const metricsDispatch = React.useContext(MetricsDispatchContext);
 
     const isNew = (arr, deal) =>
         arr.filter((res) => res.id === deal.id).length === 0;
@@ -253,6 +256,24 @@ const useCalculateDeal = (deals) => {
 
         setDealsResults(deals.map((deal) => calculateDeal(deal)));
     }, [deals]);
+
+    // landlordMetricsDispatch();
+    // tenantMetricsDispatch();
+    // const landlordNERs = deals.map((deal) => ({
+    //     id: deal.id,
+    //     ner: -pmt(deal.rate / 12, deal.term, deal.pv),
+    // }));
+
+    // landlordNERs.forEach((ner) =>
+    //     metricsDispatch({ type: "landlord", metrics: ner })
+    // );
+
+    // const tenantNERs = deals.map((deal) => ({
+    //     id: deal.id,
+    //     ner: -pmt(deal.rate / 12, deal.term, deal.pv),
+    // }));
+
+    // tenantNERs.forEach((ner) => metricsDispatch("tenant", { metrics: ner }));
 
     return {
         calculatedDeals: dealsResults,
