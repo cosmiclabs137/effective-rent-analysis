@@ -1,17 +1,17 @@
 export const metricsReducer = (metrics, action) => {
     switch (action.type) {
-        case "landlord": {
-            return {
-                tenant: [...metrics.tenant],
-                landlord: [...metrics.landlord, action.metrics],
-            };
+        case "add": {
+            // return metrics.map((metric) =>
+            //     metric.id !== action.value.id ? metric : action.value
+            // );
+            return [...metrics, action.value];
         }
-        case "tenant": {
-            return {
-                landlord: [...metrics.landlord],
-                tenant: [...metrics.tenant, action.metrics],
-            };
+        case "update": {
+            return metrics.map((metric) =>
+                metric.id === action.value.id ? action.value : metric
+            );
         }
+
         default: {
             throw Error("Unknown action: " + action.type);
         }

@@ -7,6 +7,7 @@ import ConcessionsInputs from "../Inputs/ConcessionInputs";
 import OtherInputs from "../Inputs/OtherInputs";
 
 import DealMetrics from "../DealMetrics/DealMetrics";
+import { MetricsContext } from "../../contexts/MetricsContext";
 
 import {
     DealsContext,
@@ -21,6 +22,8 @@ const DealForm = ({ dealId }) => {
     const deals = React.useContext(DealsContext);
     const dispatch = React.useContext(DealsDispatchContext);
     const deal = deals[dealId];
+
+    const metrics = React.useContext(MetricsContext);
 
     const handleChange = (e, key, type = "number") => {
         const value = e.target.value;
@@ -43,7 +46,7 @@ const DealForm = ({ dealId }) => {
                 disabled={disabled}
                 setDisabled={setDisabled}
             />
-            <DealMetrics landlord={[]} tenant={[]} />
+            <DealMetrics metrics={metrics[dealId]} />
             <form>
                 <BasicInputs
                     deal={deal}

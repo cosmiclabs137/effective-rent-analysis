@@ -1,10 +1,9 @@
 import React from "react";
 
-import { MetricsDispatchContext } from "../contexts/MetricsContext";
 import { toCurrency, pv, pmt } from "../utils";
 
 // custom hook for calculating the deals
-const useCalculateDeal = (deals) => {
+const useCalculateDeal = (deals, metricsDispatch, metrics) => {
     const beforeTaxOccupancyCostTotal = React.useRef(0);
     const tenantNetPresentValue = React.useRef(0);
     const occupancyOpExCommissionsTotal = React.useRef(0);
@@ -14,10 +13,12 @@ const useCalculateDeal = (deals) => {
     const landlordDealResults = React.useRef([]);
     const tenantDealResults = React.useRef([]);
 
-    const metricsDispatch = React.useContext(MetricsDispatchContext);
-
     const isNew = (arr, deal) =>
         arr.filter((res) => res.id === deal.id).length === 0;
+
+    const pvPerRsf = (rate, nper, pv, sqft) => -pmt(rate, nper, pv) / sqft;
+
+    // console.table(metrics);
 
     const updateLandlordResults = React.useCallback(
         (deal) => {
@@ -267,25 +268,33 @@ const useCalculateDeal = (deals) => {
         };
 
         setDealsResults(deals.map((deal) => calculateDeal(deal)));
-    }, [deals, updateLandlordResults, updateTenantResults]);
+    }, [deals, updateLandlordResults, updateTenantResults, metricsDispatch]);
 
-    // landlordMetricsDispatch();
-    // tenantMetricsDispatch();
-    // const landlordNERs = deals.map((deal) => ({
-    //     id: deal.id,
-    //     ner: -pmt(deal.rate / 12, deal.term, deal.pv),
-    // }));
-
-    // landlordNERs.forEach((ner) =>
-    //     metricsDispatch({ type: "landlord", metrics: ner })
-    // );
-
-    // const tenantNERs = deals.map((deal) => ({
-    //     id: deal.id,
-    //     ner: -pmt(deal.rate / 12, deal.term, deal.pv),
-    // }));
-
-    // tenantNERs.forEach((ner) => metricsDispatch("tenant", { metrics: ner }));
+    React.useEffect(() => {
+        deals.forEach((deal, index) => {
+            const currLandlordResults = landlordDealResults.current[index];
+            const currTenantResults = tenantDealResults.current[index];
+            console.table(currLandlordResults);
+            metricsDispatch({
+                type: "update",
+                value: {
+                    id: deal.id,
+                    landlord:
+                        -pmt(
+                            currLandlordResults.rate / 12,
+                            currLandlordResults.term,
+                            currLandlordResults.pv
+                        ) / currLandlordResults.sqftLeased,
+                    tenant:
+                        -pmt(
+                            currTenantResults.rate / 12,
+                            currTenantResults.term,
+                            currTenantResults.pv
+                        ) / currTenantResults.sqftLeased,
+                },
+            });
+        });
+    }, [deals, metricsDispatch]);
 
     return {
         calculatedDeals: dealsResults,

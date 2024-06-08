@@ -25,25 +25,28 @@ const DealsContainer = () => {
     // const [dealId, setDealId] = React.useState(0);
     // const dealId = 0;
 
-    const [metrics, metricsDispatch] = React.useReducer(metricsReducer, {
-        landlord: [],
-        tenant: [],
-    });
+    const [metrics, metricsDispatch] = React.useReducer(metricsReducer, [
+        { id: 0, landlord: 2, tenant: 3 },
+        { id: 1, landlord: 15, tenant: 34 },
+        { id: 2, landlord: 69, tenant: 420 },
+    ]);
 
     const { calculatedDeals, landlordResults, tenantResults } =
-        useCalculateDeals(deals);
+        useCalculateDeals(deals, metricsDispatch, metrics);
     const handleTabChange = (e, tabIndex) => setCurrentTabIndex(tabIndex);
 
     const deferredCalculatedDeals = React.useDeferredValue(calculatedDeals);
     const deferredLandlordDeals = React.useDeferredValue(landlordResults);
     const deferredTenantDeals = React.useDeferredValue(tenantResults);
+    // const deferredMetrics = React.useDeferredValue(metrics);
 
     return (
         <AppContext
             deals={deals}
             dealsDispatch={dealsDispatch}
+            // metrics={deferredMetrics}
             metrics={metrics}
-            metricsDispatch={metricsDispatch}
+            // metricsDispatch={metricsDispatch}
         >
             <Box
                 sx={{
