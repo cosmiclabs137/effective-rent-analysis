@@ -16,37 +16,49 @@ const useCalculateDeal = (deals) => {
     const isNew = (arr, deal) =>
         arr.filter((res) => res.id === deal.id).length === 0;
 
-    const updateLandlordResults = (deal) => {
-        const results = {
-            id: deal.id,
-            name: deal.name,
-            rate: deal.landlordDiscountRate / 100,
-            totalCost: occupancyOpExCommissionsTotal.current,
-            pv: landlordNetPresentValue.current,
-            sqftLeased: deal.sqft,
-            term: deal.term,
-        };
-        const currentResults = landlordDealResults.current;
-        landlordDealResults.current = isNew(currentResults, deal)
-            ? [...currentResults, results]
-            : [...currentResults.filter((res) => res.id !== deal.id), results];
-    };
+    const updateLandlordResults = React.useCallback(
+        (deal) => {
+            const results = {
+                id: deal.id,
+                name: deal.name,
+                rate: deal.landlordDiscountRate / 100,
+                totalCost: occupancyOpExCommissionsTotal.current,
+                pv: landlordNetPresentValue.current,
+                sqftLeased: deal.sqft,
+                term: deal.term,
+            };
+            const currentResults = landlordDealResults.current;
+            landlordDealResults.current = isNew(currentResults, deal)
+                ? [...currentResults, results]
+                : [
+                      ...currentResults.filter((res) => res.id !== deal.id),
+                      results,
+                  ];
+        },
+        [occupancyOpExCommissionsTotal, landlordDealResults]
+    );
 
-    const updateTenantResults = (deal) => {
-        const results = {
-            id: deal.id,
-            name: deal.name,
-            rate: deal.tenantDiscountRate / 100,
-            totalCost: beforeTaxOccupancyCostTotal.current,
-            pv: tenantNetPresentValue.current,
-            sqftLeased: deal.sqft,
-            term: deal.term,
-        };
-        const currentResults = tenantDealResults.current;
-        tenantDealResults.current = isNew(tenantDealResults.current, deal)
-            ? [...currentResults, results]
-            : [...currentResults.filter((res) => res.id !== deal.id), results];
-    };
+    const updateTenantResults = React.useCallback(
+        (deal) => {
+            const results = {
+                id: deal.id,
+                name: deal.name,
+                rate: deal.tenantDiscountRate / 100,
+                totalCost: beforeTaxOccupancyCostTotal.current,
+                pv: tenantNetPresentValue.current,
+                sqftLeased: deal.sqft,
+                term: deal.term,
+            };
+            const currentResults = tenantDealResults.current;
+            tenantDealResults.current = isNew(tenantDealResults.current, deal)
+                ? [...currentResults, results]
+                : [
+                      ...currentResults.filter((res) => res.id !== deal.id),
+                      results,
+                  ];
+        },
+        [beforeTaxOccupancyCostTotal, tenantNetPresentValue]
+    );
 
     React.useEffect(() => {
         const calculateDeal = (deal) => {
@@ -252,7 +264,7 @@ const useCalculateDeal = (deals) => {
         };
 
         setDealsResults(deals.map((deal) => calculateDeal(deal)));
-    }, [deals]);
+    }, [deals, updateLandlordResults, updateTenantResults]);
 
     return {
         calculatedDeals: dealsResults,
