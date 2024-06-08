@@ -109,64 +109,61 @@ const DealsContainer = () => {
                             </TabPanel>
                         )}
 
-                            {currentTabIndex === "1" && (
-                                <TabPanel value="1">
-                                    <Box
-                                        container="true"
-                                        xs={12}
-                                        sx={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            flexDirection: "column",
-                                            padding: 2,
-                                        }}
-                                    >
-                                        <div>
-                                            <Grid item>
-                                                <Summary
-                                                    tenantDeals={[
-                                                        deferredTenantDeals,
-                                                    ]}
-                                                    landlordDeals={[
-                                                        deferredLandlordDeals,
-                                                    ]}
-                                                />
-                                            </Grid>
-                                        </div>
-                                    </Box>
-                                </TabPanel>
-                            )}
+                        {currentTabIndex === "1" && (
+                            <TabPanel value="1">
+                                <Box
+                                    container="true"
+                                    xs={12}
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        flexDirection: "column",
+                                        padding: 2,
+                                    }}
+                                >
+                                    <div>
+                                        <Grid item>
+                                            <Summary
+                                                tenantDeals={[
+                                                    deferredTenantDeals,
+                                                ]}
+                                                landlordDeals={[
+                                                    deferredLandlordDeals,
+                                                ]}
+                                            />
+                                        </Grid>
+                                    </div>
+                                </Box>
+                            </TabPanel>
+                        )}
 
-                            {currentTabIndex === "2" && (
-                                <TabPanel value="2" style={{ width: "100%" }}>
-                                    <Box
-                                        container="true"
-                                        xs={12}
-                                        sx={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            flexDirection: "column",
-                                            // padding: 2,
-                                            width: "100wh",
-                                        }}
-                                    >
-                                        <div>
-                                            <Grid item>
-                                                <DealTablesContainer
-                                                    deals={
-                                                        deferredCalculatedDeals
-                                                    }
-                                                />
-                                            </Grid>
-                                        </div>
-                                    </Box>
-                                </TabPanel>
-                            )}
-                        </Grid>
-                    </TabContext>
-                </Box>
-            </DealsDispatchContext.Provider>
-        </DealsContext.Provider>
+                        {currentTabIndex === "2" && (
+                            <TabPanel value="2" style={{ width: "100%" }}>
+                                <Box
+                                    container="true"
+                                    xs={12}
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        flexDirection: "column",
+                                        // padding: 2,
+                                        width: "100wh",
+                                    }}
+                                >
+                                    <div>
+                                        <Grid item>
+                                            <DealTablesContainer
+                                                deals={deferredCalculatedDeals}
+                                            />
+                                        </Grid>
+                                    </div>
+                                </Box>
+                            </TabPanel>
+                        )}
+                    </Grid>
+                </TabContext>
+            </Box>
+        </AppContext>
     );
 };
 
