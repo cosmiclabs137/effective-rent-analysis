@@ -32,6 +32,10 @@ const DealsContainer = () => {
         useCalculateDeals(deals);
     const handleTabChange = (e, tabIndex) => setCurrentTabIndex(tabIndex);
 
+    const deferredCalculatedDeals = React.useDeferredValue(calculatedDeals);
+    const deferredLandlordDeals = React.useDeferredValue(landlordResults);
+    const deferredTenantDeals = React.useDeferredValue(tenantResults);
+
     return (
         <DealsContext.Provider value={deals}>
             <DealsDispatchContext.Provider value={dispatch}>
@@ -115,10 +119,10 @@ const DealsContainer = () => {
                                             <Grid item>
                                                 <Summary
                                                     tenantDeals={[
-                                                        tenantResults,
+                                                        deferredTenantDeals,
                                                     ]}
                                                     landlordDeals={[
-                                                        landlordResults,
+                                                        deferredLandlordDeals,
                                                     ]}
                                                 />
                                             </Grid>
@@ -143,7 +147,9 @@ const DealsContainer = () => {
                                         <div>
                                             <Grid item>
                                                 <DealTablesContainer
-                                                    deals={calculatedDeals}
+                                                    deals={
+                                                        deferredCalculatedDeals
+                                                    }
                                                 />
                                             </Grid>
                                         </div>
