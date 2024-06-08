@@ -28,7 +28,7 @@ const DealMetrics = ({ metrics }) => {
                 <Tooltip
                     arrow
                     followCursor
-                    title="Landlord net effective rate."
+                    title="Landlord net effective rate / RSF."
                     placement="top"
                     describeChild
                 >
@@ -42,7 +42,7 @@ const DealMetrics = ({ metrics }) => {
                 <Tooltip
                     arrow
                     followCursor
-                    title="Tenant net effective rate."
+                    title="Tenant net effective rate / RSF."
                     placement="top"
                     describeChild
                 >
