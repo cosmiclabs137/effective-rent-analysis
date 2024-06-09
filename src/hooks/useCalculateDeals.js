@@ -16,10 +16,6 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
     const isNew = (arr, deal) =>
         arr.filter((res) => res.id === deal.id).length === 0;
 
-    const pvPerRsf = (rate, nper, pv, sqft) => -pmt(rate, nper, pv) / sqft;
-
-    // console.table(metrics);
-
     const updateLandlordResults = React.useCallback(
         (deal) => {
             const results = {
