@@ -16,7 +16,7 @@ import {
 
 import DealMenu from "../DealMenu/DealMenu";
 
-const DealForm = ({ dealId }) => {
+const DealForm = ({ dealId, disableMetrics = false }) => {
     const [disabled, setDisabled] = React.useState(false);
 
     const deals = React.useContext(DealsContext);
@@ -46,7 +46,7 @@ const DealForm = ({ dealId }) => {
                 disabled={disabled}
                 setDisabled={setDisabled}
             />
-            <DealMetrics metrics={metrics[dealId]} />
+            {!disableMetrics && <DealMetrics metrics={metrics[dealId]} />}
             <form>
                 <BasicInputs
                     deal={deal}
