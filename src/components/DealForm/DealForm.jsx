@@ -16,7 +16,7 @@ import {
 
 import DealMenu from "../DealMenu/DealMenu";
 
-const DealForm = ({ dealId, disableMetrics = false }) => {
+const DealForm = ({ dealId, disable = { metrics: false, name: false } }) => {
     const [disabled, setDisabled] = React.useState(false);
 
     const deals = React.useContext(DealsContext);
@@ -38,15 +38,17 @@ const DealForm = ({ dealId, disableMetrics = false }) => {
 
     return (
         <Paper sx={{ p: 2 }}>
-            <Typography variant="h6">
-                {deal?.name.length > 0 ? deal?.name : "New Deal"}
-            </Typography>
+            {!disable.name && (
+                <Typography variant="h6">
+                    {deal?.name.length > 0 ? deal?.name : "New Deal"}
+                </Typography>
+            )}
             <DealMenu
                 dealId={dealId}
                 disabled={disabled}
                 setDisabled={setDisabled}
             />
-            {!disableMetrics && <DealMetrics metrics={metrics[dealId]} />}
+            {!disable.metrics && <DealMetrics metrics={metrics[dealId]} />}
             <form>
                 <BasicInputs
                     deal={deal}

@@ -18,7 +18,9 @@ const classes = {
 };
 
 const FormPanel = ({ dealId, value, index }) =>
-    value === index && <DealForm dealId={dealId} disableMetrics={true} />;
+    value === index && (
+        <DealForm dealId={dealId} disable={{ metrics: true, name: true }} />
+    );
 
 const SelectableInputsContainer = ({ sx = {} }) => {
     const deals = React.useContext(DealsContext);
