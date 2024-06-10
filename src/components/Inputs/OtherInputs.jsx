@@ -6,6 +6,15 @@ const OtherInputs = ({ deal, handleChange, disabled }) => {
     return (
         <Collapsible id="other-panel-content" summary="Other">
             <InputWithTooltip
+                label="Global inflation"
+                value={deal?.globalInflation}
+                handleChange={(e) => handleChange(e, "globalInflation")}
+                inputProps={{ min: 0, step: 0.1 }}
+                adornment={{ endAdornment: percentAdornment }}
+                title="The annual growth rate for operating expenses and other recurring costs."
+                disabled={disabled}
+            />
+            <InputWithTooltip
                 label="Tenant discount rate"
                 value={deal?.tenantDiscountRate}
                 handleChange={(e) => handleChange(e, "tenantDiscountRate")}
