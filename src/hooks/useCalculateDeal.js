@@ -57,8 +57,8 @@ const useCalculateDeal = (deal) => {
             );
             otherNonRecurringCosts[0] = -Number(deal.otherOneTimeTenantCost);
 
-            const otherRecurringCosts = Array.from(
-                new Float32Array(rates.length).fill(deal.otherOneTimeTenantCost)
+            const otherMonthlyTenantCosts = Array.from(
+                new Float32Array(rates.length).fill(deal.otherMonthlyTenantCost)
             );
             let currentRecurringCostGrowthRate = 1;
             for (let period = 0; period < deal.term; period++) {
@@ -67,8 +67,8 @@ const useCalculateDeal = (deal) => {
                         currentRecurringCostGrowthRate *
                         (1 + deal.globalInflation / 100);
                 }
-                otherRecurringCosts[period] =
-                    deal.otherOneTimeTenantCost *
+                otherMonthlyTenantCosts[period] =
+                    deal.otherMonthlyTenantCost *
                     currentRecurringCostGrowthRate;
             }
 
@@ -130,7 +130,7 @@ const useCalculateDeal = (deal) => {
                         operatingExpenses[period] +
                         tenantImprovementCosts[period] +
                         otherNonRecurringCosts[period] +
-                        otherRecurringCosts[period] +
+                        otherMonthlyTenantCosts[period] +
                         otherRecurringContributions[period] +
                         rentAbatements[period] +
                         tenantImprovementAllowances[period]
