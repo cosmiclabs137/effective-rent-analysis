@@ -270,7 +270,6 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
         deals.forEach((deal, index) => {
             const currLandlordResults = landlordDealResults.current[index];
             const currTenantResults = tenantDealResults.current[index];
-            console.table(currLandlordResults);
             metricsDispatch({
                 type: "update",
                 value: {
