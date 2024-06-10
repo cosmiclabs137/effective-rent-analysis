@@ -49,7 +49,7 @@ const ConcessionsInputs = ({ deal, handleChange, disabled }) => {
                 handleChange={(e) => handleChange(e, "tiAllowancePerRsf")}
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
-                title=""
+                title="The cost per rentable square foot that the landlord will pay."
                 disabled={disabled}
             />
             <InputWithTooltip
@@ -97,7 +97,7 @@ const ConcessionsInputs = ({ deal, handleChange, disabled }) => {
                 handleChange={(e) => handleChange(e, "tiCostPerRsf")}
                 inputProps={{ min: 0, step: 0.01 }}
                 adornment={{ startAdornment: dollarAdornment }}
-                title=""
+                title="The cost per rentable square foot that the tenant will pay."
                 disabled={disabled}
             />
         </Collapsible>
