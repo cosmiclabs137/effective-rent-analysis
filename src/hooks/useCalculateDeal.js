@@ -167,7 +167,7 @@ const useCalculateDeal = (deal) => {
                 (payment, period) => {
                     return (
                         payment +
-                        otherRecurringCosts[period] +
+                        otherMonthlyTenantCosts[period] +
                         rentAbatements[period] +
                         tenantImprovementAllowances[period] +
                         otherNonRecurringCosts[period] +
@@ -201,7 +201,7 @@ const useCalculateDeal = (deal) => {
                         otherNonRecurringCosts[period]
                     ),
                     otherMonthlyTenantCost: toCurrency(
-                        otherRecurringCosts[period]
+                        otherMonthlyTenantCosts[period]
                     ),
                     rentAbatement: toCurrency(rentAbatements[period]),
                     tiAllowancePerRsf: toCurrency(

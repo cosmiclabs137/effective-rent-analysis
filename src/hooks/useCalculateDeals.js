@@ -91,8 +91,8 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
             );
             otherNonRecurringCosts[0] = -Number(deal.otherOneTimeTenantCost);
 
-            const otherRecurringCosts = Array.from(
-                new Float32Array(rates.length).fill(deal.otherOneTimeTenantCost)
+            const otherMonthlyTenantCosts = Array.from(
+                new Float32Array(rates.length).fill(deal.otherMonthlyTenantCost)
             );
             let currentRecurringCostGrowthRate = 1;
             for (let period = 0; period < deal.term; period++) {
@@ -101,8 +101,8 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                         currentRecurringCostGrowthRate *
                         (1 + deal.globalInflation / 100);
                 }
-                otherRecurringCosts[period] =
-                    deal.otherOneTimeTenantCost *
+                otherMonthlyTenantCosts[period] =
+                    deal.otherMonthlyTenantCost *
                     currentRecurringCostGrowthRate;
             }
 
@@ -164,7 +164,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                         operatingExpenses[period] +
                         tenantImprovementCosts[period] +
                         otherNonRecurringCosts[period] +
-                        otherRecurringCosts[period] +
+                        otherMonthlyTenantCosts[period] +
                         otherRecurringContributions[period] +
                         rentAbatements[period] +
                         tenantImprovementAllowances[period]
@@ -201,7 +201,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 (payment, period) => {
                     return (
                         payment +
-                        otherRecurringCosts[period] +
+                        otherMonthlyTenantCosts[period] +
                         rentAbatements[period] +
                         tenantImprovementAllowances[period] +
                         otherNonRecurringCosts[period] +
@@ -239,7 +239,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                         otherNonRecurringCosts[period]
                     ),
                     otherMonthlyTenantCost: toCurrency(
-                        otherRecurringCosts[period]
+                        otherMonthlyTenantCosts[period]
                     ),
                     rentAbatement: toCurrency(rentAbatements[period]),
                     tiAllowancePerRsf: toCurrency(
