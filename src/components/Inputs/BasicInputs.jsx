@@ -19,7 +19,7 @@ const BasicInputs = ({ deal, handleChange, disabled }) => {
                 disabled={disabled}
             />
             <InputWithTooltip
-                label="Base rent (RSF/month)"
+                label="Rentable square feet"
                 value={deal?.sqft}
                 handleChange={(e) => handleChange(e, "sqft")}
                 inputProps={{ min: 0, step: 1 }}
