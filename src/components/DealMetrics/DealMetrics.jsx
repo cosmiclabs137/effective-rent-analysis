@@ -9,6 +9,12 @@ import { toCurrency } from "../../utils";
 import { styled } from "@mui/material/styles";
 import { Container } from "@mui/material";
 
+const MetricsText = ({ children }) => (
+    <Typography variant="subtitle1" color="InfoText" gutterBottom>
+        {children}
+    </Typography>
+);
+
 const Item = styled(Container)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -32,9 +38,7 @@ const DealMetrics = ({ metrics }) => {
                     placement="top"
                     describeChild
                 >
-                    <Typography variant="subtitle1">
-                        Landlord: {toCurrency(landlord)}
-                    </Typography>
+                    <MetricsText>Landlord: {toCurrency(landlord)}</MetricsText>
                 </Tooltip>
             </Item>
 
@@ -46,10 +50,7 @@ const DealMetrics = ({ metrics }) => {
                     placement="top"
                     describeChild
                 >
-                    <Typography variant="subtitle1">
-                        Tenant:&nbsp;
-                        {toCurrency(tenant)}
-                    </Typography>
+                    <MetricsText>Tenant: {toCurrency(tenant)}</MetricsText>
                 </Tooltip>
             </Item>
         </Stack>
