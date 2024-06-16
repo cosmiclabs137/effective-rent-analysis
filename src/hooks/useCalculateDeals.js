@@ -1,6 +1,6 @@
 import React from "react";
 
-import { toCurrency, pv, pmt } from "../utils";
+import { toCurrency, pv, pmt, pvocs } from "../utils";
 
 // custom hook for calculating the deals
 const useCalculateDeal = (deals, metricsDispatch, metrics) => {
@@ -8,6 +8,8 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
     const tenantNetPresentValue = React.useRef(0);
     const occupancyOpExCommissionsTotal = React.useRef(0);
     const landlordNetPresentValue = React.useRef(0);
+
+    const presentValuesOfConcessions = React.useRef([]);
 
     const [dealsResults, setDealsResults] = React.useState([]);
     const landlordDealResults = React.useRef([]);
@@ -39,7 +41,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
     );
 
     const updateTenantResults = React.useCallback(
-        (deal) => {
+        (deal, pvoc) => {
             const results = {
                 id: deal.id,
                 name: deal.name,
@@ -48,6 +50,8 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 pv: tenantNetPresentValue.current,
                 sqftLeased: deal.sqft,
                 term: deal.term,
+                pvoc: pvoc,
+                landlordDiscountRate: deal.landlordDiscountRate / 100,
             };
             const currentResults = tenantDealResults.current;
             tenantDealResults.current = isNew(tenantDealResults.current, deal)
@@ -224,8 +228,16 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 0
             );
 
+            const povc = pvocs(
+                deal.landlordDiscountRate / 1200,
+                rentAbatements,
+                tenantImprovementAllowances,
+                otherNonRecurringCosts,
+                otherRecurringContributions
+            );
+
             updateLandlordResults(deal);
-            updateTenantResults(deal);
+            updateTenantResults(deal, povc);
 
             // combine all the data into a table-friendly format
             const data = rates.map((rate, period) => {
@@ -264,7 +276,13 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
         };
 
         setDealsResults(deals.map((deal) => calculateDeal(deal)));
-    }, [deals, updateLandlordResults, updateTenantResults, metricsDispatch]);
+    }, [
+        deals,
+        updateLandlordResults,
+        updateTenantResults,
+        metricsDispatch,
+        presentValuesOfConcessions,
+    ]);
 
     React.useEffect(() => {
         deals.forEach((deal, index) => {
