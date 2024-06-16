@@ -18,8 +18,13 @@ const SummaryTable = ({ deals, title }) => {
     const netEffectiveRates = dealsArray.map(
         (deal) => -pmt(deal.rate / 12, deal.term, deal.pv)
     );
+    // console.table(dealsArray);
     return (
-        <TableContainer component={Paper} sx={{ overflow: "scroll" }}>
+        <TableContainer
+            component={Paper}
+            sx={{ overflow: "scroll" }}
+            style={{ overflow: "scroll" }}
+        >
             <Table size="small">
                 <TableHead>
                     <TableRow key="column-names">
@@ -110,9 +115,66 @@ const SummaryTable = ({ deals, title }) => {
                             </TableCell>
                         ))}
                     </TableRow>
+                    {title.toLowerCase() === "tenant" ? (
+                        <TenantRows deals={dealsArray} />
+                    ) : (
+                        <></>
+                    )}
                 </TableBody>
             </Table>
         </TableContainer>
+    );
+};
+
+const TenantRows = ({ deals }) => {
+    console.log(deals);
+    return (
+        <>
+            <TableRow key="present-value-of-concessions">
+                <TableCell sx={{ paddingLeft: 5 }}>
+                    Present Value of Concessions
+                </TableCell>
+                {deals.map((deal, index) => (
+                    <TableCell align="right" key={index}>
+                        {toCurrency(deal.pvoc)}
+                    </TableCell>
+                ))}
+            </TableRow>
+            <TableRow>
+                <TableCell sx={{ paddingLeft: 5 }}>
+                    Present Value of Concessions / Month
+                </TableCell>
+                {deals.map((deal, index) => (
+                    <TableCell align="right" key={index}>
+                        {toCurrency(
+                            pmt(
+                                deal.landlordDiscountRate / 12,
+                                deal.term,
+                                deal.pvoc
+                            )
+                        )}
+                    </TableCell>
+                ))}
+            </TableRow>
+            <TableRow>
+                <TableCell sx={{ paddingLeft: 5 }}>
+                    Value of Concessions / RSF
+                </TableCell>
+                {deals.map((deal, index) => (
+                    <TableCell align="right" key={index}>
+                        {toCurrency(
+                            (12 *
+                                pmt(
+                                    deal.landlordDiscountRate / 12,
+                                    deal.term,
+                                    deal.pvoc
+                                )) /
+                                deal.sqftLeased
+                        )}
+                    </TableCell>
+                ))}
+            </TableRow>
+        </>
     );
 };
 
