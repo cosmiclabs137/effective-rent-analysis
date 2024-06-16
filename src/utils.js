@@ -47,6 +47,25 @@ export const pv = (rate, nper, pmt, fv = 0) => {
 
         pv_value = -(x * (fv * rate - pmt + y * pmt)) / rate;
     }
-
     return pv_value;
+};
+
+// present value of concessions
+export const pvocs = (
+    rate,
+    abatements,
+    tiAllowance,
+    otherNonRecurringCosts,
+    beforeTaxOccupancyCost
+) => {
+    const pvs = abatements.map((abatement, index) => {
+        const fv =
+            abatement +
+            tiAllowance[index] +
+            otherNonRecurringCosts[index] +
+            beforeTaxOccupancyCost[index];
+        return -pv(rate, index, 0, fv);
+    });
+
+    return pvs.reduce((acc, val) => acc + val, 0);
 };
