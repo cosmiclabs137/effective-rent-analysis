@@ -38,7 +38,11 @@ const DealMetrics = ({ metrics }) => {
                     placement="top"
                     describeChild
                 >
-                    <MetricsText>Landlord: {toCurrency(landlord)}</MetricsText>
+                    <span>
+                        <MetricsText>
+                            Landlord: {toCurrency(landlord)}
+                        </MetricsText>
+                    </span>
                 </Tooltip>
             </Item>
 
@@ -50,7 +54,9 @@ const DealMetrics = ({ metrics }) => {
                     placement="top"
                     describeChild
                 >
-                    <MetricsText>Tenant: {toCurrency(tenant)}</MetricsText>
+                    <span>
+                        <MetricsText>Tenant: {toCurrency(tenant)}</MetricsText>
+                    </span>
                 </Tooltip>
             </Item>
         </Stack>
