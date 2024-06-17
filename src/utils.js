@@ -28,26 +28,25 @@ export const dealFactory = (id) => ({
     landlordDiscountRate: 5,
 });
 
-export const pmt = (rate, nper, pv, fv = 0) => {
+export const pmt = (rate, nper, pv, fv = 0, when = 0) => {
+    // when: 1 -> beginning, 0 -> end
     // adapted from: https://numpy.org/numpy-financial/latest/pmt.html
+    const isRateZero = rate === 0;
     const temp = (1 + rate) ** nper;
-    const fact = ((1 + rate) * (temp - 1)) / rate;
+    const maskedRate = isRateZero ? 1 : rate;
+    const fact = isRateZero
+        ? nper
+        : ((1 + maskedRate * when) * (temp - 1)) / maskedRate;
 
     return -(fv + pv * temp) / fact;
 };
 
-export const pv = (rate, nper, pmt, fv = 0) => {
-    let pv_value = 0;
-
-    if (rate === 0.0) {
-        pv_value = -(fv + pmt * nper);
-    } else {
-        const x = Math.pow(1 + rate, -nper);
-        const y = Math.pow(1 + rate, nper);
-
-        pv_value = -(x * (fv * rate - pmt + y * pmt)) / rate;
-    }
-    return pv_value;
+export const pv = (rate, nper, pmt, fv = 0, when = 0) => {
+    // when: 1 -> beginning, 0 -> end
+    const isRateZero = rate === 0;
+    const temp = (1 + rate) ** nper;
+    const fact = isRateZero ? nper : ((1 + rate * when) * (temp - 1)) / rate;
+    return -(fv + pmt * fact) / temp;
 };
 
 // present value of concessions
