@@ -1,6 +1,6 @@
 import React from "react";
 
-import { toCurrency, pv, pmt, pvocs } from "../utils";
+import { toCurrency, pv, pmt, pvocs, beginDue, endDue } from "../utils";
 
 // custom hook for calculating the deals
 const useCalculateDeal = (deals, metricsDispatch, metrics) => {
@@ -183,7 +183,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
 
             const tenantNetPV = beforeTaxOccupancyCost.map(
                 (cost, period) =>
-                    -pv(deal.tenantDiscountRate / 1200, period, 0, cost)
+                    -pv(deal.tenantDiscountRate / 1200, period, 0, cost, endDue)
             );
 
             tenantNetPresentValue.current = tenantNetPV.reduce(
@@ -220,7 +220,13 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
 
             const landlordNetPV = occupancyOpExCommissions.map(
                 (cost, period) =>
-                    -pv(deal.landlordDiscountRate / 1200, period, 0, cost)
+                    -pv(
+                        deal.landlordDiscountRate / 1200,
+                        period,
+                        0,
+                        cost,
+                        endDue
+                    )
             );
 
             landlordNetPresentValue.current = landlordNetPV.reduce(
@@ -296,13 +302,15 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                         -pmt(
                             currLandlordResults.rate / 12,
                             currLandlordResults.term,
-                            currLandlordResults.pv
+                            currLandlordResults.pv,
+                            beginDue
                         ) / currLandlordResults.sqftLeased,
                     tenant:
                         -pmt(
                             currTenantResults.rate / 12,
                             currTenantResults.term,
-                            currTenantResults.pv
+                            currTenantResults.pv,
+                            beginDue
                         ) / currTenantResults.sqftLeased,
                 },
             });
