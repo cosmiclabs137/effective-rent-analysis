@@ -11,14 +11,20 @@ import {
     Typography,
 } from "@mui/material";
 
+import { PaymentDueTime } from "financial";
+
 import { toCurrency, pmt } from "../../utils";
+
+const begin = PaymentDueTime.Begin;
+const end = PaymentDueTime.End;
 
 const SummaryTable = ({ deals, title }) => {
     const dealsArray = deals[0];
     const netEffectiveRates = dealsArray.map(
-        (deal) => -pmt(deal.rate / 12, deal.term, deal.pv)
+        (deal) => -pmt(deal.rate / 12, deal.term, deal.pv, 0, begin)
     );
-    // console.table(dealsArray);
+    console.log(title);
+    console.table(dealsArray);
     return (
         <TableContainer
             component={Paper}
@@ -69,12 +75,9 @@ const SummaryTable = ({ deals, title }) => {
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Net Effective Rate per Annum
                         </TableCell>
-                        {dealsArray.map((deal, index) => (
+                        {dealsArray.map((_, index) => (
                             <TableCell align="right" key={index}>
-                                {toCurrency(
-                                    -pmt(deal.rate / 12, deal.term, deal.pv) *
-                                        12
-                                )}
+                                {toCurrency(netEffectiveRates[index] * 12)}
                             </TableCell>
                         ))}
                     </TableRow>
@@ -82,11 +85,9 @@ const SummaryTable = ({ deals, title }) => {
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Net Effective Rate per Month
                         </TableCell>
-                        {dealsArray.map((deal, index) => (
+                        {dealsArray.map((_, index) => (
                             <TableCell align="right" key={index}>
-                                {toCurrency(
-                                    -pmt(deal.rate / 12, deal.term, deal.pv)
-                                )}
+                                {toCurrency(netEffectiveRates[index])}
                             </TableCell>
                         ))}
                     </TableRow>
