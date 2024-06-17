@@ -11,16 +11,12 @@ import {
     Typography,
 } from "@mui/material";
 
-import { PaymentDueTime } from "financial";
-
-import { toCurrency, pmt } from "../../utils";
-
-const begin = PaymentDueTime.Begin;
+import { toCurrency, pmt, beginDue } from "../../utils";
 
 const SummaryTable = ({ deals, title }) => {
     const dealsArray = deals[0];
     const netEffectiveRates = dealsArray.map(
-        (deal) => -pmt(deal.rate / 12, deal.term, deal.pv, 0, begin)
+        (deal) => -pmt(deal.rate / 12, deal.term, deal.pv, 0, beginDue)
     );
     console.log(title);
     console.table(dealsArray);
@@ -150,7 +146,9 @@ const TenantRows = ({ deals }) => {
                             pmt(
                                 deal.landlordDiscountRate / 12,
                                 deal.term,
-                                deal.pvoc
+                                deal.pvoc,
+                                0,
+                                beginDue
                             )
                         )}
                     </TableCell>
@@ -167,7 +165,9 @@ const TenantRows = ({ deals }) => {
                                 pmt(
                                     deal.landlordDiscountRate / 12,
                                     deal.term,
-                                    deal.pvoc
+                                    deal.pvoc,
+                                    0,
+                                    beginDue
                                 )) /
                                 deal.sqftLeased
                         )}
