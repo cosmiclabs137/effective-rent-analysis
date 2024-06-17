@@ -16,7 +16,6 @@ import { PaymentDueTime } from "financial";
 import { toCurrency, pmt } from "../../utils";
 
 const begin = PaymentDueTime.Begin;
-const end = PaymentDueTime.End;
 
 const SummaryTable = ({ deals, title }) => {
     const dealsArray = deals[0];
