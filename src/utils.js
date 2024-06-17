@@ -1,4 +1,7 @@
-import { pmt, pv } from "financial";
+import { pmt, pv, PaymentDueTime } from "financial";
+
+const beginDue = PaymentDueTime.Begin;
+const endDue = PaymentDueTime.End;
 
 export const toCurrency = (num) => {
     const formatted = Intl.NumberFormat("en-US", {
@@ -57,18 +60,18 @@ export const pvocs = (
     abatements,
     tiAllowance,
     otherNonRecurringCosts,
-    beforeTaxOccupancyCost
+    otherRecurringContributions
 ) => {
     const pvs = abatements.map((abatement, index) => {
         const fv =
             abatement +
             tiAllowance[index] +
             otherNonRecurringCosts[index] +
-            beforeTaxOccupancyCost[index];
-        return -pv(rate, index, 0, fv);
+            otherRecurringContributions[index];
+        return -pv(rate, index, 0, fv, endDue);
     });
 
     return pvs.reduce((acc, val) => acc + val, 0);
 };
 
-export { pmt, pv };
+export { beginDue, endDue, pmt, pv };
