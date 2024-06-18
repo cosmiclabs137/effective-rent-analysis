@@ -1,21 +1,19 @@
-export function range(
-    stop: number,
-    start: number = 0,
-    step: number = 1
+import { isNewYear } from "./utils";
+
+function simpleYearlyIncrease(
+    periods: number[],
+    value: number,
+    rate: number
 ): number[] {
-    const arr: number[] = [];
+    let currentRate: number = 1;
 
-    for (let i = start; i < stop; i += step) {
-        arr.push(i);
-    }
+    return periods.map((period: number) => {
+        if (isNewYear(period)) {
+            currentRate *= 1 + rate;
+        }
 
-    return arr;
+        return value * currentRate;
+    });
 }
 
-export function calcMonthlyPayments(
-    period: number[],
-    baseRent: number,
-    sqft: number
-): number[] {
-    return [];
-}
+export { simpleYearlyIncrease };
