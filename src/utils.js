@@ -11,6 +11,24 @@ export const toCurrency = (num) => {
     return num >= 0 ? formatted : `(${formatted})`;
 };
 
+const isNewYear = (period) => period / 12 > 1 && period % 12 === 0;
+
+function range(stop, start = 0, step = 1) {
+    const arr = [];
+
+    if (start < stop) {
+        for (let i = start; i < stop; i += step) {
+            arr.push(i);
+        }
+    } else {
+        for (let i = start; i > stop; i += step) {
+            arr.push(i);
+        }
+    }
+
+    return arr;
+}
+
 export const dealFactory = (id) => ({
     id: id,
     name: `Deal ${id + 1}`,
@@ -74,4 +92,4 @@ export const pvocs = (
     return pvs.reduce((acc, val) => acc + val, 0);
 };
 
-export { beginDue, endDue, pmt, pv };
+export { beginDue, endDue, pmt, pv, isNewYear, range };
