@@ -1,6 +1,6 @@
 import { isNewYear } from "./utils";
 
-function simpleYearlyIncrease(
+function simplePeriodIncrease(
     periods: number[],
     value: number,
     rate: number
@@ -16,4 +16,4 @@ function simpleYearlyIncrease(
     });
 }
 
-export { simpleYearlyIncrease };
+export { simplePeriodIncrease };
