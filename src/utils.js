@@ -11,7 +11,7 @@ export const toCurrency = (num) => {
     return num >= 0 ? formatted : `(${formatted})`;
 };
 
-const isNewYear = (period) => period / 12 > 1 && period % 12 === 0;
+const isNewYear = (period) => period > 11 && period % 12 === 0;
 
 function range(stop, start = 0, step = 1) {
     const arr = [];
