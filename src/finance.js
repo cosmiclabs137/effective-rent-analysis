@@ -1,13 +1,9 @@
 import { isNewYear } from "./utils";
 
-function simplePeriodIncrease(
-    periods: number[],
-    value: number,
-    rate: number
-): number[] {
-    let currentRate: number = 1;
+function simpleYearlyIncrease(periods, value, rate) {
+    let currentRate = 1;
 
-    return periods.map((period: number) => {
+    return periods.map((period) => {
         if (isNewYear(period)) {
             currentRate *= 1 + rate;
         }
@@ -16,4 +12,4 @@ function simplePeriodIncrease(
     });
 }
 
-export { simplePeriodIncrease };
+export { simpleYearlyIncrease };
