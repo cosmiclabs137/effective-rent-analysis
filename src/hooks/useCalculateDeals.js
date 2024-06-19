@@ -1,7 +1,14 @@
 import React from "react";
 
-import { simpleYearlyIncrease } from "../finance";
-import { toCurrency, pv, pmt, pvocs, beginDue, endDue } from "../utils";
+import {
+    beginDue,
+    endDue,
+    pmt,
+    pv,
+    pvocs,
+    simpleYearlyIncrease,
+    toCurrency,
+} from "../finance";
 
 // custom hook for calculating the deals
 const useCalculateDeal = (deals, metricsDispatch, metrics) => {

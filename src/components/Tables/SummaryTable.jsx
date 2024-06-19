@@ -11,7 +11,7 @@ import {
     Typography,
 } from "@mui/material";
 
-import { toCurrency, pmt, beginDue } from "../../utils";
+import { toCurrency, pmt, beginDue } from "../../finance";
 
 const SummaryTable = ({ deals, title }) => {
     const dealsArray = deals[0];
