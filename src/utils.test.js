@@ -1,6 +1,6 @@
 import { toBeDeepCloseTo, toMatchCloseTo } from "jest-matcher-deep-close-to";
 
-import { range } from "./utils";
+import { isNewYear, range } from "./utils";
 
 expect.extend({ toBeDeepCloseTo, toMatchCloseTo });
 
@@ -24,6 +24,38 @@ describe("utils", function () {
 
         it("should return an array of 5 sequential numbers, starting with 15 and ending with 11", () => {
             expect(range(10, 15, -1)).toEqual([15, 14, 13, 12, 11]);
+        });
+    });
+
+    describe("#isNewYear", function () {
+        it("should return false", () => {
+            expect(isNewYear(0)).toEqual(false);
+            expect(isNewYear(1)).toEqual(false);
+            expect(isNewYear(13)).toEqual(false);
+        });
+
+        it("should return true", () => {
+            expect(isNewYear(12)).toEqual(true);
+            expect(isNewYear(24)).toEqual(true);
+        });
+
+        it("should work with arrays of values", () => {
+            expect(range(14).map((period) => isNewYear(period))).toEqual([
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+            ]);
         });
     });
 });
