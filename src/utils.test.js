@@ -4,7 +4,7 @@ import { range } from "./utils";
 
 expect.extend({ toBeDeepCloseTo, toMatchCloseTo });
 
-describe("finance", function () {
+describe("utils", function () {
     describe("#range", function () {
         it("should return an empty array", () => {
             expect(range(0)).toEqual([]);
