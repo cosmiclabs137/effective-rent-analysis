@@ -16,6 +16,9 @@ function range(stop, start = 0, step = 1) {
     return arr;
 }
 
+const arrayFrom = (array, fill = 0) =>
+    Array.from(new Float32Array(array.length).fill(fill));
+
 const dealFactory = (id) => ({
     id: id,
     name: `Deal ${id + 1}`,
@@ -38,4 +41,4 @@ const dealFactory = (id) => ({
     landlordDiscountRate: 5,
 });
 
-export { dealFactory, isNewYear, range };
+export { arrayFrom, dealFactory, isNewYear, range };
