@@ -1,5 +1,6 @@
 import React from "react";
 
+import { simpleYearlyIncrease } from "../finance";
 import { toCurrency, pv, pmt, pvocs, beginDue, endDue } from "../utils";
 
 // custom hook for calculating the deals
