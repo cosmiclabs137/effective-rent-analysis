@@ -1,7 +1,6 @@
 import { pmt, pv, PaymentDueTime } from "financial";
 
 import { arrayFrom, isNewYear, range } from "./utils";
-import { ownerDocument } from "@mui/material";
 
 const beginDue = PaymentDueTime.Begin;
 const endDue = PaymentDueTime.End;
