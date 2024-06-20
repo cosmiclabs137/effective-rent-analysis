@@ -294,6 +294,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
         deals.forEach((deal, index) => {
             const currLandlordResults = landlordDealResults.current[index];
             const currTenantResults = tenantDealResults.current[index];
+
             metricsDispatch({
                 type: "update",
                 value: {
@@ -303,6 +304,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                             currLandlordResults.rate / 12,
                             currLandlordResults.term,
                             currLandlordResults.pv,
+                            0,
                             beginDue
                         ) / currLandlordResults.sqftLeased,
                     tenant:
@@ -310,6 +312,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                             currTenantResults.rate / 12,
                             currTenantResults.term,
                             currTenantResults.pv,
+                            0,
                             beginDue
                         ) / currTenantResults.sqftLeased,
                 },
