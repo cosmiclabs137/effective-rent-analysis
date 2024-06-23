@@ -175,7 +175,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                         otherMonthlyTenantCosts[period] + // orCost_i
                         rentAbatements[period] + // ra_i
                         otherRecurringContributions[period] + // orContrib_i
-                        otherRecurringContributions[period] + // onrContrib_i
+                        otherNonRecurringContributions[period] + // onrContrib_i
                         tenantImprovementAllowances[period] // tiAllowance_i
                     );
                 }
@@ -240,11 +240,12 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 0
             );
 
+            // const
             const povc = pvocs(
                 deal.landlordDiscountRate / 1200,
                 rentAbatements,
-                tenantImprovementAllowances,
-                otherNonRecurringCosts,
+                tenantImprovementCosts,
+                otherNonRecurringContributions,
                 otherRecurringContributions
             );
 
