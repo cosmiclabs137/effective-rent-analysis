@@ -240,7 +240,6 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 0
             );
 
-            // const
             const povc = pvocs(
                 deal.landlordDiscountRate / 1200,
                 rentAbatements,
