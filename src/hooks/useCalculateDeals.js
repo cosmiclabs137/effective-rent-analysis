@@ -93,7 +93,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
             const otherNonRecurringCosts = Array.from(
                 new Float32Array(rates.length).fill(0.0)
             );
-            otherNonRecurringCosts[0] = -Number(deal.otherOneTimeTenantCost);
+            otherNonRecurringCosts[0] = Number(deal.otherOneTimeTenantCost);
 
             const otherMonthlyTenantCosts = Array.from(
                 new Float32Array(rates.length).fill(deal.otherMonthlyTenantCost)
@@ -213,7 +213,6 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                         otherMonthlyTenantCosts[period] + // orCost_i
                         rentAbatements[period] + // ra_i
                         tenantImprovementCosts[period] + // tiContrib_i
-                        otherNonRecurringCosts[period] + // onrc_i
                         otherRecurringContributions[period] + // orContrib__i
                         otherNonRecurringContributions[period] + // onrContrib_i
                         (period === 0 ? totalCommission : 0)
