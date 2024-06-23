@@ -58,15 +58,15 @@ export const dealFactory = (id) => ({
 export const pvocs = (
     rate,
     abatements,
-    tiAllowance,
-    otherNonRecurringCosts,
+    tiContribution,
+    otherNonRecurringContribitions,
     otherRecurringContributions
 ) => {
     const pvs = abatements.map((abatement, index) => {
         const fv =
             abatement +
-            tiAllowance[index] +
-            otherNonRecurringCosts[index] +
+            tiContribution[index] +
+            otherNonRecurringContribitions[index] +
             otherRecurringContributions[index];
         return -pv(rate, index, 0, fv, endDue);
     });
