@@ -137,6 +137,10 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 otherRecurringContributions[period] =
                     -deal.otherMonthlyLandlordCost * currentContribGrowthRate;
             }
+            const otherNonRecurringContributions = Array.from(
+                new Float32Array(rates.length).fill(0)
+            );
+            otherNonRecurringContributions[0] = -deal.otherOneTimeLandlordCost;
 
             const monthlyPayments = rates.map(
                 (rate) => rate * deal.baseRent * deal.sqft
@@ -162,16 +166,17 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
             });
 
             const beforeTaxOccupancyCost = monthlyPayments.map(
-                (baseRent, period) => {
+                (monthlyPayment, period) => {
                     return (
-                        baseRent +
-                        operatingExpenses[period] +
-                        tenantImprovementCosts[period] +
-                        otherNonRecurringCosts[period] +
-                        otherMonthlyTenantCosts[period] +
-                        otherRecurringContributions[period] +
-                        rentAbatements[period] +
-                        tenantImprovementAllowances[period]
+                        monthlyPayment + // mp_i
+                        operatingExpenses[period] + // opex_i
+                        otherNonRecurringCosts[period] + // nrc_i
+                        tenantImprovementCosts[period] + // tiContrib_i
+                        otherMonthlyTenantCosts[period] + // orCost_i
+                        rentAbatements[period] + // ra_i
+                        otherRecurringContributions[period] + // orContrib_i
+                        otherRecurringContributions[period] + // onrContrib_i
+                        tenantImprovementAllowances[period] // tiAllowance_i
                     );
                 }
             );
@@ -204,12 +209,13 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
             const occupancyOpExCommissions = monthlyPayments.map(
                 (payment, period) => {
                     return (
-                        payment +
-                        otherMonthlyTenantCosts[period] +
-                        rentAbatements[period] +
-                        tenantImprovementAllowances[period] +
-                        otherNonRecurringCosts[period] +
-                        otherRecurringContributions[period] +
+                        payment + // mp_i
+                        otherMonthlyTenantCosts[period] + // orCost_i
+                        rentAbatements[period] + // ra_i
+                        tenantImprovementCosts[period] + // tiContrib_i
+                        otherNonRecurringCosts[period] + // onrc_i
+                        otherRecurringContributions[period] + // orContrib__i
+                        otherNonRecurringContributions[period] + // onrContrib_i
                         (period === 0 ? totalCommission : 0)
                     );
                 }
