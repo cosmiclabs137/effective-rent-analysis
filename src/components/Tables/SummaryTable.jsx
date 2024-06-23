@@ -18,8 +18,6 @@ const SummaryTable = ({ deals, title }) => {
     const netEffectiveRates = dealsArray.map(
         (deal) => -pmt(deal.rate / 12, deal.term, deal.pv, 0, beginDue)
     );
-    console.log(title);
-    console.table(dealsArray);
     return (
         <TableContainer
             component={Paper}
@@ -123,7 +121,6 @@ const SummaryTable = ({ deals, title }) => {
 };
 
 const TenantRows = ({ deals }) => {
-    console.log(deals);
     return (
         <>
             <TableRow key="present-value-of-concessions">
