@@ -64,7 +64,7 @@ const SummaryTable = ({ deals, title }) => {
                             </TableCell>
                         ))}
                     </TableRow>
-                    <TableRow key="net-effective-rate-per-annum">
+                    {/* <TableRow key="net-effective-rate-per-annum">
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Net Effective Rate per Annum
                         </TableCell>
@@ -96,7 +96,7 @@ const SummaryTable = ({ deals, title }) => {
                                 )}
                             </TableCell>
                         ))}
-                    </TableRow>
+                    </TableRow> */}
                     <TableRow key="net-effective-rate-per-month-per-sf">
                         <TableCell sx={{ paddingLeft: 5 }}>
                             Net Effective Rate per Month/RSF
@@ -123,7 +123,7 @@ const SummaryTable = ({ deals, title }) => {
 const TenantRows = ({ deals }) => {
     return (
         <>
-            <TableRow key="present-value-of-concessions">
+            {/* <TableRow key="present-value-of-concessions">
                 <TableCell sx={{ paddingLeft: 5 }}>
                     Present Value of Concessions
                 </TableCell>
@@ -132,8 +132,8 @@ const TenantRows = ({ deals }) => {
                         {toCurrency(deal.pvoc)}
                     </TableCell>
                 ))}
-            </TableRow>
-            <TableRow>
+            </TableRow> */}
+            {/* <TableRow>
                 <TableCell sx={{ paddingLeft: 5 }}>
                     Present Value of Concessions / Month
                 </TableCell>
@@ -150,7 +150,7 @@ const TenantRows = ({ deals }) => {
                         )}
                     </TableCell>
                 ))}
-            </TableRow>
+            </TableRow> */}
             <TableRow>
                 <TableCell sx={{ paddingLeft: 5 }}>
                     Value of Concessions / RSF
