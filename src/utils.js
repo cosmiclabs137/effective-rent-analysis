@@ -1,17 +1,25 @@
-import { pmt, pv, PaymentDueTime } from "financial";
+const isNewYear = (period) => period > 11 && period % 12 === 0;
 
-const beginDue = PaymentDueTime.Begin;
-const endDue = PaymentDueTime.End;
+function range(stop, start = 0, step = 1) {
+    const arr = [];
 
-export const toCurrency = (num) => {
-    const formatted = Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-    }).format(num >= 0 ? num : -num);
-    return num >= 0 ? formatted : `(${formatted})`;
-};
+    if (start < stop) {
+        for (let i = start; i < stop; i += step) {
+            arr.push(i);
+        }
+    } else {
+        for (let i = start; i > stop; i += step) {
+            arr.push(i);
+        }
+    }
 
-export const dealFactory = (id) => ({
+    return arr;
+}
+
+const arrayFrom = (array, fill = 0) =>
+    Array.from(new Float32Array(array.length).fill(fill));
+
+const dealFactory = (id) => ({
     id: id,
     name: `Deal ${id + 1}`,
     sqft: 2794,
@@ -33,45 +41,4 @@ export const dealFactory = (id) => ({
     landlordDiscountRate: 5,
 });
 
-// export const pmt = (rate, nper, pv, fv = 0, when = 0) => {
-//     // when: 1 -> beginning, 0 -> end
-//     // adapted from: https://numpy.org/numpy-financial/latest/pmt.html
-//     const isRateZero = rate === 0;
-//     const temp = (1 + rate) ** nper;
-//     const maskedRate = isRateZero ? 1 : rate;
-//     const fact = isRateZero
-//         ? nper
-//         : ((1 + maskedRate * when) * (temp - 1)) / maskedRate;
-
-//     return -(fv + pv * temp) / fact;
-// };
-
-// export const pv = (rate, nper, pmt, fv = 0, when = 0) => {
-//     // when: 1 -> beginning, 0 -> end
-//     const isRateZero = rate === 0;
-//     const temp = (1 + rate) ** nper;
-//     const fact = isRateZero ? nper : ((1 + rate * when) * (temp - 1)) / rate;
-//     return -(fv + pmt * fact) / temp;
-// };
-
-// present value of concessions
-export const pvocs = (
-    rate,
-    abatements,
-    tiContribution,
-    otherNonRecurringContribitions,
-    otherRecurringContributions
-) => {
-    const pvs = abatements.map((abatement, index) => {
-        const fv =
-            abatement +
-            tiContribution[index] +
-            otherNonRecurringContribitions[index] +
-            otherRecurringContributions[index];
-        return -pv(rate, index, 0, fv, endDue);
-    });
-
-    return pvs.reduce((acc, val) => acc + val, 0);
-};
-
-export { beginDue, endDue, pmt, pv };
+export { arrayFrom, dealFactory, isNewYear, range };
