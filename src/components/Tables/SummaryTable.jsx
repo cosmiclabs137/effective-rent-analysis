@@ -11,7 +11,7 @@ import {
     Typography,
 } from "@mui/material";
 
-import { toCurrency, pmt, beginDue } from "../../finance";
+import { toCurrency, pmt, beginDue, toPercent } from "../../finance";
 
 const SummaryTable = ({ deals, title }) => {
     const dealsArray = deals[0];
@@ -112,11 +112,36 @@ const SummaryTable = ({ deals, title }) => {
                     {title.toLowerCase() === "tenant" ? (
                         <TenantRows deals={dealsArray} />
                     ) : (
-                        <></>
+                        <LandlordRows deals={dealsArray} />
                     )}
                 </TableBody>
             </Table>
         </TableContainer>
+    );
+};
+
+const LandlordRows = ({ deals }) => {
+    return (
+        <>
+            <TableRow key="irr">
+                <TableCell sx={{ paddingLeft: 5 }}>
+                    Internal Rate of Return (IRR):
+                </TableCell>
+                {deals.map((deal, index) => (
+                    <TableCell align="right" key={index}>
+                        {toPercent(deal.irr)}
+                    </TableCell>
+                ))}
+            </TableRow>
+            <TableRow key="break-even-month">
+                <TableCell sx={{ paddingLeft: 5 }}>Break Even Month</TableCell>
+                {deals.map((deal, index) => (
+                    <TableCell align="right" key={index}>
+                        {deal.breakEven}
+                    </TableCell>
+                ))}
+            </TableRow>
+        </>
     );
 };
 
