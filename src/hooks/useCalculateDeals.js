@@ -1,6 +1,6 @@
 import React from "react";
 
-import { toCurrency, pv, pmt, pvocs, beginDue, endDue } from "../utils";
+import { toCurrency, pv, pmt, pvocs, beginDue, endDue } from "../finance";
 
 // custom hook for calculating the deals
 const useCalculateDeal = (deals, metricsDispatch, metrics) => {
