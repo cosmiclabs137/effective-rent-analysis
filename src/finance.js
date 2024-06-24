@@ -1,4 +1,4 @@
-import { pmt, pv, PaymentDueTime } from "financial";
+import { irr as financeIrr, pmt, pv, PaymentDueTime } from "financial";
 
 import { arrayFrom, isNewYear, range } from "./utils";
 
@@ -44,6 +44,12 @@ const toCurrency = (num) => {
     }).format(num >= 0 ? num : -num);
     return num >= 0 ? formatted : `(${formatted})`;
 };
+
+const toPercent = (num) =>
+    Number(num).toLocaleString(undefined, {
+        style: "percent",
+        minimumFractionDigits: 2,
+    });
 
 const calculateDeal = (deal) => {
     const periods = range(deal.term);
@@ -169,13 +175,29 @@ const calculateDeal = (deal) => {
     };
 };
 
+const irr = (values, guess = 0.001) =>
+    Math.pow(1 + financeIrr(values, guess), 12) - 1;
+
+const breakEvenMonth = (array) => {
+    for (let index = 0; index < array.length; index++) {
+        if (array[index] >= 0) {
+            return index + 1;
+        }
+    }
+
+    return -1;
+};
+
 export {
     beginDue,
+    breakEvenMonth,
     calculateDeal,
     endDue,
+    irr,
     pmt,
     pv,
     pvocs,
     simpleYearlyIncrease,
     toCurrency,
+    toPercent,
 };
