@@ -6,4 +6,7 @@
 html {
     min-height: 100vh;
     background-color: #f8f8ff;
+    overflow: scroll;
+    scrollbar-color: white lightgray;
+    scrollbar-width: thin;
 }
