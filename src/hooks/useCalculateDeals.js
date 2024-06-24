@@ -1,6 +1,17 @@
 import React from "react";
 
-import { toCurrency, pv, pmt, pvocs, beginDue, endDue } from "../finance";
+import {
+    toCurrency,
+    pv,
+    pmt,
+    pvocs,
+    beginDue,
+    endDue,
+    irr,
+    breakEvenMonth,
+} from "../finance";
+
+import { cumsum } from "../utils";
 
 // custom hook for calculating the deals
 const useCalculateDeal = (deals, metricsDispatch, metrics) => {
@@ -19,7 +30,7 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
         arr.filter((res) => res.id === deal.id).length === 0;
 
     const updateLandlordResults = React.useCallback(
-        (deal) => {
+        (deal, irr, breakEven) => {
             const results = {
                 id: deal.id,
                 name: deal.name,
@@ -28,6 +39,8 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 pv: landlordNetPresentValue.current,
                 sqftLeased: deal.sqft,
                 term: deal.term,
+                irr: irr,
+                breakEven: breakEven,
             };
             const currentResults = landlordDealResults.current;
             landlordDealResults.current = isNew(currentResults, deal)
@@ -246,8 +259,11 @@ const useCalculateDeal = (deals, metricsDispatch, metrics) => {
                 otherNonRecurringContributions,
                 otherRecurringContributions
             );
+            const landlordIrr = irr(occupancyOpExCommissions, 0.001);
 
-            updateLandlordResults(deal);
+            const breakEven = breakEvenMonth(cumsum(occupancyOpExCommissions));
+
+            updateLandlordResults(deal, landlordIrr, breakEven);
             updateTenantResults(deal, povc);
 
             // combine all the data into a table-friendly format
